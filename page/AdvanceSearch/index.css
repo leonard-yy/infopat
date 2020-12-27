@@ -1,0 +1,49 @@
+.adv-page-container {
+  height: 100%;
+  width: 100%;
+  background-color: transparent !important;
+  overflow: auto;
+}
+
+.adv-page-container .adv-page-selector,
+.adv-page-container .adv-page-index,
+.adv-page-container .adv-page-toolbox {
+  background: #ffffff;
+}
+
+.adv-page-body {
+  padding: 0px 40px;
+}
+
+.adv-footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px 40px 20px;
+}
+.fields-content {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  line-height: 50px;
+}
+.fields-label {
+  width: 120px;
+  padding: 0;
+  font-size: 14px;
+  text-align: left;
+}
+.fields-box {
+  width: 100%;
+  margin: 0;
+  padding: 5px 10px;
+  background-color: rgba(232, 233, 234, 0.4);
+  border-radius: 6px;
+}
+.fields-item {
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #1e48ac;
+  margin-right: 50px;
+  display: inline-block;
+  cursor: pointer;
+}

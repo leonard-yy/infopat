@@ -1,0 +1,32 @@
+/**
+ pad自适应样式
+*/
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .detailInfo {
+    display: table-row;
+    width: 100%;
+  }
+
+  html {
+    font-size: 50px !important;
+  }
+
+  .layui-layout-admin .header-2 .checks .layui-form-radio {
+    padding-right: 10px;
+  }
+}
+
+@media print {
+  .detailInfo {
+    display: table-row;
+    width: 100%;
+  }
+
+  html {
+    font-size: 50px !important;
+  }
+
+  .layui-layout-admin .header-2 .checks .layui-form-radio {
+    padding-right: 10px;
+  }
+}

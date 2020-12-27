@@ -1,0 +1,51 @@
+<div class="search-content-container adv-page-container">
+  <div class="adv-page-selector">
+    <div class="search-container-title">高级检索</div>
+    <div class="adv-page-body" id="adv-body-advance"></div>
+    <div class="adv-footer">
+      <span class="slef-search-btn" id="advance-generate" style="width: 100px"
+        >生成检索式</span
+      >
+      <span
+        class="slef-search-btn normal ml10"
+        id="advance-clear"
+        style="width: 100px"
+        >清空</span
+      >
+    </div>
+  </div>
+
+  <div class="adv-page-index mt20">
+    <div class="search-container-title">指令检索</div>
+    <div class="adv-page-body" id="adv-body-instruct">
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">检索式</label>
+        <div class="layui-input-block" style="margin-left: 80px">
+          <textarea
+            name="desc"
+            placeholder="请输入内容"
+            class="layui-textarea"
+            style="background: rgba(239, 239, 239, 0.5); height: 200px"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="adv-footer">
+      <span class="slef-search-btn" id="instruce-search" style="width: 100px"
+        >检索</span
+      >
+      <span
+        class="slef-search-btn normal ml10"
+        id="instruce-clear"
+        style="width: 100px"
+        >清空</span
+      >
+    </div>
+  </div>
+
+  <div class="adv-page-toolbox mt20" style="padding-bottom: 40px">
+    <div class="search-container-title">检索字段代码</div>
+    <div class="adv-page-body" id="adv-body-fields"></div>
+  </div>
+</div>
+<script src="./page/AdvanceSearch/index.js"></script>

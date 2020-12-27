@@ -1,0 +1,30 @@
+{
+  "potal": [
+    {
+      "potalName": "检索",
+      "potalPath": "",
+      "children": [
+        {
+          "potalName": "智能检索",
+          "potalPath": "",
+          "potalCode": "intellectSearch"
+        },
+        {
+          "potalName": "高级检索",
+          "potalPath": "",
+          "potalCode": "advanceSearch"
+        }
+      ]
+    },
+    {
+      "potalName": "收藏夹",
+      "potalPath": "",
+      "potalCode": "favorite"
+    },
+    {
+      "potalName": "托管",
+      "potalPath": "",
+      "potalCode": "care"
+    }
+  ]
+}

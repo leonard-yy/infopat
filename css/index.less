@@ -1,0 +1,416 @@
+/**头部样式 */
+// * {
+//   -moz-user-select   : none;
+//   -webkit-user-select: none;
+//   user-select        : none;
+// }
+
+.layui-layout-admin {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+
+    .menu-content {
+      display: flex;
+      .logo {
+        line-height: 70px;
+      }
+    }
+
+    .navigation {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #ffffff;
+      letter-spacing: 0.35px;
+
+      span {
+        &:nth-child(2) {
+          margin: 0 0.45rem 0 0.4rem;
+          cursor: pointer;
+
+          i {
+            margin: 0 0.04rem;
+          }
+        }
+
+        &:nth-child(3) {
+          display: inline-flex;
+          align-items: center;
+
+          i {
+            font-size: 0.28rem;
+            margin-right: 0.1rem;
+          }
+        }
+      }
+    }
+  }
+
+  .header-2 {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 70px;
+    bottom: 0;
+    height: 80px;
+    padding: 0 0.34rem;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+
+    .search-input {
+      flex: 1;
+      font-size: 0.14rem;
+      border: 1px solid #efefef;
+      border-radius: 6px;
+      height: 0.6rem;
+      padding-left: 0.3rem;
+      background-color: #f7f7f7;
+      margin-right: 0.46rem;
+
+      input {
+        height: 100%;
+        border: none;
+        width: calc(100% - 0.5rem);
+        background-color: #f7f7f7;
+        font-size: 14px;
+        padding-left: 0.04rem;
+      }
+    }
+
+    .checks {
+      color: #333333;
+      display: flex;
+      align-items: center;
+
+      .layui-form-radio {
+        margin: 0;
+
+        padding-right: 0.46rem;
+
+        &.layui-form-radioed {
+          i {
+            background: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #5ba0d8;
+          }
+        }
+
+        i {
+          font-size: 14px;
+          color: #efefef;
+        }
+      }
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+
+      .btn {
+        border-radius: 6px;
+        padding: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        letter-spacing: 0.3px;
+        width: 80px;
+        height: 34px;
+        text-align: center;
+
+        &:nth-child(2) {
+          margin: 0 24px;
+        }
+
+        &.btn-default {
+          color: #1e48ac;
+          // background-image   : linear-gradient(180deg, #ffffff 0%, #5BA0D8 100%);
+          background-color: #ffffff;
+          // border             : 1px solid #5BA0D8;
+          position: relative;
+
+          &::before {
+            content: "";
+            display: block;
+            width: 82px;
+            height: 36px;
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            background-image: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
+            border-radius: 6px;
+            z-index: -1;
+          }
+        }
+
+        &.btn-primary {
+          color: #ffffff;
+          background-image: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
+          border: 1px solid;
+        }
+      }
+    }
+  }
+}
+
+.mypage-container {
+  // width         : 100%;
+  // height        : 100%;
+  // display       : flex;
+  // flex-direction: row;
+  width: 100%;
+  height: 100%;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 20px;
+}
+
+.detailInfo {
+  display: table-cell;
+  width: calc(100% - 630px);
+  background-color: white;
+}
+
+// 表格公共样式
+
+.table-container-common {
+  margin-bottom: 20px;
+  background-color: #fff;
+
+  &:nth-child(1) .table-title-common:before {
+    background-image: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
+  }
+
+  &:nth-child(2) .table-title-common:before {
+    background-image: linear-gradient(180deg, #ff7e5b 0%, #ff6b6b 100%);
+  }
+
+  &:nth-child(3) .table-title-common:before {
+    background-image: linear-gradient(180deg, #f7b500 0%, #ffa200 100%);
+  }
+
+  .table-title-common.table-subtitle {
+    font-size: 14px;
+
+    &:before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: -4px;
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
+
+  .table-title-common {
+    font-family: PingFangSC-Semibold;
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    padding-top: 0.3rem;
+    padding-bottom: 0.17rem;
+    padding-left: 0.4rem;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 16px;
+      margin-right: 0.14rem;
+      vertical-align: middle;
+    }
+  }
+
+  .table-common {
+    width: 100%;
+    line-height: 50px;
+
+    tr {
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      color: #333333;
+
+      &:first-child {
+        color: #999999;
+      }
+
+      &:nth-child(odd) {
+        background: rgba(232, 233, 234, 0.4);
+      }
+
+      td {
+        &:first-child {
+          padding-left: 58px;
+        }
+
+        &.td-action {
+          font-size: 12px;
+          color: #1e48ac;
+          letter-spacing: 0.3px;
+          cursor: pointer;
+
+          .action,
+          img {
+            margin-right: 8px;
+
+            &:nth-child(2) {
+              margin-left: 60px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/** 预览图片公共样式*/
+.common-container-picture {
+  display: none;
+  position: absolute;
+  top: 20px;
+  height: 100%;
+  // padding   : 84px 33px 116px 33px;
+  padding: 80px;
+  background: rgba(0, 0, 0, 0.4);
+  width: inherit;
+  z-index: 2;
+
+  &.inpage {
+    background-color: white;
+    width: 100%;
+    height: 700px;
+    position: unset;
+    padding: 0;
+  }
+
+  &.full {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    position: fixed;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 80px;
+
+    .container-picture-scroll img {
+      height: auto;
+    }
+  }
+
+  .container-picture {
+    position: relative;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    font-size: 0;
+    padding: 2% 2% 6% 2%;
+    background-color: white;
+
+    img {
+      height: 100%;
+      max-width: 50%;
+    }
+
+    .close-icon {
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+    }
+
+    .container-picture-scroll {
+      height: 100%;
+      overflow-y: scroll;
+    }
+  }
+
+  .picture-btns {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .picture-btn {
+      cursor: pointer;
+      font-family: PingFangSC;
+      position: relative;
+      margin: 0 10px;
+
+      img {
+        max-width: 20px;
+        height: 20px;
+      }
+
+      .page-tooltip {
+        position: absolute;
+        bottom: 28px;
+        width: 80px;
+        left: -30px;
+        height: 42px;
+        background-image: url(../images/page-btns/page-tooltip.png);
+        font-size: 14px;
+        color: #ffffff;
+        line-height: 34px;
+      }
+
+      &.btn-full {
+        position: absolute;
+        right: 10%;
+      }
+
+      &.btn-print {
+        position: absolute;
+        right: calc(10% + 60px);
+      }
+    }
+  }
+}
+
+//第一次检索 第一个表格样式
+.examiation-search-table {
+  line-height: 50px;
+  width: calc(100% - 58px);
+  margin-left: 58px;
+
+  tr {
+    border-bottom: 1px solid #e8e9ea;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    td:nth-child(odd) {
+      color: #999999;
+    }
+
+    td:nth-child(even) {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 180px;
+      display: inline-block;
+    }
+  }
+}
+
+td.tip-hotspot {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 180px;
+}
+
+img[src=""],
+img[src="_"],
+img:not([src]) {
+  opacity: 0;
+}

@@ -1,0 +1,59 @@
+{
+  "clearInfo": {
+    "clearUrl": "api/clear.json"
+  },
+  "homeInfo": {
+    "title": "首页",
+    "icon": "fa fa-home",
+    "href": "page/CostInfo/index.html"
+  },
+  "logoInfo": {
+    "title": "LayuiMini",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": {
+    "currency": {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "child": [
+        {
+          "title": "费用信息",
+          "active":"true",
+          "href": "page/CostInfo/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "发文通知",
+          "href": "page/NotificationDispatch/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "审查意见",
+          "href": "page/ExaminationOption/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "审查检索信息",
+          "href": "page/ExaminationSearch/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "法律状态信息",
+          "href": "page/LegalStatus/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "专利权评价报告",
+          "href": "page/PatentEvaluationReport/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "专利全文信息",
+          "href": "page/PatentInformation/index.html",
+          "target": "_self"
+        }
+      ]
+    }
+  }
+}

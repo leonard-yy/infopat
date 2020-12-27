@@ -1,0 +1,166 @@
+{
+  "data": [
+    {
+      "name": "关键词",
+      "selector": [
+        {
+          "name": "标题",
+          "value": "ti"
+        },
+        {
+          "name": "中文摘要",
+          "value": "cab"
+        },
+        {
+          "name": "标题中文和英文",
+          "value": "ceti"
+        },
+        {
+          "name": "英文标题",
+          "value": "eti"
+        },
+        {
+          "name": "权利要求",
+          "value": "cl"
+        },
+        {
+          "name": "标题与摘要的中英文",
+          "value": "cets"
+        }
+      ],
+      "isDate": false
+    },
+    {
+      "name": "名称和地址",
+      "selector": [
+        {
+          "name": "申请人",
+          "value": "ap"
+        },
+        {
+          "name": "发明人",
+          "value": "in"
+        },
+        {
+          "name": "第一申请人",
+          "value": "fap"
+        },
+        {
+          "name": "申请人地址",
+          "value": "addr"
+        },
+        {
+          "name": "专利权人",
+          "value": "aee"
+        },
+        {
+          "name": "申请日期年",
+          "value": "ady"
+        },
+        {
+          "name": "申请人",
+          "value": "ap"
+        },
+        {
+          "name": "发明人",
+          "value": "in"
+        },
+        {
+          "name": "第一申请人",
+          "value": "fap"
+        },
+        {
+          "name": "申请人地址",
+          "value": "addr"
+        },
+        {
+          "name": "专利权人",
+          "value": "aee"
+        },
+        {
+          "name": "申请日期年",
+          "value": "ady"
+        }
+      ],
+      "isDate": false
+    },
+    {
+      "name": "号码",
+      "selector": [
+        {
+          "name": "号码",
+          "value": "n"
+        },
+        {
+          "name": "公开(公告)号",
+          "value": "dn"
+        },
+        {
+          "name": "申请号",
+          "value": "an"
+        },
+        {
+          "name": "优先权号",
+          "value": "pr"
+        }
+      ],
+      "isDate": false
+    },
+    {
+      "name": "日期",
+      "selector": [
+        {
+          "name": "公开(公告)日期",
+          "value": "dd"
+        },
+        {
+          "name": "申请日期月",
+          "value": "adm"
+        }
+      ],
+      "isDate": false
+    },
+    {
+      "name": "分类",
+      "selector": [
+        {
+          "name": "国际IPC分类",
+          "value": "ipc"
+        },
+        {
+          "name": "IPC分类-小组",
+          "value": "ipc-subgroup"
+        }
+      ],
+      "isDate": false
+    },
+    {
+      "name": "状态",
+      "selector": [
+        {
+          "name": "专利有效性",
+          "value": "ls"
+        },
+        {
+          "name": "当前法律状态",
+          "value": "currentStatus"
+        }
+      ],
+      "isDate": false
+    },
+    {
+      "name": "其他",
+      "selector": [
+        {
+          "name": "专利类型",
+          "value": "type:"
+        },
+        {
+          "name": "申请人类型",
+          "value": "apt"
+        }
+      ],
+      "isDate": false
+    }
+  ]
+}
