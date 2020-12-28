@@ -1,7 +1,6 @@
-layui.use(["layuipotal", "loader", "commonmap"], function () {
+layui.use(["layuipotal", "loader"], function () {
   var $ = layui.jquery,
-    layuipotal = layui.layuipotal,
-    commonmap = layui.commonmap;
+    layuipotal = layui.layuipotal;
   var $containerDom = $(".checkbox-block");
   var checkbox =
     '<div class="checkbox-block">' +
@@ -16,13 +15,17 @@ layui.use(["layuipotal", "loader", "commonmap"], function () {
 
   // 去列表页面 本页跳转
   function gotoListPage() {
+    layui.sessionData("session", { key: "listValue", value: "I" });
     window.location.href = "/list.html";
   }
   // 检索
   $("#intelSearchBtn").on("click", function () {
     var value = $("#intelSearchInput").val();
     if (value && value !== "") {
-      commonmap.set("INTELLECT_INPUT_VALUE", value);
+      layui.sessionData("session", {
+        key: "intellectSearchValue",
+        value: value,
+      });
       gotoListPage();
     }
   });
