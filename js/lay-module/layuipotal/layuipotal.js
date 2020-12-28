@@ -66,6 +66,10 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
      *  初始化检索页面
      */
     this._initPage = function (type) {
+      // 显示+隐藏列表
+      $(".search-container").show();
+      $(".search-result-container").remove();
+
       this._renderLeftMenu(type);
       this._renderContent(type);
     };
@@ -155,7 +159,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     /**
      * 初始化右侧页面
      */
-    this._renderContent = function (type) {
+    this._renderContent = async function (type) {
       var path = "";
       if (type === "I") {
         path = "page/IntellectSearch/index.html";
@@ -166,13 +170,21 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       }
       var container = ".search-content";
       $(".search-content").empty();
+
+      data = this._requirePreview(path);
+      $(container).html(data);
+    };
+
+    this._requirePreview = function (path) {
       var v = new Date().getTime();
+      var htmlData = "暂无数据";
       $.ajax({
         url: path.indexOf("?") > -1 ? path + "&v=" + v : path + "?v=" + v,
         type: "get",
         dataType: "html",
+        async: false,
         success: function (data) {
-          $(container).html(data);
+          htmlData = data;
         },
         error: function (xhr, textstatus, thrown) {
           return layuimini.msg_error(
@@ -180,6 +192,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
           );
         },
       });
+      return htmlData;
     };
 
     /**
