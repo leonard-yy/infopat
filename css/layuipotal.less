@@ -136,17 +136,20 @@
           border: 1px solid #efefef;
           border-radius: 6px;
           height: 60px;
-          padding-left: 30px;
+          padding: 0 20px;
           background-color: rgba(239, 239, 239, 0.5);
           margin: 0 auto;
           margin-top: 15%;
+          img {
+            margin-right: 10px;
+          }
           input {
             height: 100%;
             border: none;
             width: calc(100% - 120px);
             background: transparent;
             font-size: 14px;
-            padding-left: 4px;
+            padding-left: 10px;
           }
         }
         .checkbox-block {
@@ -157,6 +160,76 @@
           display: flex;
           align-items: center;
         }
+      }
+    }
+  }
+  .search-result-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .result-header {
+      min-height: 80px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      // 查询框
+      .search-input {
+        display: flex;
+        align-items: center;
+        width: 80%;
+        font-size: 14px;
+        border: 1px solid #efefef;
+        border-radius: 6px;
+        min-height: 60px;
+        padding-left: 20px;
+        background-color: rgba(239, 239, 239, 0.5);
+
+        .expand-textarea {
+          flex: 1;
+          padding: 10px;
+          position: relative;
+          textarea {
+            width: 100%;
+            padding: 15px 10px 10px 10px;
+            min-height: 60px;
+            resize: none;
+            border: 1px solid #e6e6e6;
+            line-height: 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: PingFangSC-Regular;
+            overflow: hidden;
+            word-wrap: break-word;
+          }
+          pre {
+            width: 100%;
+            padding: 15px 10px 10px 10px;
+            margin: 0 0 20px 0;
+            border: 1px solid #e6e6e6;
+            min-height: 60px;
+            resize: none;
+            line-height: 24px;
+            border-radius: 3px;
+            font-size: 14px;
+            font-family: PingFangSC-Regular;
+            overflow: hidden;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+          }
+        }
+      }
+    }
+    .search-result-content {
+      flex: 1;
+      display: flex;
+      .result-left-selector {
+        width: 200px;
+      }
+      .result-content-container {
+        flex: 1;
+        background: #efefef;
       }
     }
   }
@@ -198,6 +271,9 @@
 .ml15 {
   margin-left: 15px;
 }
+.ml20 {
+  margin-left: 20px;
+}
 .mr20 {
   margin-right: 20px;
 }
@@ -212,6 +288,11 @@
 }
 .bwhite {
   background: white !important;
+}
+.hide {
+  visibility: hidden;
+  position: absolute;
+  z-index: -100;
 }
 .slef-search-btn {
   display: inline-block;
