@@ -40,6 +40,7 @@
           line-height: 55px;
           font-weight: 500;
           padding-left: 20px;
+          cursor: pointer;
           &.active {
             background-image: linear-gradient(90deg, #5268d3 0%, #5ba0d8 100%);
             color: #ffffff;
@@ -70,7 +71,36 @@
       .search-country-selector {
         flex: 1;
         overflow: auto;
-        padding: 10px 0;
+        padding: 0 10px;
+        .search-country-item {
+          display: flex;
+          align-items: center;
+          padding: 5px 10px;
+          .block-back {
+            height: 16px;
+            width: 16px;
+            display: inline-block;
+            background: #999999;
+            &.active {
+              background: #5ba0d8;
+            }
+          }
+          .search-country-title {
+            font-family: PingFangSC-Regular;
+            font-size: 14px;
+            color: #333333;
+            line-height: 30px;
+            &.avtive {
+              color: #5268d3;
+            }
+            &.with-parent {
+              font-weight: bold;
+            }
+          }
+          &.with-parent {
+            margin-top: 10px;
+          }
+        }
       }
     }
     // 中间菜单

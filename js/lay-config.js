@@ -22,6 +22,7 @@ layui
     patBasicInfo: "pat/basicInfo",
     fieldspat: "pat/fieldspat",
     advancepat: "pat/advancepat",
+    treeselectpat: "pat/treeselectpat",
     commonTable: "pat/table",
     costTable: "pat/costTable", //费用信息
     nfctTable: "pat/nfctTable", //发文信息

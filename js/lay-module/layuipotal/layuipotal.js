@@ -9,7 +9,6 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     $ = layui.$,
     loader = layui.loader,
     layuimini = layui.layuimini;
-
   layuipotal = new (function () {
     // 智能检索 I 高级检索 A
     this.currentPage = "I";
@@ -27,7 +26,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       });
       //关闭loading层
       loader.hide($("#loading"));
-      this._initPage("A");
+      this._initPage("I");
     };
 
     /**
@@ -100,7 +99,57 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       }
       // 高级检索
       if (type === "A") {
+        var $menuDom = $(".search-menu");
+        $menuDom.append(
+          '<div class="search-country-selector" id="choose-country"></div>'
+        );
+        var _this = this;
+        $.getJSON("api/tree.json", function (res, status) {
+          _this._getTreeDom(res.data || []);
+        });
       }
+    };
+
+    this._getTreeDom = function (data) {
+      var $selectorDom = $(".search-country-selector");
+      var getParentNode = function (item) {
+        // 叶子节点  COUNTRY-PARENT-VALUE
+        var tpl = '<div class="search-country-item with-parent">';
+        tpl += '      <div class="squared-checkbox">';
+        tpl += '          <input type="checkbox" class="tree-search-parent" ';
+        tpl += '              id="COUNTRY-PARENT-' + item.value + '" />';
+        tpl += '          <label for="COUNTRY-PARENT-' + item.value + '" />';
+        tpl += "      </div>";
+        tpl += '      <span class="block-back ml10"/>';
+        tpl +=
+          '      <span class="ml10 search-country-title with-parent" >' +
+          item.title +
+          "</span>";
+        tpl += "   </div>";
+        return tpl;
+      };
+      var getChildNode = function (item) {
+        // 叶子节点  COUNTRY-PARENT-VALUE
+        var tpl = '<div class="search-country-item">';
+        tpl += '      <div class="squared-checkbox">';
+        tpl += '          <input type="checkbox" class="tree-search-child" ';
+        tpl += '              id="COUNTRY-CHILD-' + item.value + '" />';
+        tpl += '          <label for="COUNTRY-CHILD-' + item.value + '" />';
+        tpl += "      </div>";
+        tpl += '      <span class="block-back ml10"/>';
+        tpl += '      <span class="ml10" >' + item.title + "</span>";
+        tpl += "   </div>";
+        return tpl;
+      };
+      var _this = this;
+      layui.each(data, function (idx, item) {
+        if (item.isLeaf) {
+          $selectorDom.append(getParentNode(item));
+          _this._getTreeDom(item.children || []);
+        } else {
+          $selectorDom.append(getChildNode(item));
+        }
+      });
     };
 
     /**
@@ -211,7 +260,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       $('[top-menu-item = "intellectSearch"]').addClass("layui-this");
       $('[top-menu-item = "advanceSearch"]').removeClass("layui-this");
     }
-    layuipotal._renderContent(value);
+    layuipotal._initPage(value);
   });
   // 自测  ----------------------------------------------------------------------------------
   layuipotal._init("api/potal.json");

@@ -1,24 +1,143 @@
 {
   "data": [
     {
-      "title": "江西", //一级菜单
+      "title": "中国",
+      "value": "CHINA1",
+      "isLeaf": true
+    },
+    {
+      "title": "全球",
+      "value": "ALL",
+      "isLeaf": true,
       "children": [
         {
-          "title": "南昌", //二级菜单
-          "children": [
-            {
-              "title": "高新区" //三级菜单
-              //…… //以此类推，可无限层级
-            }
-          ]
+          "title": "中国",
+          "value": "CHINA1",
+          "isLeaf": false,
+          "parent": "ALL"
+        },
+        {
+          "title": "中国台湾",
+          "value": "CHINA2",
+          "isLeaf": false,
+          "parent": "ALL"
+        },
+        {
+          "title": "中国香港",
+          "value": "CHINA3",
+          "isLeaf": false,
+          "parent": "ALL"
+        },
+        {
+          "title": "美国",
+          "value": "CHINA4",
+          "isLeaf": false,
+          "parent": "ALL"
+        },
+        {
+          "title": "日本",
+          "value": "CHINA5",
+          "isLeaf": false,
+          "parent": "ALL"
         }
       ]
     },
     {
-      "title": "陕西", //一级菜单
+      "title": "欧洲国家",
+      "value": "Europe",
+      "isLeaf": true,
       "children": [
         {
-          "title": "西安" //二级菜单
+          "title": "德国",
+          "value": "CHINA6",
+          "isLeaf": false,
+          "parent": "Europe"
+        },
+        {
+          "title": "美国",
+          "value": "CHINA7",
+          "isLeaf": false,
+          "parent": "Europe"
+        },
+        {
+          "title": "法国",
+          "value": "CHINA8",
+          "isLeaf": false,
+          "parent": "Europe"
+        },
+        {
+          "title": "俄罗斯",
+          "value": "CHINA9",
+          "isLeaf": false,
+          "parent": "Europe"
+        },
+        {
+          "title": "瑞士",
+          "value": "CHINA10",
+          "isLeaf": false,
+          "parent": "Europe"
+        }
+      ]
+    },
+    {
+      "title": "亚洲国家",
+      "value": "ASIA",
+      "isLeaf": true,
+      "children": [
+        {
+          "title": "印度",
+          "value": "CHINA11",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "约旦",
+          "value": "CHINA12",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "越南",
+          "value": "CHINA13",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "泰国",
+          "value": "CHINA14",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "蒙古",
+          "value": "CHINA15",
+          "isLeaf": false,
+          "parent": "ASIA"
+        }
+      ]
+    },
+    {
+      "title": "非洲国家",
+      "value": "AFRICA",
+      "isLeaf": true,
+      "children": [
+        {
+          "title": "南非",
+          "value": "CHINA16",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "埃及",
+          "value": "CHINA17",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "肯尼亚",
+          "value": "CHINA18",
+          "isLeaf": false,
+          "parent": "AFRICA"
         }
       ]
     }
