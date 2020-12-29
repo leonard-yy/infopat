@@ -1,6 +1,10 @@
 <div class="result-header">
   <div class="search-input">
-    <img src="./images/search/quanqiu.png" />
+    <img
+      src="./images/search/quanqiu.png"
+      style="cursor: pointer"
+      id="quanqiuSelector"
+    />
     <div class="expand-textarea">
       <pre id="preTextarea" class="hide"><span></span><br/></pre>
       <textarea
@@ -22,7 +26,39 @@
 </div>
 <div class="search-result-content">
   <div class="result-left-selector"></div>
-  <div class="result-content-container"></div>
-</div>
+  <div class="result-content-container">
+    <div class="result-content-background height100 width100">
+      <div class="result-tool-box">
+        <div>
+          <span
+            class="slef-search-btn ml20"
+            id="selectAllResult"
+            style="width: 100px"
+            >全选</span
+          >
+          <span
+            class="slef-search-btn ml20"
+            id="collectSelectedResult"
+            style="width: 100px"
+            >收藏</span
+          >
+        </div>
+        <div class="flex" style="align-items: center">
+          <span>排序</span>
+          <span class="ml10 title-color">检索结果：</span>
+          <span class="ml10 value-color">0条</span>
+          <span class="ml10 title-color">耗时：</span>
+          <span class="mr20 value-color">0.00s</span>
+        </div>
+      </div>
+      <div class="result-body" id="fieldsContent"></div>
+      <div class="result-footer">
+        <fieldset class="layui-elem-field layui-field-title">
+          <div id="pageNavagete"></div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
 
-<script src="./page/ResultList/index.js"></script>
+  <script src="./page/ResultList/index.js"></script>
+</div>

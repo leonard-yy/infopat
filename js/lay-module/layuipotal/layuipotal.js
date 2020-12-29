@@ -148,7 +148,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
         return tpl;
       };
       var getChildNode = function (item) {
-        // 叶子节点  COUNTRY-PARENT-VALUE
+        // 子节点  COUNTRY-PARENT-VALUE
         var tpl = '<div class="search-country-item">';
         tpl += '      <div class="squared-checkbox">';
         tpl += '          <input type="checkbox" class="tree-search-child" ';

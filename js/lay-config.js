@@ -24,6 +24,7 @@ layui
     advancepat: "pat/advancepat",
     commonmap: "cdata/commonmap",
     treeselectpat: "pat/treeselectpat",
+    resultlistpat: "pat/resultlistpat",
     commonTable: "pat/table",
     costTable: "pat/costTable", //费用信息
     nfctTable: "pat/nfctTable", //发文信息

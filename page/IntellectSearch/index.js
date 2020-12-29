@@ -18,6 +18,8 @@ layui.use(["layuipotal", "loader"], function () {
     layui.sessionData("session", { key: "listValue", value: "I" });
     window.location.href = "/list.html";
   }
+  // 测试列表页
+  // gotoListPage();
   // 检索
   $("#intelSearchBtn").on("click", function () {
     var value = $("#intelSearchInput").val();
