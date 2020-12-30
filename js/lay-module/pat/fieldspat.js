@@ -18,7 +18,7 @@ layui.define("patNodataPage", function (exports) {
                 <div class="layui-input-block fields-box">
                   {{#  if(item.selector && item.selector.length > 0){ }}
                       {{#  layui.each(item.selector, function(idx, s){ }}
-                          <div class="fields-item" data-value={{s.value}}>{{s.name}}</div>
+                          <div class="fields-item" data-value={{s.value}}>{{s.value}}:{{s.name}}</div>
                       {{#  }); }}
                   {{# }}}
                 </div>
@@ -26,7 +26,7 @@ layui.define("patNodataPage", function (exports) {
                 <div class="layui-input-block fields-box bwhite">
                   {{#  if(item.selector && item.selector.length > 0){ }}
                       {{#  layui.each(item.selector, function(idx, s){ }}
-                          <div class="fields-item" data-value={{s.value}}>{{s.name}}</div>
+                          <div class="fields-item" data-value={{s.value}}>{{s.value}}:{{s.name}}</div>
                       {{#  }); }}
                   {{# }}}
                 </div>

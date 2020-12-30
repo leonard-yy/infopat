@@ -11,7 +11,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     layuimini = layui.layuimini;
   layuipotal = new (function () {
     // 智能检索 I 高级检索 A
-    this.currentPage = "I";
+    this.currentPage = "A";
 
     this._init = function (url) {
       //自定义loading样式
@@ -98,15 +98,9 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       $menuDom.append('<div class="search-left-menu"></div>');
 
       var $menuContainerDom = $(".search-left-menu");
-      $menuContainerDom.append(
-        '<div class="search-left-menu-title">检索功能列表</div>'
-      );
-      $menuContainerDom.append(
-        '<div class="search-left-menu-item" data-value="I"><div class="intel-sch sch-icon"></div><span>智能检索</span></div>'
-      );
-      $menuContainerDom.append(
-        '<div class="search-left-menu-item" data-value="A"><div class="advance-sch sch-icon"></div><span>高级检索</span></div>'
-      );
+      $menuContainerDom.append('<div class="search-left-menu-title">检索功能列表</div>');
+      $menuContainerDom.append('<div class="search-left-menu-item" data-value="I"><div class="intel-sch sch-icon"></div><span>智能检索</span></div>');
+      $menuContainerDom.append('<div class="search-left-menu-item" data-value="A"><div class="advance-sch sch-icon"></div><span>高级检索</span></div>');
       // 选中状态
       if (type === "I") {
         $(".intel-sch").addClass("active");
@@ -119,9 +113,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       // 高级检索
       if (type === "A") {
         var $menuDom = $(".search-menu");
-        $menuDom.append(
-          '<div class="search-country-selector" id="choose-country"></div>'
-        );
+        $menuDom.append('<div class="search-country-selector" id="choose-country"></div>');
         var _this = this;
         $.getJSON("api/tree.json", function (res, status) {
           _this._getTreeDom(res.data || []);
@@ -137,13 +129,11 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
         tpl += '      <div class="squared-checkbox">';
         tpl += '          <input type="checkbox" class="tree-search-parent" ';
         tpl += '              id="COUNTRY-PARENT-' + item.value + '" />';
-        tpl += '          <label for="COUNTRY-PARENT-' + item.value + '" />';
+        tpl += '               <label class="country-checkbox-parent" for="COUNTRY-PARENT-';
+        tpl += item.value + '" />';
         tpl += "      </div>";
         tpl += '      <span class="block-back ml10"/>';
-        tpl +=
-          '      <span class="ml10 search-country-title with-parent" >' +
-          item.title +
-          "</span>";
+        tpl += '      <span class="ml10 search-country-title with-parent" >' + item.title + "</span>";
         tpl += "   </div>";
         return tpl;
       };
@@ -152,8 +142,10 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
         var tpl = '<div class="search-country-item">';
         tpl += '      <div class="squared-checkbox">';
         tpl += '          <input type="checkbox" class="tree-search-child" ';
+        tpl += '              parent="' + item.parent + '" ';
         tpl += '              id="COUNTRY-CHILD-' + item.value + '" />';
-        tpl += '          <label for="COUNTRY-CHILD-' + item.value + '" />';
+        tpl += '          <label class="country-checkbox-child" ';
+        tpl += '              for="COUNTRY-CHILD-' + item.value + '" />';
         tpl += "      </div>";
         tpl += '      <span class="block-back ml10"/>';
         tpl += '      <span class="ml10" >' + item.title + "</span>";
@@ -199,9 +191,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
           $(selector).html(data);
         },
         error: function (xhr, textstatus, thrown) {
-          return layuimini.msg_error(
-            "Status:" + xhr.status + "，" + xhr.statusText + "，请稍后再试！"
-          );
+          return layuimini.msg_error("Status:" + xhr.status + "，" + xhr.statusText + "，请稍后再试！");
         },
       });
     };
@@ -216,9 +206,9 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     this.getBtnSelf = function (id, name, value, checked) {
       var temp = "";
       temp += '<div class="squared-checkbox">';
-      temp += '<input type="checkbox" id="' + id + '" value="' + value + '"';
+      temp += '<input type="checkbox" id="' + id + '" data-value="' + value + '"';
       if (checked) {
-        temp += "checked";
+        temp += 'value="checked"';
       }
       temp += "/>";
       temp += '<label for="' + id + '"></label></div>';
@@ -240,10 +230,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       window.location.href = "/index.html";
       return;
     }
-    if (
-      (menuName === "intellectSearch" && layuipotal.currentPage == "I") ||
-      (menuName === "advanceSearch" && layuipotal.currentPage == "A")
-    ) {
+    if ((menuName === "intellectSearch" && layuipotal.currentPage == "I") || (menuName === "advanceSearch" && layuipotal.currentPage == "A")) {
       return;
     }
 
@@ -274,11 +261,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     $(e.currentTarget).addClass("active");
 
     var value = e.currentTarget.dataset.value;
-    if (
-      value == null ||
-      value == undefined ||
-      (value !== "A" && value !== "I")
-    ) {
+    if (value == null || value == undefined || (value !== "A" && value !== "I")) {
       value == "A";
     }
     layuipotal.currentPage = value;
@@ -293,5 +276,54 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     }
     layuipotal._initSearchPage(value);
   });
+
+  /**
+   * 左侧选择框父节点 点击事件
+   */
+  $("body").on("click", ".country-checkbox-parent", function (e) {
+    var input = $(e.currentTarget).parent().find('input[value="checked"]');
+    var id = $(e.currentTarget).parent().find("input").attr("id");
+    var value = id.split("-").pop();
+    if (input.length > 0) {
+      // 取消
+      $(e.currentTarget).prev().attr("value", "unchecked");
+      $("#choose-country")
+        .find("input[parent = " + value + "]")
+        .attr("value", "unchecked");
+    } else {
+      // 选择
+      $(e.currentTarget).prev().attr("value", "checked");
+      $("#choose-country")
+        .find("input[parent = " + value + "]")
+        .attr("value", "checked");
+    }
+  });
+
+  /**
+   * 左侧选择框子节点 点击事件
+   */
+  $("body").on("click", ".country-checkbox-child", function (e) {
+    var input = $(e.currentTarget).parent().find('input[value="checked"]');
+    var id = $(e.currentTarget).parent().find("input").attr("parent");
+    var value = id.split("-").pop();
+    if (input.length > 0) {
+      $(e.currentTarget).prev().attr("value", "unchecked");
+      // 取消全选
+      $("#choose-country")
+        .find("#COUNTRY-PARENT-" + value)
+        .attr("value", "unchecked");
+    } else {
+      // 检查满足是否全选
+      var all = $("#choose-country").find("input[parent = " + value + "]");
+      var checked = $("#choose-country").find("input[parent = " + value + "][value=checked]");
+      $(e.currentTarget).prev().attr("value", "checked");
+      if (all.length == checked.length + 1) {
+        $("#choose-country")
+          .find("#COUNTRY-PARENT-" + value)
+          .attr("value", "checked");
+      }
+    }
+  });
+
   exports("layuipotal", layuipotal);
 });

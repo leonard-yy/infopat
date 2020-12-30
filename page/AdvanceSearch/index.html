@@ -1,4 +1,4 @@
-<div class="search-content-container adv-page-container">
+<div class="search-content-container adv-page-container" id="advanceSearch">
   <div class="adv-page-selector">
     <div class="search-container-title">高级检索</div>
     <div class="adv-page-body" id="adv-body-advance"></div>
@@ -19,7 +19,7 @@
     <div class="search-container-title">指令检索</div>
     <div class="adv-page-body" id="adv-body-instruct">
       <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">检索式</label>
+        <label class="layui-form-label blod">检索式</label>
         <div class="layui-input-block" style="margin-left: 80px">
           <textarea
             name="desc"
@@ -29,6 +29,27 @@
             style="background: rgba(239, 239, 239, 0.5); height: 200px"
           ></textarea>
         </div>
+      </div>
+      <div class="op-btn">
+        逻辑运算符:
+        <a class="add-to-ss" data-value=" AND ">AND</a>
+        <a class="add-to-ss" data-value=" OR ">OR</a>
+        <a class="add-to-ss" data-value=" NOT ">NOT</a>
+        <a class="add-to-ss" data-value="(">(</a>
+        <a class="add-to-ss" data-value=")">)</a>
+        <a class="add-to-ss" data-value="[">[</a>
+        <a class="add-to-ss" data-value="]">]</a>
+        <a class="add-to-ss" data-value="?">?</a>
+        <a class="add-to-ss" data-value="*">*</a>
+        <!-- <span style="float: right; margin-right: 10px" class="count-layout">
+          <i class="refresh icon" style="cursor: pointer"></i>
+          <span style=""
+            >搜索结果：<span style="color: red">801587</span>条，耗时：<span
+              style="color: red"
+              >0.01</span
+            >s</span
+          >
+        </span> -->
       </div>
     </div>
     <div class="adv-footer">

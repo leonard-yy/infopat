@@ -13,17 +13,17 @@ layui.define("patNodataPage", function (exports) {
         {{#  layui.each(d, function(index, item){ }}
           <div class="result-content-item">
             <div class="squared-checkbox" style="margin-top: 8px;">
-                <input type="checkbox" id={{"CONTENT-KEY-"+ item.id}} />
-                <label for={{"CONTENT-KEY-"+ item.id}}/>
+                <input type="checkbox" id={{"RESULT-KEY-"+ item.id}} />
+                <label for={{"RESULT-KEY-"+ item.id}}/>
             </div>
 
-            <div class="result-content-img">
+            <div class="result-content-img" data-value={{item.id}}>
                 <img src={{item.imagePath}}/>
             </div>
 
             <div class="result-content-fileds">
                 <div class="content-fileds-item">
-                    <span class="title">{{item.title}}</span>
+                    <span class="title fileds-item-title" data-value={{item.id}}>{{item.title}}</span>
                     {{#  if(item.type === "发明授权"){ }}
                     <div class="fmsq-img ml20"></div>
                     {{#  } }} 

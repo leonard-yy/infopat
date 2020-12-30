@@ -14,6 +14,10 @@
 .adv-page-body {
   padding: 0px 40px;
 }
+#adv-body-advance {
+  max-height: 400px;
+  overflow: auto;
+}
 
 .adv-footer {
   display: flex;
@@ -31,6 +35,7 @@
   padding: 0;
   font-size: 14px;
   text-align: left;
+  font-weight: bold;
 }
 .fields-box {
   width: 100%;
@@ -46,4 +51,21 @@
   margin-right: 50px;
   display: inline-block;
   cursor: pointer;
+}
+
+.op-btn {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  line-height: 20px;
+  padding-top: 3px;
+  padding-left: 10px;
+  margin-left: 80px;
+}
+.op-btn a {
+  padding: 5px 5px;
+  cursor: pointer;
+}
+.op-btn a:hover {
+  color: #1678c2;
 }

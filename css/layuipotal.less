@@ -250,6 +250,15 @@
         height: 100%;
         overflow: auto;
         padding: 0 0 20px 0;
+        .layui-nav-item a:hover {
+          background-color: #ffffff;
+        }
+        .layui-nav-more {
+          border-color: #999999 transparent transparent;
+        }
+        .layui-nav-itemed > a .layui-nav-more {
+          border-color: transparent transparent #999999;
+        }
         .result-selector-item {
           display: flex;
           align-items: center;
@@ -260,6 +269,7 @@
             border-bottom: 1px solid #efefef;
             border-top: 1px solid #efefef;
             cursor: pointer;
+            color: #000 !important;
           }
           &.child {
             margin-left: 25px;
@@ -337,6 +347,7 @@
 
               .result-content-img {
                 margin: 8px 10px 0 10px;
+                cursor: pointer;
                 img {
                   height: 160px;
                   width: 160px;
@@ -349,6 +360,7 @@
                 .title {
                   font-size: 14px;
                   font-weight: bold;
+                  cursor: pointer;
                 }
 
                 .fmgk-img {
@@ -406,11 +418,7 @@
               padding: 0 20px;
             }
             .layui-laypage .layui-laypage-curr .layui-laypage-em {
-              background-image: linear-gradient(
-                179deg,
-                #5268d3 0%,
-                #5ba0d8 100%
-              );
+              background-image: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
               border-radius: 6px;
             }
             .layui-laypage a,
@@ -483,6 +491,9 @@
 .bwhite {
   background: white !important;
 }
+.blod {
+  font-weight: bold;
+}
 .hide {
   visibility: hidden;
   position: absolute;
@@ -542,7 +553,7 @@
   input[type="checkbox"] {
     visibility: hidden;
   }
-  input[type="checkbox"]:checked + label:after {
+  input[value="checked"] + label:after {
     filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
     opacity: 1;
   }
