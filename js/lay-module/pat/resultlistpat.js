@@ -13,8 +13,8 @@ layui.define("patNodataPage", function (exports) {
         {{#  layui.each(d, function(index, item){ }}
           <div class="result-content-item">
             <div class="squared-checkbox" style="margin-top: 8px;">
-                <input type="checkbox" id={{"RESULT-KEY-"+ item.id}} />
-                <label for={{"RESULT-KEY-"+ item.id}}/>
+                <input type="checkbox" class="result-checkbox-input" id={{"RESULT-KEY-"+ item.id}} />
+                <label class="result-checkbox-label" for={{"RESULT-KEY-"+ item.id}}/>
             </div>
 
             <div class="result-content-img" data-value={{item.id}}>
@@ -22,23 +22,30 @@ layui.define("patNodataPage", function (exports) {
             </div>
 
             <div class="result-content-fileds">
-                <div class="content-fileds-item">
-                    <span class="title fileds-item-title" data-value={{item.id}}>{{item.title}}</span>
-                    {{#  if(item.type === "发明授权"){ }}
-                    <div class="fmsq-img ml20"></div>
-                    {{#  } }} 
-                    {{#  if(item.type === "有权"){ }}
-                    <div class="yq-img ml20"></div>
-                    {{#  } }} 
-                    {{#  if(item.type === "发明公开"){ }}
-                        <div class="fmsq-img ml20"></div>
-                    {{#  } }} 
-                    {{#  if(item.type === "外观设计"){ }}
-                        <div class="wgsj-img ml20"></div>
-                    {{#  } }} 
-                    {{#  if(item.type === "实用新型"){ }}
-                        <div class="syxx-img ml20"></div>
-                    {{#  } }} 
+                <div class="content-fileds-item sp-bt">
+                    <div>
+                        <span class="title fileds-item-title" data-value={{item.id}}>{{item.title}}</span>
+                        {{#  if(item.type === "发明授权"){ }}
+                        <div class="fmsq-img ml20 inline"></div>
+                        {{#  } }} 
+                        {{#  if(item.type === "有权"){ }}
+                        <div class="yq-img ml20"></div>
+                        {{#  } }} 
+                        {{#  if(item.type === "发明公开"){ }}
+                            <div class="fmsq-img ml20 inline"></div>
+                        {{#  } }} 
+                        {{#  if(item.type === "外观设计"){ }}
+                            <div class="wgsj-img ml20 inline"></div>
+                        {{#  } }} 
+                        {{#  if(item.type === "实用新型"){ }}
+                            <div class="syxx-img ml20 inlineBlock"></div>
+                        {{#  } }} 
+                    </div>
+                    <div style="flex; width: 100px;">
+                        <i class="layui-icon layui-icon-star fork-star" style="color:#F7B500;cursor:pointer"></i>
+                        <span>收藏</span>
+                    </div>
+                   
                 </div>
                 <div class="content-fileds-item">
                     <div style="width:400px">

@@ -250,14 +250,10 @@
         height: 100%;
         overflow: auto;
         padding: 0 0 20px 0;
-        .layui-nav-item a:hover {
-          background-color: #ffffff;
-        }
-        .layui-nav-more {
-          border-color: #999999 transparent transparent;
-        }
-        .layui-nav-itemed > a .layui-nav-more {
-          border-color: transparent transparent #999999;
+        .result-selector-filter {
+          display: flex;
+          justify-content: center;
+          padding: 5px 0;
         }
         .result-selector-item {
           display: flex;
@@ -301,6 +297,19 @@
           &.with-parent {
             margin-top: 10px;
           }
+        }
+        .layui-nav-item a:hover {
+          background-color: #ffffff;
+        }
+        .layui-nav-more {
+          border-color: #999999 transparent transparent;
+        }
+        .layui-nav-itemed > a .layui-nav-more {
+          border-color: transparent transparent #999999;
+        }
+        .layui-this,
+        .layui-this > a {
+          background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
         }
         .layui-side,
         .layui-side-scroll,
@@ -357,6 +366,10 @@
                 display: flex;
                 justify-content: flex-start;
                 padding: 4px 5px;
+
+                &.sp-bt {
+                  justify-content: space-between;
+                }
                 .title {
                   font-size: 14px;
                   font-weight: bold;
@@ -499,6 +512,12 @@
   position: absolute;
   z-index: -100;
 }
+.inline {
+  display: inline;
+}
+.inlineBlock {
+  display: inline-block;
+}
 .slef-search-btn {
   display: inline-block;
   height: 32px;
@@ -510,11 +529,16 @@
   border-radius: 6px;
   border-radius: 6px;
   font-size: 12px;
+  font-family: PingFangSC-Regular;
   cursor: pointer;
   &.normal {
-    color: #5268d3;
+    color: #1e48ac;
     background: #ffffff;
     border: 1px solid #5268d3;
+  }
+  &.normal:hover {
+    color: #ffffff;
+    background-image: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
   }
 }
 

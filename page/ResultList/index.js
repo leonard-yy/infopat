@@ -1,4 +1,4 @@
-layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "resultlistpat"], function () {
+layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "layer", "resultlistpat"], function () {
   var $ = layui.jquery,
     laytpl = layui.laytpl,
     loader = layui.loader,
@@ -6,7 +6,8 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "resu
     laypage = layui.laypage,
     element = layui.element,
     resultlistpat = layui.resultlistpat,
-    layuipotal = layui.layuipotal;
+    layuipotal = layui.layuipotal,
+    layer = layui.layer;
   var _this = {
     page: 1,
     pageSize: 10,
@@ -74,9 +75,14 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "resu
             });
           }
         });
+        // 筛选
+        var sxhtml = '<span class="slef-search-btn normal select-of-result" id="' + sel.value + '" style="width: 80px">筛选</span>';
+        var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" id="' + sel.value + '" style="width: 80px">过滤</span>';
+        temp += '       <dd class="result-selector-filter">' + sxhtml + glhtml + "</dd>";
         temp += "    </dl>";
         $("#T-" + sel.value + " dl").remove();
         $("#T-" + sel.value).append(temp);
+
         element.render("nav");
       }
     });
@@ -87,6 +93,9 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "resu
    * @param {*} res
    */
   _this._renderSelector = function (res) {
+    // 记录本地值
+    _this.selectorData = res.data || [];
+
     var temp = '<ul class="layui-nav layui-nav-tree layui-inline">';
     var data = res.data || [];
 
@@ -104,6 +113,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "resu
     if (data.length > 0) {
       var firstItem = data[0];
       _this._getSelectorContent(firstItem);
+      _this.selector = firstItem.value || "";
     }
     element.render("nav");
   };
@@ -160,6 +170,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "resu
     _this._initSelector();
     _this._initContent();
   };
+
   _this._init();
 
   function gotoResultPage(value) {
@@ -180,6 +191,55 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "resu
   $("#searchResult").on("click", ".fileds-item-title", function (e) {
     var value = $(e.currentTarget).data().value;
     gotoResultPage(value);
+  });
+
+  $("#searchResult").on("click", ".layui-nav-item", function (e) {
+    var id = $(e.currentTarget).attr("id");
+    var value = id.split("-").pop();
+    if (_this.selector == value) {
+      return;
+    }
+    var s = _this.selectorData.find(function (d) {
+      return d.value == value;
+    });
+    if (s !== undefined && s !== null) {
+      _this._getSelectorContent(s);
+      _this.selector = value;
+    }
+  });
+
+  /**
+   * 全选
+   */
+  $("#searchResult").on("click", "#selectAllResult", function (e) {
+    if ($(e.currentTarget).hasClass("select-all")) {
+      // 取消全选
+      $(e.currentTarget).text("全选");
+      $(e.currentTarget).removeClass("select-all");
+      $(".result-checkbox-input").attr("value", "unchecked");
+    } else {
+      // 全选
+      $(e.currentTarget).text("全不选");
+      $(e.currentTarget).addClass("select-all");
+      $(".result-checkbox-input").attr("value", "checked");
+    }
+  });
+
+  /**
+   * 收藏
+   */
+  $("#searchResult").on("click", "#collectSelectedResult", function (e) {
+    var checkedInput = $("#searchResult").find('input[value = "checked"]');
+    if (checkedInput.length == 0) {
+      layer.msg("请选择一条记录进行收藏");
+      return;
+    }
+    var checkValue = [];
+    checkedInput.each(function () {
+      var id = $(this).parent().find("input").attr("id");
+      checkValue.push(id.split("-").pop());
+    });
+    layer.msg(checkValue.toString());
   });
 
   /**
@@ -227,6 +287,35 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "resu
           .find("#RESULT-SELECTOR-PARENT-" + value)
           .attr("value", "checked");
       }
+    }
+  });
+
+  /**
+   * 中间内容选择框
+   */
+  $("#searchResult").on("click", ".result-checkbox-label", function (e) {
+    var input = $(e.currentTarget).parent().find('input[value="checked"]');
+    if (input.length > 0) {
+      // 取消
+      $(e.currentTarget).parent().find("input").attr("value", "unchecked");
+    } else {
+      // 取消
+      $(e.currentTarget).parent().find("input").attr("value", "checked");
+    }
+  });
+  /**
+   * 收藏 取消收藏
+   */
+  $("#searchResult").on("click", ".fork-star", function (e) {
+    if ($(e.currentTarget).hasClass("layui-icon-star")) {
+      // 收藏
+      $(e.currentTarget).removeClass("layui-icon-star");
+      $(e.currentTarget).addClass("layui-icon-star-fill");
+      $(e.currentTarget).next().html("取消收藏");
+    } else {
+      $(e.currentTarget).removeClass("layui-icon-star-fill");
+      $(e.currentTarget).addClass("layui-icon-star");
+      $(e.currentTarget).next().html("收藏");
     }
   });
 });
