@@ -13,14 +13,14 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     // 智能检索 I 高级检索 A
     this.currentPage = "A";
 
-    this._init = function (url) {
+    this.init = function (url) {
       //自定义loading样式
       loader.show($("#loading"));
       $.getJSON(url, function (data, status) {
         if (data == null) {
           layuimini.msg_error("暂无菜单信息");
         } else {
-          layuipotal._initPotalMenu(data.potal);
+          layuipotal.initPotalMenu(data.potal);
         }
       }).fail(function () {
         layuimini.msg_error("菜单接口有误");
@@ -34,16 +34,16 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
         if (currentPage && currentPage !== "") {
           this.currentPage = currentPage;
         }
-        this._initSearchPage(this.currentPage);
+        this.initSearchPage(this.currentPage);
       } else {
-        this._initListPage();
+        this.initListPage();
       }
     };
 
     /**
      * 头部菜单
      */
-    this._initPotalMenu = function (potalList) {
+    this.initPotalMenu = function (potalList) {
       // 头部菜单 最多二级
       // 遍历生成节点
       var potalHtml = "";
@@ -76,23 +76,23 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     /**
      *  初始化检索页面
      */
-    this._initSearchPage = function (type) {
+    this.initSearchPage = function (type) {
       // 显示+隐藏列表
       $(".search-container").show();
       $(".search-result-container").hide();
 
-      this._renderLeftMenu(type);
-      this._renderContent(type);
+      this.renderLeftMenu(type);
+      this.renderContent(type);
     };
 
-    this._initListPage = function (type) {
+    this.initListPage = function (type) {
       $(".search-result-container").show();
     };
 
     /**
      * 初始化左侧菜单
      */
-    this._renderLeftMenu = function (type) {
+    this.renderLeftMenu = function (type) {
       var $menuDom = $(".search-menu");
       $menuDom.empty();
       $menuDom.append('<div class="search-left-menu"></div>');
@@ -116,12 +116,12 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
         $menuDom.append('<div class="search-country-selector" id="choose-country"></div>');
         var _this = this;
         $.getJSON("api/tree.json", function (res, status) {
-          _this._getTreeDom(res.data || []);
+          _this.getTreeDom(res.data || []);
         });
       }
     };
 
-    this._getTreeDom = function (data) {
+    this.getTreeDom = function (data) {
       var $selectorDom = $(".search-country-selector");
       var getParentNode = function (item) {
         // 叶子节点  COUNTRY-PARENT-VALUE
@@ -156,7 +156,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       layui.each(data, function (idx, item) {
         if (item.isLeaf) {
           $selectorDom.append(getParentNode(item));
-          _this._getTreeDom(item.children || []);
+          _this.getTreeDom(item.children || []);
         } else {
           $selectorDom.append(getChildNode(item));
         }
@@ -166,7 +166,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
     /**
      * 初始化右侧页面
      */
-    this._renderContent = async function (type) {
+    this.renderContent = async function (type) {
       var path = "";
       if (type === "I") {
         path = "page/IntellectSearch/index.html";
@@ -177,10 +177,10 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       }
       var container = ".search-content";
       $(".search-content").empty();
-      data = this._requirePreview(path, container);
+      data = this.requirePreview(path, container);
     };
 
-    this._requirePreview = function (path, selector) {
+    this.requirePreview = function (path, selector) {
       var v = new Date().getTime();
       $.ajax({
         url: path.indexOf("?") > -1 ? path + "&v=" + v : path + "?v=" + v,
@@ -239,11 +239,11 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
 
     if (menuName === "intellectSearch" && layuipotal.currentPage !== "I") {
       layuipotal.currentPage = "I";
-      layuipotal._initSearchPage("I");
+      layuipotal.initSearchPage("I");
     }
     if (menuName === "advanceSearch" && layuipotal.currentPage !== "A") {
       layuipotal.currentPage = "A";
-      layuipotal._initSearchPage("A");
+      layuipotal.initSearchPage("A");
     }
   });
 
@@ -274,7 +274,7 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       $('[top-menu-item = "intellectSearch"]').addClass("layui-this");
       $('[top-menu-item = "advanceSearch"]').removeClass("layui-this");
     }
-    layuipotal._initSearchPage(value);
+    layuipotal.initSearchPage(value);
   });
 
   /**

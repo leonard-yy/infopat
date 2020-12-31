@@ -41,7 +41,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
   /**
    * 查询左侧选择框 lazy
    */
-  _this._getSelectorContent = function (sel) {
+  _this.getSelectorContent = function (sel) {
     $.getJSON("api/resultselect.json", function (res, status) {
       var temp = "";
       var data = res.analysis_total || [];
@@ -92,7 +92,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
    * 加载大类 并默认加载第一列
    * @param {*} res
    */
-  _this._renderSelector = function (res) {
+  _this.renderSelector = function (res) {
     // 记录本地值
     _this.selectorData = res.data || [];
 
@@ -112,7 +112,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
 
     if (data.length > 0) {
       var firstItem = data[0];
-      _this._getSelectorContent(firstItem);
+      _this.getSelectorContent(firstItem);
       _this.selector = firstItem.value || "";
     }
     element.render("nav");
@@ -122,7 +122,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
    * 渲染中间 列表
    * @param {*} res
    */
-  _this._renderContent = function (res) {
+  _this.renderContent = function (res) {
     // 数据
     var fieldview = document.getElementById("fieldsContent");
     laytpl(resultlistpat).render(res.patents || [], function (html) {
@@ -140,15 +140,15 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
     });
   };
 
-  _this._initSelector = function () {
+  _this.initSelector = function () {
     $.getJSON("api/selectorlist.json", function (res, status) {
-      _this._renderSelector(res || {});
+      _this.renderSelector(res || {});
     });
   };
 
-  _this._initContent = function () {
+  _this.initContent = function () {
     $.getJSON("api/searchresult.json", function (res, status) {
-      _this._renderContent(res || {});
+      _this.renderContent(res || {});
     });
   };
   // 得到检索条件 查询
@@ -162,16 +162,16 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
   //   },
   // });
   //   $.getJSON("api/searchresult.json", function (res, status) {
-  //     _this._renderSelectOption(res);
+  //     _this.renderSelectOption(res);
   //   });
   // 关闭loading层
   // loader.hide($("#loading"));
-  _this._init = function () {
-    _this._initSelector();
-    _this._initContent();
+  _this.init = function () {
+    _this.initSelector();
+    _this.initContent();
   };
 
-  _this._init();
+  _this.init();
 
   function gotoResultPage(value) {
     layui.sessionData("session", { key: "resultId", value: value });
@@ -203,7 +203,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
       return d.value == value;
     });
     if (s !== undefined && s !== null) {
-      _this._getSelectorContent(s);
+      _this.getSelectorContent(s);
       _this.selector = value;
     }
   });

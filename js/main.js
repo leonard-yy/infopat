@@ -1,50 +1,46 @@
-layui.use(
-  ["element", "layer", "layuimini", "layuipotal", "form", "loader"],
-  function () {
-    layuipotal._init("api/potal.json");
-    //--以上是项目初始化结构 ------
-    //初始化提示框
-    ToolTip.init({
-      delay: 400,
-      fadeDuration: 250,
-      fontSize: "1.0em",
-      theme: "dark",
-      textColor: "#333333",
-      shadowColor: "#F9EDCD",
-      fontFamily:
-        "century gothic, texgyreadventor, stheiti, sans-serif,'Roboto-Medium', 'Roboto-Regular', Arial",
-    });
+layui.use(["element", "layer", "layuimini", "layuipotal", "form", "loader"], function () {
+  layuipotal.init("api/potal.json");
+  //--以上是项目初始化结构 ------
+  //初始化提示框
+  ToolTip.init({
+    delay: 400,
+    fadeDuration: 250,
+    fontSize: "1.0em",
+    theme: "dark",
+    textColor: "#333333",
+    shadowColor: "#F9EDCD",
+    fontFamily: "century gothic, texgyreadventor, stheiti, sans-serif,'Roboto-Medium', 'Roboto-Regular', Arial",
+  });
 
-    // 登陆
-    // login();
-    //初次进入页面 loading框 此处是模拟的 请适当结合ajax请求使用
-    // $("body").addClass("nopointer");
-    // $("#loading").addClass("wrapperAll").show();
-    // // Splitting();
-    // setTimeout(() => {
-    //   $("body").removeClass("nopointer");
-    //   $("#loading").hide().removeClass("wrapperAll");
-    // }, 300);
-    // const search = window.location.search;
-    // var PAT_CODE = search.replace("?", "");
-    // $("#input-search").val(PAT_CODE);
+  // 登陆
+  // login();
+  //初次进入页面 loading框 此处是模拟的 请适当结合ajax请求使用
+  // $("body").addClass("nopointer");
+  // $("#loading").addClass("wrapperAll").show();
+  // // Splitting();
+  // setTimeout(() => {
+  //   $("body").removeClass("nopointer");
+  //   $("#loading").hide().removeClass("wrapperAll");
+  // }, 300);
+  // const search = window.location.search;
+  // var PAT_CODE = search.replace("?", "");
+  // $("#input-search").val(PAT_CODE);
 
-    // try {
-    //   if (PAT_CODE) {
-    //     getData(false, () => {
-    //       var inter = setInterval(() => {
-    //         if (initData) {
-    //           window.clearInterval(inter);
-    //           initData();
-    //         }
-    //       }, 100);
-    //     });
-    //   }
-    // } catch (error) {}
-    // initBtnSearch();
-    // initBtnRefresh();
-  }
-);
+  // try {
+  //   if (PAT_CODE) {
+  //     getData(false, () => {
+  //       var inter = setInterval(() => {
+  //         if (initData) {
+  //           window.clearInterval(inter);
+  //           initData();
+  //         }
+  //       }, 100);
+  //     });
+  //   }
+  // } catch (error) {}
+  // initBtnSearch();
+  // initBtnRefresh();
+});
 
 function login() {
   $.ajax({

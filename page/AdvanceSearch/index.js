@@ -1,7 +1,8 @@
 function initPage() {
-  layui.use(["laytpl", "form", "advancepat", "fieldspat"], function () {
+  layui.use(["laytpl", "layer", "form", "advancepat", "fieldspat"], function () {
     var $ = layui.jquery,
       laytpl = layui.laytpl,
+      layer = layui.layer,
       advancepat = layui.advancepat;
     fieldspat = layui.fieldspat;
     form = layui.form;
@@ -73,11 +74,14 @@ function initPage() {
       }
     }
 
-    $.getJSON("api/advance.json", function (res, status) {
-      _this.pageData = res.data;
-      renderContent();
-    });
+    _this.init = function () {
+      $.getJSON("api/advance.json", function (res, status) {
+        _this.pageData = res.data;
+        renderContent();
+      });
+    };
 
+    _this.init();
     /**
      * 去列表页面
      */
@@ -85,6 +89,39 @@ function initPage() {
       layui.sessionData("session", { key: "listValue", value: "A" });
       window.open("/list.html", "_blank");
     }
+
+    /**
+     * 生成检索式
+     */
+    $("#generateSearchIndex").on("click", function () {
+      var allInput = $("#searchForm").find("input[name]");
+      var indexStr = "";
+      var hasValue = allInput.filter(function () {
+        var val = $(this).val();
+        return val !== undefined && val !== "";
+      });
+
+      if (hasValue && hasValue.length > 0) {
+        hasValue.each(function () {
+          var val = $(this).val();
+          var name = $(this).attr("name");
+          var selectType = $(this).parent().parent().find('select[stype = "selectType"]');
+          var selectRel = $(this).parent().parent().find('select[stype = "selectRelation"]');
+          if (selectType.val() == undefined || selectType.val() == "") {
+            layer.msg("请选择" + name);
+          } else {
+            indexStr += selectRel.val() + " " + selectType.val() + ":(" + val + ") ";
+
+            if (indexStr.startsWith("AND")) indexStr = indexStr.replace("AND ", "");
+            if (indexStr.startsWith("OR")) indexStr = indexStr.replace("OR ", "");
+            if (indexStr.startsWith("NOT")) indexStr = indexStr.replace("NOT ", "");
+          }
+        });
+        if (indexStr !== "") {
+          $("#instruceTexteat").val(indexStr);
+        }
+      }
+    });
 
     /**
      * 检索
@@ -114,11 +151,13 @@ function initPage() {
     /**
      * 清空
      */
-    $("#instruce-clear").on("click", function () {
+    $("#instruceClear").on("click", function () {
       $("#instruceTexteat").val("");
     });
-    $("#advance-clear").on("click", function () {
-      //
+    $("#advanceClear").on("click", function () {
+      // 清空输入框
+      $("#searchForm").find("input[name]").val("");
+      // 清空日期
     });
     /**
      * 添加检索项
@@ -144,6 +183,9 @@ function initPage() {
       $("#instruceTexteat").val(value.trim());
     });
 
+    /**
+     * 逻辑运算符点击
+     */
     $("#advanceSearch").on("click", ".add-to-ss", function (e) {
       var value = $("#instruceTexteat").val();
       var text = $(e.currentTarget).text();
