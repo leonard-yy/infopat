@@ -17,12 +17,13 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
   _this.resizeTextarea = function () {
     var textarea = document.getElementById("expandTextarea");
     var pre = document.getElementById("preTextarea");
-    pre.innerHTML = textarea.value;
-    var realHeight = pre.offsetHeight; //offsetHeight = height + padding + border
-    if (realHeight > 82) textarea.style.height = realHeight + 24 - 22 + "px";
-    //加24为一行的高度，减22为padding和border
-    else textarea.style.height = realHeight - 22 + "px";
-    console.log(textarea.style.height);
+    if (textarea !== null && pre !== null) {
+      pre.innerHTML = textarea.value;
+      var realHeight = pre.offsetHeight; //offsetHeight = height + padding + border
+      if (realHeight > 82) textarea.style.height = realHeight + 24 - 22 + "px";
+      //加24为一行的高度，减22为padding和border
+      else textarea.style.height = realHeight - 22 + "px";
+    }
   };
 
   // 自定义输入框
@@ -167,6 +168,11 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
   // 关闭loading层
   // loader.hide($("#loading"));
   _this.init = function () {
+    var currentMenu = layui.sessionData("session").currentMenu;
+    if (currentMenu !== "LIST") {
+      return;
+    }
+
     _this.initSelector();
     _this.initContent();
   };

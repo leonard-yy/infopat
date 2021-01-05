@@ -14,7 +14,7 @@ layui.use(["element", "layer", "layuimini", "layuipotal", "form", "loader"], fun
 
   // 登陆
   // login();
-  //初次进入页面 loading框 此处是模拟的 请适当结合ajax请求使用
+  // 初次进入页面 loading框 此处是模拟的 请适当结合ajax请求使用
   // $("body").addClass("nopointer");
   // $("#loading").addClass("wrapperAll").show();
   // // Splitting();
@@ -38,8 +38,6 @@ layui.use(["element", "layer", "layuimini", "layuipotal", "form", "loader"], fun
   //     });
   //   }
   // } catch (error) {}
-  // initBtnSearch();
-  // initBtnRefresh();
 });
 
 function login() {

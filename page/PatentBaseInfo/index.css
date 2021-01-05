@@ -1,0 +1,7 @@
+.result-container {
+  position: relative;
+}
+.result-img-content,
+.result-sumary-content {
+  position: absolute;
+}

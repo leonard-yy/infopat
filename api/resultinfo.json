@@ -1,0 +1,33 @@
+{
+  "baseInfo": {
+    "code": 200,
+    "patent": {
+      "id": "CN105701324B",
+      "title": "大数据癌症监控系统",
+      "summary": "本发明名称为大数据癌症监控系统，本发明涉及利用健康体检的个人信息和血尿化验数据监控早期癌症，属于大数据在医疗领域的应用，是大数据和医疗的交叉技术领域。本发明的主要目的在于提供一个简易可行，准确性高的早期癌症监控系统。目前的早期癌症预测和监控大多数是与基因和生物标记物有关的，而且所有的预测和监控都是由医院和医生所控制管理的，用户是无法进行早期癌症自我监控的。本发明利用用户健康体检的个人信息和血尿化验数据，预测用户患癌症的概率和分值，提供早期癌症可能性的分析结果报告，帮助用户进行早期癌症自我监控。",
+      "ipc": "G16H50/20; G16H50/50",
+      "priorityNumber": "",
+      "applicant": "马立明; 马立伟; 马靖起",
+      "assignee": "马立明,马立伟,马靖起",
+      "inventor": "马立伟; 马立明; 马靖超",
+      "applicationDate": "2014-10-15",
+      "applicationNumber": "CN201410579137.7",
+      "applicantAddress": "安徽省阜阳市临泉路450号阜阳市第二人民医院大数据癌症研究中心",
+      "type": "发明授权",
+      "agency": "",
+      "agent": "",
+      "legalStatus": "有效专利",
+      "currentStatus": "授权",
+      "imagePath": "/CN/2014/1/115/images/201410579137.jpg",
+      "mainIpc": "G16H50/20",
+      "firstInventor": "马立伟",
+      "firstApplicant": "马立明",
+      "pdfList": ["/CN/api/2018/09/28/1/CN105701324B.pdf"],
+      "documentNumber": "CN105701324B",
+      "documentDate": "2018-09-28",
+      "documentType": 2,
+      "currentAssignee": "马立明,马立伟,马靖起"
+    },
+    "success": true
+  }
+}

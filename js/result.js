@@ -1,239 +1,75 @@
-layui.use(["element", "layer", "layuimini", "form", "loader"], function () {
+layui.use(["element", "layuipotal"], function () {
   var $ = layui.jquery,
-    element = layui.element,
-    layer = layui.layer,
-    layuimini = layui.layuimini,
-    laytpl = layui.laytpl,
-    form = layui.form,
-    loader = layui.loader,
-    patBasicInfo = layui.patBasicInfo;
+    layuipotal = layui.layuipotal,
+    element = layui.element;
+  var _this = {};
 
-  form.render();
-  layuimini.init("api/init.json");
-  layuimini.listen();
-  //--以上是项目初始化结构 ------
-  //初始化提示框
-  ToolTip.init({
-    delay: 400,
-    fadeDuration: 250,
-    fontSize: "1.0em",
-    theme: "dark",
-    textColor: "#333333",
-    shadowColor: "#F9EDCD",
-    fontFamily:
-      "century gothic, texgyreadventor, stheiti, sans-serif,'Roboto-Medium', 'Roboto-Regular', Arial",
-  });
-
-  // 登陆
-  // login();
-  //全屏
-  $("#btnFullscreen").on("click", function (e) {
-    const isfull = isFullscreen();
-    if (!isfull) {
-      if (document.body.requestFullscreen) {
-        document.body.requestFullscreen();
-      } else if (document.body.mozRequestFullScreen) {
-        document.body.mozRequestFullScreen();
-      } else if (document.body.webkitRequestFullscreen) {
-        document.body.webkitRequestFullscreen();
-      } else if (document.body.msRequestFullscreen) {
-        document.body.msRequestFullscreen();
-      }
-      $("#btnFullscreen").text("退出全屏");
+  // _this.resultId = layui.sessionData("session").resultId || "";
+  /**
+   * 详情内容
+   * @param {*} path
+   */
+  _this.initCont = function (value, type) {
+    if (type == "path") {
+      layuipotal.requirePreview(value, ".layuimini-content-page");
     } else {
-      if (document.exitFullScreen) {
-        document.exitFullScreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (element.msExitFullscreen) {
-        element.msExitFullscreen();
+      // type == 'name'
+      var ahref = $(".layui-left-menu").find('a[title = "' + value + '"]');
+      if (ahref.length > 0) {
+        var v = ahref.parent().data().value;
+        layuipotal.requirePreview(v, ".layuimini-content-page");
       }
-      $("#btnFullscreen").text("全屏");
     }
+  };
+
+  /**
+   * 左侧菜单
+   */
+  _this.initMenu = function (data) {
+    $.getJSON("api/menu.json", function (data) {
+      if (data != null) {
+        var menuList = data.menu || [];
+
+        var html = '<ul class="layui-nav layui-nav-tree" >';
+
+        menuList.map(function (item, index) {
+          var child = item.child || [];
+          var needMargin = false;
+          if (index > 0) {
+            needMargin = true;
+          }
+          child.map(function (c, idx) {
+            var clazz = needMargin && idx == 0 ? "mt10" : "";
+            if (idx == 0 && index == 0) {
+              _this.firstMenu = c.title;
+            }
+            if (c.active) {
+              html += '<li class="layui-nav-item layui-this ' + clazz + '" data-value="' + c.href + '">';
+            } else {
+              html += '<li class="layui-nav-item ' + clazz + '" data-value="' + c.href + '">';
+            }
+            html += '     <a href="javascript:;"  title=' + c.title + ">" + c.title + "</a>";
+            html += "  </li>";
+          });
+        });
+
+        $(".layui-left-menu").html(html);
+
+        _this.initCont(_this.firstMenu || "", "name");
+      }
+    });
+  };
+
+  _this.initMenu();
+  /**
+   * 菜单点击事件
+   */
+  $(".layui-left-menu").on("click", ".layui-nav-item", function () {
+    $(".layui-nav-item").removeClass("layui-this");
+    $(this).addClass("layui-this");
+
+    // 渲染菜单
+    var value = $(this).data().value;
+    _this.initCont(value || "", "path");
   });
-
-  //初次进入页面 loading框 此处是模拟的 请适当结合ajax请求使用
-  // $("body").addClass("nopointer");
-  // $("#loading").addClass("wrapperAll").show();
-  // // Splitting();
-  // setTimeout(() => {
-  //   $("body").removeClass("nopointer");
-  //   $("#loading").hide().removeClass("wrapperAll");
-  // }, 300);
-  const search = window.location.search;
-  var PAT_CODE = search.replace("?", "");
-  $("#input-search").val(PAT_CODE);
-
-  // try {
-  //   if (PAT_CODE) {
-  //     getData(false, () => {
-  //       var inter = setInterval(() => {
-  //         if (initData) {
-  //           window.clearInterval(inter);
-  //           initData();
-  //         }
-  //       }, 100);
-  //     });
-  //   }
-  // } catch (error) {}
-  initBtnSearch();
-  initBtnRefresh();
 });
-
-function login() {
-  $.ajax({
-    type: "GET",
-    url: `https://www.infopat.net/patent/v2/session?t=${new Date().getTime()}`,
-    success: function (result) {
-      if (result && result.code == 1) {
-        $(".username").html(result.data.username);
-      } else {
-        // 尚未登陆
-        $(".username").html("尚未登陆");
-      }
-    },
-    error: function () {},
-    complete: function (result) {},
-  });
-}
-
-function initBtnSearch() {
-  //搜索 打印 全屏按钮事件
-  $("#btn-search").click(function () {
-    let search = $("#input-search").val();
-    search = search.replace(/\.|ZL|zl|CN|cn| /g, "");
-    $("#input-search").val(search);
-    console.log("查询专利编号为：", search);
-    if (search) {
-      // var href =
-      //   window.location.origin + window.location.pathname + "?" + search;
-      // window.location.href = href;
-      // window.location.search = "?" + search;
-      // window.location.hash = "#page/CostInfo/index.html";
-      sessionStorage.clear();
-      layuimini.hash("page/CostInfo/index.html");
-      getData(false, () => {
-        var inter = setInterval(() => {
-          if (initData) {
-            window.clearInterval(inter);
-            initData();
-          }
-        }, 100);
-      });
-    } else {
-      alert("请输入专利号");
-    }
-  });
-}
-function initBtnRefresh() {
-  // 更新
-  $(".layuimini-content-page").delegate("#btn-refresh", "click", function () {
-    let search = $("#input-search").val();
-    console.log("查询专利编号为：", search);
-    if (search) {
-      sessionStorage.clear();
-      layuimini.hash("page/CostInfo/index.html");
-      getData(true, () => {
-        var inter = setInterval(() => {
-          if (initData) {
-            window.clearInterval(inter);
-            initData();
-          }
-        }, 100);
-      });
-    } else {
-      alert("请输入专利号");
-    }
-  });
-}
-
-function getData(refresh = false, cb) {
-  //将基本信息放在session里面
-  layui.loader.show($("#loading"));
-
-  var number = $("#input-search").val();
-  if (!number || number == "") {
-    // FIXME:没有输入专利号 添加自定义的错误提示
-    alert("请输入查询专利号");
-  }
-  var url = `https://www.infopat.net/patent/v2/${number}`;
-  if (refresh) {
-    url += "?refresh=1";
-  }
-  $.ajax({
-    type: "GET",
-    url: url,
-    success: function (result) {
-      //返回成功进行响应操作
-      if (result.data) {
-        let AllInfo = result.data;
-        // 放到session里，减少重复请求
-        layui.sessionData("session", {
-          key: "allInfo",
-          value: AllInfo,
-        });
-        let basicInfo = AllInfo["申请信息"] || {};
-        layui.sessionData("session", {
-          key: "basicInfo",
-          value: {
-            updateDate: AllInfo["查询时间"] || "--",
-            status: basicInfo["案件状态"] || "--",
-            number: basicInfo["专利号码"] || "--",
-            flNumber: basicInfo["主分类号"] || "--",
-            name: basicInfo["专利名称"] || "--",
-            applicationDate: basicInfo["申请日期"] || "",
-            applicant:
-              (basicInfo["申请人"] && basicInfo["申请人"].join("、")) || "--",
-            inventor:
-              (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
-            Agency:
-              (basicInfo["代理情况"] &&
-                basicInfo["代理情况"]["代理机构名称"]) ||
-              "--",
-            agent:
-              (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) ||
-              "--",
-          },
-        });
-        cb && cb();
-      } else {
-        layui.sessionData("session", {
-          key: "allInfo",
-          value: {},
-        });
-        layui.sessionData("session", {
-          key: "basicInfo",
-          value: {},
-        });
-        alert(result.message);
-      }
-    },
-    error: function () {
-      layui.sessionData("session", {
-        key: "allInfo",
-        value: {},
-      });
-      layui.sessionData("session", {
-        key: "basicInfo",
-        value: {},
-      });
-    },
-    complete: function () {
-      // $(".detailInfo").loding("stop");
-
-      //关闭loading层
-      layui.loader.hide($("#loading"));
-    },
-  });
-}
-
-function isFullscreen() {
-  var text = btnFullscreen.textContent;
-  if (text === "全屏") {
-    return false;
-  } else {
-    return true;
-  }
-}

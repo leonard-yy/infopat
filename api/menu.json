@@ -1,0 +1,81 @@
+{
+  "menu": [
+    {
+      "name": "base",
+      "child": [
+        {
+          "title": "基础信息",
+          "active": "true",
+          "href": "page/PatentBaseInfo/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "权利要求书",
+          "href": "page/PatentBaseInfo/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "说明书",
+          "href": "page/PatentBaseInfo/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "PDF全文",
+          "href": "page/PatentBaseInfo/index.html",
+          "target": "_self"
+        }
+      ]
+    },
+    {
+      "name": "alike",
+      "child": [
+        {
+          "title": "相似专利",
+          "href": "page/PatentBaseInfo/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "专利引用",
+          "href": "page/PatentBaseInfo/index.html",
+          "target": "_self"
+        }
+      ]
+    },
+    {
+      "name": "base",
+      "child": [
+        {
+          "title": "费用信息",
+          "href": "page/CostInfo/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "法律信息",
+          "href": "page/LegalStatus/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "发文通知",
+          "href": "page/NotificationDispatch/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "审查意见",
+          "href": "page/ExaminationOption/index.html",
+          "target": "_self"
+        },
+        {
+          "title": "审查检索信息",
+          "href": "page/ExaminationSearch/index.html",
+          "target": "_self"
+        },
+
+        {
+          "title": "专利权评价报告",
+          "href": "page/PatentEvaluationReport/index.html",
+          "target": "_self"
+        }
+      ]
+    }
+  ]
+}

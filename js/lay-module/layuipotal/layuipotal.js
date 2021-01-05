@@ -4,14 +4,15 @@
  * description:layuipotal 框架扩展
  */
 
-layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
+layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (exports) {
   var element = layui.element,
     $ = layui.$,
     loader = layui.loader,
-    layuimini = layui.layuimini;
+    layuimini = layui.layuimini,
+    layer = layui.layer;
   layuipotal = new (function () {
     // 智能检索 I 高级检索 A
-    this.currentPage = "A";
+    this.currentPage = "I";
 
     this.init = function (url) {
       //自定义loading样式
@@ -85,7 +86,10 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       this.renderContent(type);
     };
 
-    this.initListPage = function (type) {
+    /**
+     *  初始化列表页面
+     */
+    this.initListPage = function () {
       $(".search-result-container").show();
     };
 
@@ -213,6 +217,21 @@ layui.define(["element", "jquery", "loader", "layuimini"], function (exports) {
       temp += "/>";
       temp += '<label for="' + id + '"></label></div>';
       return temp;
+    };
+
+    /**
+     * 失败
+     * @param title
+     * @returns {*}
+     */
+    this.msg_error = function (title) {
+      return layer.msg(title, {
+        icon: 2,
+        shade: this.shade,
+        scrollbar: false,
+        time: 3000,
+        shadeClose: true,
+      });
     };
   })();
 
