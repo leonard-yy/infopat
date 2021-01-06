@@ -281,11 +281,17 @@
   top: 0 !important;
   transition: all 0.2s;
   background: #f2f2f2;
+  display: flex;
 }
 
 /**内容主体（缩放） */
 .layuimini-mini .layui-layout-admin .layui-body {
   left: 60px !important;
+}
+
+.layuimini-content-list {
+  width: 300px;
+  padding: 20px 10px;
 }
 
 /**选择配色方案 */
@@ -361,8 +367,8 @@
 
 /**其它 */
 .layuimini-content-page {
-  width: 100%;
   height: 100%;
+  flex: 1;
 }
 
 .layui-tab-item {
