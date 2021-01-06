@@ -16,12 +16,12 @@
         },
         {
           "title": "说明书",
-          "href": "page/PatentBaseInfo/index.html",
+          "href": "page/Specification/index.html",
           "target": "_self"
         },
         {
           "title": "PDF全文",
-          "href": "page/PatentBaseInfo/index.html",
+          "href": "page/PDFBook/index.html",
           "target": "_self"
         }
       ]
@@ -31,12 +31,12 @@
       "child": [
         {
           "title": "相似专利",
-          "href": "page/PatentBaseInfo/index.html",
+          "href": "page/AlikePatent/index.html",
           "target": "_self"
         },
         {
           "title": "专利引用",
-          "href": "page/PatentBaseInfo/index.html",
+          "href": "page/PatentCite/index.html",
           "target": "_self"
         }
       ]

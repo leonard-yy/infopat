@@ -21,6 +21,7 @@
   top: 90px;
   right: 340px;
 }
+/** 中间内容 **/
 .result-body {
   flex: 1;
   display: flex;
@@ -102,7 +103,7 @@
   background-image: url(../images/search/wgsj.png);
   display: inline-block;
 }
-
+/** 右侧列表 **/
 .result-list {
   background: #ffffff;
   display: flex;
@@ -199,4 +200,17 @@
   align-items: center;
   height: 54px;
   line-height: 36px;
+}
+/** 权利要求书 **/
+#claimsContent {
+  padding: 20px;
+}
+#specificationContent {
+  line-height: 32px;
+  padding: 25px;
+}
+.claim-item {
+  line-height: 32px;
+  display: flex;
+  padding: 4px 5px;
 }
