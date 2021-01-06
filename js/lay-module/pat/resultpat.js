@@ -13,75 +13,99 @@ layui.define("patNodataPage", function (exports) {
         {{#  layui.each(d, function(index, item){ }}
           <div class="result-content-item">
 
-            <div class="result-content-fileds">
-                <div class="content-fileds-item sp-bt">
-                    <div>
-                        <span class="title fileds-item-title" data-value={{item.id}}>{{item.title}}</span>
-                        {{#  if(item.type === "发明授权"){ }}
+            <div class="result-content-filed">
+                <div class="content-filed-item">
+                    <span class="title-block"></span>
+                    <span class="title filed-item-title" data-value={{item.id}}>{{item.id + " " + item.title}}</span>
+                    {{#  if(item.type === "发明授权"){ }}
+                    <div class="fmsq-img ml20"></div>
+                    {{#  } }} 
+                    {{#  if(item.type === "有权"){ }}
+                    <div class="yq-img ml20"></div>
+                    {{#  } }} 
+                    {{#  if(item.type === "发明公开"){ }}
                         <div class="fmsq-img ml20 inline"></div>
-                        {{#  } }} 
-                        {{#  if(item.type === "有权"){ }}
-                        <div class="yq-img ml20"></div>
-                        {{#  } }} 
-                        {{#  if(item.type === "发明公开"){ }}
-                            <div class="fmsq-img ml20 inline"></div>
-                        {{#  } }} 
-                        {{#  if(item.type === "外观设计"){ }}
-                            <div class="wgsj-img ml20 inline"></div>
-                        {{#  } }} 
-                        {{#  if(item.type === "实用新型"){ }}
-                            <div class="syxx-img ml20 inlineBlock"></div>
-                        {{#  } }} 
-                    </div>
-                    <div style="flex; width: 100px;">
-                        <i class="layui-icon layui-icon-star fork-star" style="color:#F7B500;cursor:pointer"></i>
-                        <span>收藏</span>
-                    </div>
-                   
+                    {{#  } }} 
+                    {{#  if(item.type === "外观设计"){ }}
+                        <div class="wgsj-img ml20 inline"></div>
+                    {{#  } }} 
+                    {{#  if(item.type === "实用新型"){ }}
+                        <div class="syxx-img ml20 inlineBlock"></div>
+                    {{#  } }} 
                 </div>
-                <div class="content-fileds-item">
-                    <div style="width:400px">
-                        <span class="tips-title">公开日：</span>
-                        <span class="tips-value ml10">{{item.documentDate}}</span>
-                    </div>
-                    <div style="width:400px">
-                        <span class="tips-title ">申请日：</span>
-                        <span class="tips-value ml10">{{item.applicationDate}}</span>
-                    </div>
+                <div class="content-filed-item">
+                    <span class="tips-title">专利名称：</span>
+                    <span class="tips-value ml10">{{item.title}}</span>
                 </div>
-                <div class="content-fileds-item">
-                    <div style="width:400px">
-                        <span class="tips-title">公开（公告）号：</span>
-                        <span class="tips-value ml10">{{item.documentNumber}}</span>
-                    </div>
-                    <div style="width:400px">
-                        <span class="tips-title">申请号：</span>
-                        <span class="tips-value ml10">{{item.applicationNumber}}</span>
-                    </div>
+                <div class="content-filed-item">
+                    <span class="tips-title">申请号：</span>
+                    <span class="tips-value ml10">{{item.applicationNumber}}</span>
                 </div>
-
-                <div class="content-fileds-item">
-                    <span class="tips-title">申请人：</span>
-                    <span class="tips-value ml10">{{item.applicant}}</span>
+                <div class="content-filed-item">
+                    <span class="tips-title ">申请日：</span>
+                    <span class="tips-value ml10">{{item.applicationDate}}</span>
                 </div>
-
-                <div class="content-fileds-item">
+                <div class="content-filed-item">
+                    <span class="tips-title">公开（公告）号：</span>
+                    <span class="tips-value ml10">{{item.documentNumber}}</span>
+                </div>
+                <div class="content-filed-item">
+                    <span class="tips-title">公开日：</span>
+                    <span class="tips-value ml10">{{item.documentDate}}</span>
+                </div>
+               
+                <div class="content-filed-item">
                     <span class="tips-title">发明人：</span>
                     <span class="tips-value ml10">{{item.inventor}}</span>
                 </div>
 
-                <div class="content-fileds-item">
-                    <span class="tips-title">IPC分类号：</span>
+                <div class="content-filed-item">
+                    <span class="tips-title">申请人：</span>
+                    <span class="tips-value ml10">{{item.applicant}}</span>
+                </div>
+
+                <div class="content-filed-item">
+                    <span class="tips-title">申请人地址：</span>
+                    <span class="tips-value ml10">{{item.applicantAddress}}</span>
+                </div>
+
+                <div class="content-filed-item">
+                    <span class="tips-title">专利权人：</span>
+                    <span class="tips-value ml10">{{item.assignee}}</span>
+                </div>
+
+                <div class="content-filed-item">
+                    <span class="tips-title">当前专利权人：</span>
+                    <span class="tips-value ml10">{{item.currentAssignee}}</span>
+                </div>
+
+                <div class="content-filed-item">
+                    <span class="tips-title">代理机构：</span>
+                    <span class="tips-value ml10">{{item.agency}}</span>
+                </div>
+
+                <div class="content-filed-item">
+                    <span class="tips-title">代理人：</span>
+                    <span class="tips-value ml10">{{item.agent}}</span>
+                </div>
+
+                <div class="content-filed-item">
+                    <span class="tips-title">主分类号：</span>
                     <span class="tips-value ml10">{{item.mainIpc}}</span>
                 </div>
 
-                <div class="content-fileds-item">
-                    <span class="tips-title">CPC分类号：</span>
+                <div class="content-filed-item">
+                    <span class="tips-title">IPC分类号：</span>
                     <span class="tips-value ml10">{{item.ipc}}</span>
                 </div>
 
-                <div class="content-fileds-item">
-                    <div class="tips-title">摘要：</div>
+                <div class="content-filed-item">
+                    <span class="tips-title">IPC结构图谱：</span>
+                    <span class="tips-value ml10">{{item.ipc}}</span>
+                </div>
+
+                <div class="content-filed-item">
+                    <div class="tips-title">首项权利要求：</div>
                     <div class="tips-value ml10">{{item.summary}}</div>
                 </div>
 

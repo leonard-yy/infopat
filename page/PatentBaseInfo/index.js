@@ -15,19 +15,18 @@ function initPage() {
     var render = function (id) {
       var fieldview = document.getElementById("resultBaseInfo");
       $.getJSON("api/resultInfo.json", function (res, status) {
-        laytpl(resultpat).render([res.baseInfo.patent], function (html) {
+        var patent = res.baseInfo.patent;
+        laytpl(resultpat).render([patent], function (html) {
           fieldview.innerHTML = html;
         });
+
+        $("#resultSumaryContent").html(patent.summary);
+        $("#resultImgContent").attr("src", patent.imagePath);
       });
     };
 
-    /**
-     * 获取详情数据
-     */
-    var getPageData = function () {};
-
     // 初始化
-    getPageData();
+    render();
   });
 }
 
