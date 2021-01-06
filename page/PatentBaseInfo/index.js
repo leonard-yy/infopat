@@ -16,6 +16,28 @@ function initPage() {
       var fieldview = document.getElementById("resultBaseInfo");
       $.getJSON("api/resultInfo.json", function (res, status) {
         var patent = res.baseInfo.patent;
+
+        // 标题
+        $("#pageTitle").html(patent.id + "  " + patent.title);
+        var imgClass = "";
+        if (patent.type === "发明授权") {
+          imgClass = "fmsq-img";
+        }
+        if (patent.type === "有权") {
+          imgClass = "yq-img";
+        }
+        if (patent.type === "发明公开") {
+          imgClass = "fmgk-img";
+        }
+        if (patent.type === "外观设计") {
+          imgClass = "wgsj-img";
+        }
+        if (patent.type === "实用新型") {
+          imgClass = "syxx-img";
+        }
+        // 图片
+        $("#pageImg").addClass(imgClass);
+
         laytpl(resultpat).render([patent], function (html) {
           fieldview.innerHTML = html;
         });

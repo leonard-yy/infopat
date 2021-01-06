@@ -11,14 +11,14 @@
   position: absolute;
   height: 300px;
   width: 300px;
-  top: 40px;
+  top: 90px;
   right: 650px;
 }
 .result-sumary-content {
   position: absolute;
   height: 300px;
   width: 300px;
-  top: 40px;
+  top: 90px;
   right: 340px;
 }
 .result-body {
@@ -190,4 +190,13 @@
   display: flex;
   justify-content: flex-end;
   padding: 0 15px 0 0;
+}
+
+.result-common-title {
+  display: flex;
+  justify-content: flex-start;
+  padding: 14px 25px 4px 25px;
+  align-items: center;
+  height: 54px;
+  line-height: 36px;
 }
