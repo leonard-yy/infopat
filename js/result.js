@@ -1,4 +1,4 @@
-layui.use(["element", "layuipotal", "laypage", "element"], function () {
+layui.use(["element", "layuipotal", "laypage", "element", "loader"], function () {
   var $ = layui.jquery,
     layuipotal = layui.layuipotal,
     laypage = layui.laypage,
@@ -12,6 +12,10 @@ layui.use(["element", "layuipotal", "laypage", "element"], function () {
    * @param {*} path
    */
 
+  /**
+   * 右侧列表
+   * @param {*} res
+   */
   _this.renderList = function (res) {
     if (res.total > 0) {
       var patents = res.patents || [];
@@ -53,6 +57,12 @@ layui.use(["element", "layuipotal", "laypage", "element"], function () {
     }
   };
 
+  /**
+   * 中间内容渲染
+   * @param {*} value
+   * @param {*} type
+   * @param {*} showlist
+   */
   _this.renderCont = function (value, type, showlist) {
     // _this.resultId = layui.sessionData("session").resultId || "";
     if (showlist) {
@@ -72,6 +82,69 @@ layui.use(["element", "layuipotal", "laypage", "element"], function () {
     }
   };
 
+  // 其他页面信息 | 法律信息之下
+  _this.getData = function (refresh = false, cb) {
+    //将基本信息放在session里面
+    var number = layui.sessionData("session").resultId || "CN101941693B";
+    var url = `https://www.infopat.net/patent/v2/${number}`;
+    if (refresh) {
+      url += "?refresh=1";
+    }
+    $.ajax({
+      type: "GET",
+      url: url,
+      success: function (result) {
+        //返回成功进行响应操作
+        if (result.data) {
+          let AllInfo = result.data;
+          // 放到session里，减少重复请求
+          layui.sessionData("session", {
+            key: "allInfo",
+            value: AllInfo,
+          });
+          let basicInfo = AllInfo["申请信息"] || {};
+          layui.sessionData("session", {
+            key: "basicInfo",
+            value: {
+              updateDate: AllInfo["查询时间"] || "--",
+              status: basicInfo["案件状态"] || "--",
+              number: basicInfo["专利号码"] || "--",
+              flNumber: basicInfo["主分类号"] || "--",
+              name: basicInfo["专利名称"] || "--",
+              applicationDate: basicInfo["申请日期"] || "",
+              applicant: (basicInfo["申请人"] && basicInfo["申请人"].join("、")) || "--",
+              inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
+              Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
+              agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
+            },
+          });
+          cb && cb();
+        } else {
+          layui.sessionData("session", {
+            key: "allInfo",
+            value: {},
+          });
+          layui.sessionData("session", {
+            key: "basicInfo",
+            value: {},
+          });
+          alert(result.message);
+        }
+      },
+      error: function () {
+        layui.sessionData("session", {
+          key: "allInfo",
+          value: {},
+        });
+        layui.sessionData("session", {
+          key: "basicInfo",
+          value: {},
+        });
+      },
+      complete: function () {},
+    });
+  };
+
   _this.initCont = function () {
     // 查询右侧分页
     $.getJSON("api/searchresult.json", function (res, status) {
@@ -80,12 +153,16 @@ layui.use(["element", "layuipotal", "laypage", "element"], function () {
 
     // 中间基础信息
     _this.renderCont("基础信息", "name", true);
+
+    // 其他页面数据
+    _this.getData();
   };
 
   /**
    * 左侧菜单
    */
   _this.initMenu = function (data) {
+    // 菜单数据
     $.getJSON("api/menu.json", function (data) {
       if (data != null) {
         var menuList = data.menu || [];
@@ -115,6 +192,7 @@ layui.use(["element", "layuipotal", "laypage", "element"], function () {
 
         $(".layui-left-menu").html(html);
 
+        // 加载页面数据
         _this.initCont();
       }
     });
@@ -150,11 +228,17 @@ layui.use(["element", "layuipotal", "laypage", "element"], function () {
     $(this).find(".title").addClass("active");
     $(this).find(".subtitle").addClass("active");
 
+    // 纪录当前专利编码
     var v = $(this).data().value;
-
+    layui.sessionData("session", {
+      key: "resultId",
+      value: v,
+    });
     // 联动左侧
     $(".layui-nav-item").removeClass("layui-this");
     $(".layui-left-menu").find('a[title = "基础信息"]').parent().addClass("layui-this");
+
     _this.renderCont("基础信息", "name", true);
+    _this.getData();
   });
 });

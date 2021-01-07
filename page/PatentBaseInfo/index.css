@@ -26,7 +26,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
   background-color: #ffffff;
   position: relative;
 }
@@ -172,11 +172,10 @@
 
 .result-footer {
   width: 100%;
-  height: 70px;
 }
-.result-footer .layui-laypage .layui-laypage-curr .layui-laypage-em {
-  background-image: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
-  border-radius: 6px;
+/* 分页 */
+.result-footer .layui-field-title {
+  margin: 0;
 }
 .result-footer .layui-laypage a,
 .layui-laypage span {
@@ -187,6 +186,11 @@
   text-align: center;
   margin: 0 5px 5px 5px;
 }
+.result-footer .layui-laypage .layui-laypage-curr .layui-laypage-em {
+  background-image: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
+  border-radius: 6px;
+}
+
 .result-footer #pageNavagete {
   display: flex;
   justify-content: flex-end;
@@ -213,4 +217,35 @@
   line-height: 32px;
   display: flex;
   padding: 4px 5px;
+}
+
+.over-flex {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  padding: 10px 20px;
+}
+/** 表格 **/
+.table-self-content .layui-table thead {
+  font-size: 14px;
+  color: #999999;
+}
+.table-self-content .layui-table td {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #333333;
+  line-height: 32px;
+}
+.result-body .no-data-onepage {
+  z-index: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: #999999;
+
+  line-height: 51px;
+  text-align: center;
 }
