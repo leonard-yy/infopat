@@ -324,6 +324,140 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
       $(e.currentTarget).next().html("收藏");
     }
   });
+
+  /**
+   * 全球按钮
+   */
+  $("#quanqiuSelector").on("click", function (e) {
+    var getParentNode = function (item) {
+      // 叶子节点  COUNTRY-PARENT-VALUE
+      var tpl = '<div class="search-country-layer">';
+      tpl += '      <div class="squared-checkbox">';
+      tpl += '          <input type="checkbox" class="tree-search-parent" ';
+      tpl += '              id="COUNTRY-PARENT-' + item.value + '" />';
+      tpl += '               <label class="country-layer-parent" for="COUNTRY-PARENT-';
+      tpl += item.value + '" />';
+      tpl += "      </div>";
+      tpl += '      <span class="ml10 over-text" title="' + item.title + '">' + item.title + "</span>";
+      tpl += "   </div>";
+      return tpl;
+    };
+    var getChildNode = function (item) {
+      // 子节点  COUNTRY-PARENT-VALUE
+      var tpl = '<div class="search-country-layer">';
+      tpl += '      <div class="squared-checkbox">';
+      tpl += '          <input type="checkbox" class="tree-search-child" ';
+      tpl += '              parent="' + item.parent + '" ';
+      tpl += '              id="COUNTRY-CHILD-' + item.value + '" />';
+      tpl += '          <label class="country-layer-child" ';
+      tpl += '              for="COUNTRY-CHILD-' + item.value + '" />';
+      tpl += "      </div>";
+      tpl += '      <span class="block-back ml10"/>';
+      tpl += '      <span class="ml10 over-text"title="' + item.title + '">' + item.title + "</span>";
+      tpl += "   </div>";
+      return tpl;
+    };
+
+    var content = '<div style="padding:20px;" class="layer-country-checkbox">';
+    $.getJSON("api/tree.json", function (res, status) {
+      var data = res.data;
+
+      data.map(function (item, index) {
+        if (item.title == "中国" || item.title == "全球") {
+          var temp = '<div class="layer-line-parent inlineBlock">';
+        } else {
+          var temp = '<div class="layer-line-parent">';
+        }
+
+        temp += getParentNode(item);
+        temp += "</div>";
+        if (item.children && item.children.length > 0) {
+          temp += '<div class="layer-line-child">';
+          item.children.map(function (child, idx) {
+            temp += getChildNode(child);
+          });
+          temp += "</div>";
+        }
+
+        content += temp;
+      });
+
+      content += "</div>";
+
+      var index = layer.open({
+        type: 1,
+        offset: "auto",
+        id: "layerSelector",
+        content: content,
+        btn: ["确认", "取消"],
+        btnAlign: "c", //按钮居中
+        shade: 0.5,
+        area: ["800px", "500px"],
+        yes: function () {
+          var c = $("#layerSelector").find(".layer-line-child").find('input[value = "checked"]');
+          var checked = "";
+          c.each(function () {
+            var id = $(this).attr("id");
+            var value = id.split("-").pop();
+            checked += value;
+          });
+          layer.msg(checked);
+          layer.close(index);
+        },
+        btn2: function () {
+          layer.close(index);
+        },
+      });
+
+      /**
+       * 弹出选择框父节点 点击事件
+       */
+      $("#layerSelector").on("click", ".country-layer-parent", function (e) {
+        var input = $(e.currentTarget).parent().find('input[value="checked"]');
+        var id = $(e.currentTarget).parent().find("input").attr("id");
+        var value = id.split("-").pop();
+        if (input.length > 0) {
+          // 取消
+          $(e.currentTarget).prev().attr("value", "unchecked");
+          $("#layerSelector")
+            .find("input[parent = " + value + "]")
+            .attr("value", "unchecked");
+        } else {
+          // 选择
+          $(e.currentTarget).prev().attr("value", "checked");
+          $("#layerSelector")
+            .find("input[parent = " + value + "]")
+            .attr("value", "checked");
+        }
+      });
+
+      /**
+       * 弹出选择框子节点 点击事件
+       */
+      $("#layerSelector").on("click", ".country-layer-child", function (e) {
+        var input = $(e.currentTarget).parent().find('input[value="checked"]');
+        var id = $(e.currentTarget).parent().find("input").attr("parent");
+        var value = id.split("-").pop();
+        if (input.length > 0) {
+          $(e.currentTarget).prev().attr("value", "unchecked");
+          // 取消全选
+          $("#layerSelector")
+            .find("#COUNTRY-PARENT-" + value)
+            .attr("value", "unchecked");
+        } else {
+          // 检查满足是否全选
+          var all = $("#layerSelector").find("input[parent = " + value + "]");
+          var checked = $("#layerSelector").find("input[parent = " + value + "][value=checked]");
+          $(e.currentTarget).prev().attr("value", "checked");
+          if (all.length == checked.length + 1) {
+            $("#layerSelector")
+              .find("#COUNTRY-PARENT-" + value)
+              .attr("value", "checked");
+          }
+        }
+      });
+    });
+  });
 });
 
 (function () {})();
