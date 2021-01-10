@@ -28,7 +28,7 @@ function initPage() {
 
         itemHtml += '<div style="flex:1;text-align:right;padding-right:10px;">' + name + "</div>";
 
-        itemHtml += '<div class="layui-input-inline" style="flex:4">';
+        itemHtml += '<div class="layui-input-inline" style="flex:6">';
         itemHtml += '<select name="' + name + '" class="layui-form-select" style="flex:1">';
         itemHtml += '<option value="">请选择' + name + "</option>";
         if (item.selector && item.selector.length > 0) {
@@ -39,7 +39,7 @@ function initPage() {
 
         itemHtml += "</select> ";
         itemHtml += " </div>";
-        itemHtml += '<div class="layui-input-inline" style="flex:4;"> ';
+        itemHtml += '<div class="layui-input-inline" style="flex:6;"> ';
         itemHtml += '<input type="text" name="' + name + '" placeholder="请输入' + name + '" autocomplete="off" class="layui-input">';
         itemHtml += "</div>";
         itemHtml += '<div class="layui-input-inline flex" style="flex:1; align-items: center; cursor:pointer;">';
