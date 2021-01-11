@@ -1,6 +1,0 @@
-{
-  "data": [
-    { "name": "国家/地区", "value": "conutryCode" },
-    { "name": "专利有效性", "value": "legalStatus" }
-  ]
-}

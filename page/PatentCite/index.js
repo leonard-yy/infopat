@@ -19,7 +19,7 @@ function initPage() {
           html += "<tr>";
           html += '<td style="min-width:60px">' + (index + 1) + "</td>";
           html += "<td>" + item.documentNumber + "</td>";
-          html += "<td>" + item.documentDate + "</td>";
+          html += '<td style="min-width:110px">' + item.documentDate + "</td>";
           html += "<td>" + item.applicationDate + "</td>";
           html += "<td>" + item.type + "</td>";
           html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";
@@ -51,7 +51,7 @@ function initPage() {
           html += "<tr>";
           html += '<td style="min-width:60px">' + (index + 1) + "</td>";
           html += "<td>" + item.documentNumber + "</td>";
-          html += "<td>" + item.documentDate + "</td>";
+          html += '<td style="min-width:110px">' + item.documentDate + "</td>";
           html += "<td>" + item.applicationDate + "</td>";
           html += "<td>" + item.type + "</td>";
           html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";

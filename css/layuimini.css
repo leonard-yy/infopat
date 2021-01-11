@@ -51,18 +51,18 @@
 
 .layui-header-menu,
 .layui-header {
-  height: 70px !important;
+  height: 42px !important;
 }
 
 .layui-header-menu > .layui-nav-item {
   color: #1b1d21;
-  height: 60px !important;
-  line-height: 60px !important;
+  height: 42px !important;
+  line-height: 42px !important;
 }
 
 .layui-header > .layui-layout-right > .layui-nav-item {
-  height: 60px !important;
-  line-height: 60px !important;
+  height: 42px !important;
+  line-height: 42px !important;
 }
 
 .layui-layout-left {

@@ -18,7 +18,7 @@ layui.define("patNodataPage", function (exports) {
             </div>
 
             <div class="result-content-img" data-value={{item.id}}>
-                <img src={{item.imagePath}}/>
+                <img src={{"https://www.iprabc.com" + item.imagePath }} data-value={{item.id}} />
             </div>
 
             <div class="result-content-fileds">
@@ -67,15 +67,15 @@ layui.define("patNodataPage", function (exports) {
                         <span class="tips-value ml10">{{item.applicationNumber}}</span>
                     </div>
                 </div>
-
                 <div class="content-fileds-item">
-                    <span class="tips-title">申请人：</span>
-                    <span class="tips-value ml10">{{item.applicant}}</span>
-                </div>
-
-                <div class="content-fileds-item">
-                    <span class="tips-title">发明人：</span>
-                    <span class="tips-value ml10">{{item.inventor}}</span>
+                    <div style="width:400px">
+                        <span class="tips-title">申请人：</span>
+                        <span class="tips-value ml10">{{item.applicant}}</span>
+                    </div>
+                    <div style="width:400px">
+                        <span class="tips-title">发明人：</span>
+                        <span class="tips-value ml10">{{item.inventor}}</span>
+                    </div>
                 </div>
 
                 <div class="content-fileds-item">
