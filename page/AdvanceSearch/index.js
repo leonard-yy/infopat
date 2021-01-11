@@ -75,7 +75,7 @@ function initPage() {
     }
 
     _this.init = function () {
-      $.getJSON("api/advance.json", function (res, status) {
+      $.getJSON("mock/advance.json", function (res, status) {
         _this.pageData = res.data;
         renderContent();
       });
@@ -189,8 +189,13 @@ function initPage() {
     $("#advanceSearch").on("click", ".add-to-ss", function (e) {
       var value = $("#instruceTexteat").val();
       var text = $(e.currentTarget).text();
-      value += " " + text + " ";
-      $("#instruceTexteat").val(value.trim());
+      if (text === "AND" || text === "OR" || text === "NOT") {
+        value += " " + text + " ";
+      } else {
+        value += text;
+      }
+      $("#instruceTexteat").val(value.trimLeft());
+      $("#instruceTexteat").focus();
     });
   });
 }

@@ -119,7 +119,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         var $menuDom = $(".search-menu");
         $menuDom.append('<div class="search-country-selector" id="choose-country"></div>');
         var _this = this;
-        $.getJSON("api/tree.json", function (res, status) {
+        $.getJSON("mock/tree.json", function (res, status) {
           _this.getTreeDom(res.data || []);
         });
       }

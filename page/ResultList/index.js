@@ -43,7 +43,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
    * 查询左侧选择框 lazy
    */
   _this.getSelectorContent = function (sel) {
-    $.getJSON("api/resultselect.json", function (res, status) {
+    $.getJSON("mock/resultselect.json", function (res, status) {
       var temp = "";
       var data = res.analysis_total || [];
 
@@ -142,31 +142,27 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
   };
 
   _this.initSelector = function () {
-    $.getJSON("api/selectorlist.json", function (res, status) {
+    $.getJSON("mock/selectorlist.json", function (res, status) {
       _this.renderSelector(res || {});
     });
   };
 
   _this.initContent = function () {
-    $.getJSON("api/searchresult.json", function (res, status) {
-      _this.renderContent(res || {});
+    // 得到检索条件 查询
+    loader.show($("#loading"));
+    $.ajax({
+      url: "mock/s?ds=cn&q=汽车&t=96fe4d35788780783a290ace37190fb8632c9c54&v=1",
+      type: "get",
+      success: function (data) {},
+      error: function (xhr, textstatus, thrown) {},
     });
+    // 关闭loading层
+    loader.hide($("#loading"));
+    // $.getJSON("mock/searchresult.json", function (res, status) {
+    //   _this.renderContent(res || {});
+    // });
   };
-  // 得到检索条件 查询
-  // loader.show($("#loading"));
-  // $.ajax({
-  //   url: '',
-  //   type: "get",
-  //   success: function (data) {
-  //   },
-  //   error: function (xhr, textstatus, thrown) {
-  //   },
-  // });
-  //   $.getJSON("api/searchresult.json", function (res, status) {
-  //     _this.renderSelectOption(res);
-  //   });
-  // 关闭loading层
-  // loader.hide($("#loading"));
+
   _this.init = function () {
     var currentMenu = layui.sessionData("session").currentMenu;
     if (currentMenu !== "LIST") {
@@ -359,7 +355,7 @@ layui.use(["laytpl", "layuipotal", "loader", "form", "laypage", "element", "laye
     };
 
     var content = '<div style="padding:20px;" class="layer-country-checkbox">';
-    $.getJSON("api/tree.json", function (res, status) {
+    $.getJSON("mock/tree.json", function (res, status) {
       var data = res.data;
 
       data.map(function (item, index) {

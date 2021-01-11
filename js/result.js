@@ -147,7 +147,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
 
   _this.initCont = function () {
     // 查询右侧分页
-    $.getJSON("api/searchresult.json", function (res, status) {
+    $.getJSON("mock/searchresult.json", function (res, status) {
       _this.renderList(res || {});
     });
 
@@ -163,7 +163,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
    */
   _this.initMenu = function (data) {
     // 菜单数据
-    $.getJSON("api/menu.json", function (data) {
+    $.getJSON("mock/menu.json", function (data) {
       if (data != null) {
         var menuList = data.menu || [];
 

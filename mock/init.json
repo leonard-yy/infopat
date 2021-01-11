@@ -1,6 +1,6 @@
 {
   "clearInfo": {
-    "clearUrl": "api/clear.json"
+    "clearUrl": "mock/clear.json"
   },
   "homeInfo": {
     "title": "首页",
@@ -19,7 +19,7 @@
       "child": [
         {
           "title": "费用信息",
-          "active":"true",
+          "active": "true",
           "href": "page/CostInfo/index.html",
           "target": "_self"
         },

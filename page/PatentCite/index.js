@@ -71,7 +71,7 @@ function initPage() {
       $(selector).html(patNodataPage.getNoDataTips(tips));
     }
 
-    $.getJSON("api/resultInfo.json", function (res, status) {
+    $.getJSON("mock/resultInfo.json", function (res, status) {
       var citeData = res.citeData;
       var citeData2 = res.citeData2;
       renderTableTop(citeData);

@@ -1,5 +1,5 @@
 layui.use(["element", "layer", "layuimini", "layuipotal", "form", "loader"], function () {
-  layuipotal.init("api/potal.json");
+  layuipotal.init("mock/potal.json");
   //--以上是项目初始化结构 ------
   //初始化提示框
   ToolTip.init({

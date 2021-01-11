@@ -14,7 +14,7 @@ function initPage() {
 
     var render = function (id) {
       var fieldview = document.getElementById("resultBaseInfo");
-      $.getJSON("api/resultInfo.json", function (res, status) {
+      $.getJSON("mock/resultInfo.json", function (res, status) {
         var patent = res.baseInfo.patent;
 
         // 标题
