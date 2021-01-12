@@ -32,8 +32,16 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   var value = "";
   if (listValue === "A") {
     value = layui.sessionData("session").advanceSearchValue;
+    layui.sessionData("session", {
+      key: "advanceSearchValue",
+      value: "",
+    });
   } else {
     value = layui.sessionData("session").intellectSearchValue;
+    layui.sessionData("session", {
+      key: "intellectSearchValue",
+      value: "",
+    });
   }
   $("#expandTextarea").val(value);
   _this.resizeTextarea();
@@ -43,80 +51,52 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    */
   _this.getSelectorContent = function (sel) {
     var searchText = $("#expandTextarea").val();
-    request.get(`api/ration?q=${searchText}&c=${sel.value}`, "statistic", function (res) {
-      var temp = "";
-      var data = res.analysis_total || [];
-      if (data.length > 0) {
-        temp += '   <dl class="layui-nav-child">';
-        layui.each(data, function (index, item) {
-          temp += "    <dd>";
-          temp += '      <div class="result-selector-item">';
-          temp += '      <div class="squared-checkbox">';
-          temp += '          <input type="checkbox" class="result-select-child" ';
-          temp += '              id="RESULT-SELECTOR-PARENT-' + index + '"/>';
-          temp += '          <label class="result-selector-parent" for="RESULT-SELECTOR-PARENT-' + index + '" />';
-          temp += "      </div>";
-          temp += '      <span class="block-back ml10"/>';
-          temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
-          temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
-          temp += "     </div>";
-          temp += "   </dd>";
-          if (item.children && item.children.length > 0) {
-            layui.each(item.children, function (idx, child) {
-              temp += "    <dd>";
-              temp += '      <div class="result-selector-item child">';
-              temp += '      <div class="squared-checkbox">';
-              temp += '                <input type="checkbox" class="result-select-child" ';
-              temp += '              id="RESULT-SELECTOR-CHILD-' + idx + '" parent="' + index + '"/>';
-              temp += '          <label class="result-selector-child" for="CHILD-KEY-' + idx + '" />';
-              temp += "      </div>";
-              temp += '      <span class="ml10 result-selector-title normal" >' + child.key + "</span>";
-              temp += '       <span class="filter-count">(' + (child.count || 0) + ")</span>";
-              temp += "   </div>";
-              temp += "</dd>";
-            });
-          }
-        });
-        // 筛选
-        var sxhtml = '<span class="slef-search-btn normal select-of-result" id="' + sel.value + '" style="width: 80px">筛选</span>';
-        var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" id="' + sel.value + '" style="width: 80px">过滤</span>';
-        temp += '       <dd class="result-selector-filter">' + sxhtml + glhtml + "</dd>";
-        temp += "    </dl>";
-        $("#T-" + sel.value + " dl").remove();
-        $("#T-" + sel.value).append(temp);
-        element.render("nav");
-      }
-    });
-  };
-
-  /**
-   * 加载大类 并默认加载第一列
-   * @param {*} res
-   */
-  _this.renderSelector = function (res) {
-    // 记录本地值
-    _this.selectorData = res.data || [];
-
-    var temp = '<ul class="layui-nav layui-nav-tree layui-inline">';
-    var data = res.data || [];
-
-    layui.each(data, function (index, item) {
-      temp += '<li class="layui-nav-item layui-nav-itemed" id="T-' + item.value + '">';
-      // 自定义叶子节点
-      // temp += '<div class="result-selector-item bb">';
-      temp += '  <a class="result-selector-title result-selector-item bb" >' + item.name + "</a>";
-      // temp += "</div>";
-      temp += "</li>";
-    });
-    temp += "</ul>";
-    $(".result-left-selector").html(temp);
-
-    if (data.length > 0) {
-      var firstItem = data[0];
-      _this.getSelectorContent(firstItem);
-      _this.selector = firstItem.value || "";
+    if (searchText !== null && searchText !== "") {
+      request.get(`api/ration?q=${searchText}&c=${sel.value}`, "statistic", function (res) {
+        var temp = "";
+        var data = res.analysis_total || [];
+        if (data.length > 0) {
+          temp += '   <dl class="layui-nav-child">';
+          layui.each(data, function (index, item) {
+            temp += "    <dd>";
+            temp += '      <div class="result-selector-item">';
+            temp += '      <div class="squared-checkbox">';
+            temp += '          <input type="checkbox" class="result-select-child" ';
+            temp += '              id="RESULT-SELECTOR-PARENT-' + index + '"/>';
+            temp += '          <label class="result-selector-parent" for="RESULT-SELECTOR-PARENT-' + index + '" />';
+            temp += "      </div>";
+            temp += '      <span class="block-back ml10"/>';
+            temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
+            temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
+            temp += "     </div>";
+            temp += "   </dd>";
+            if (item.children && item.children.length > 0) {
+              layui.each(item.children, function (idx, child) {
+                temp += "    <dd>";
+                temp += '      <div class="result-selector-item child">';
+                temp += '      <div class="squared-checkbox">';
+                temp += '                <input type="checkbox" class="result-select-child" ';
+                temp += '              id="RESULT-SELECTOR-CHILD-' + idx + '" parent="' + index + '"/>';
+                temp += '          <label class="result-selector-child" for="CHILD-KEY-' + idx + '" />';
+                temp += "      </div>";
+                temp += '      <span class="ml10 result-selector-title normal" >' + child.key + "</span>";
+                temp += '       <span class="filter-count">(' + (child.count || 0) + ")</span>";
+                temp += "   </div>";
+                temp += "</dd>";
+              });
+            }
+          });
+          // 筛选
+          var sxhtml = '<span class="slef-search-btn normal select-of-result" id="' + sel.value + '" style="width: 80px">筛选</span>';
+          var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" id="' + sel.value + '" style="width: 80px">过滤</span>';
+          temp += '       <dd class="result-selector-filter">' + sxhtml + glhtml + "</dd>";
+          temp += "    </dl>";
+          $("#T-" + sel.value + " dl").remove();
+          $("#T-" + sel.value).append(temp);
+          element.render("nav");
+        }
+      });
     }
-    element.render("nav");
   };
 
   /**
@@ -124,10 +104,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * @param {*} res
    */
   _this.renderContent = function (res) {
+    debugger;
     // 数据
-    var fieldview = document.getElementById("fieldsContent");
+    // var fieldview = document.getElementById("fieldsContent");
     laytpl(resultlistpat).render(res.patents || [], function (html) {
-      fieldview.innerHTML = html;
+      $("#fieldsContent").html(html);
     });
     // 分页
     laypage.render({
@@ -151,29 +132,56 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     });
 
     // 统计
-    $("#resultTime").html(res.responseTimes + "s");
-    $("#resultCount").html(res.total + "条");
+    $("#resultTime").html(res.responseTimes || 0 + "s");
+    $("#resultCount").html(res.total || 0 + "条");
   };
 
   _this.initSelector = function () {
     $.getJSON("mock/fliterDimension.json", function (res, status) {
-      _this.renderSelector(res || {});
+      // 记录本地值
+      _this.selectorData = res.data || [];
+
+      var temp = '<ul class="layui-nav layui-nav-tree layui-inline">';
+      var data = res.data || [];
+
+      layui.each(data, function (index, item) {
+        temp += '<li class="layui-nav-item layui-nav-itemed" id="T-' + item.value + '">';
+        // 自定义叶子节点
+        // temp += '<div class="result-selector-item bb">';
+        temp += '  <a class="result-selector-title result-selector-item bb" >' + item.name + "</a>";
+        // temp += "</div>";
+        temp += "</li>";
+      });
+      temp += "</ul>";
+      $(".result-left-selector").html(temp);
+      $(".result-left-selector").css("width", "200px");
+      if (data.length > 0) {
+        var firstItem = data[0];
+        _this.getSelectorContent(firstItem);
+        _this.selector = firstItem.value || "";
+      }
+      element.render("nav");
     });
   };
 
   _this.initContent = function () {
     // 得到检索条件 查询
     var searchText = $("#expandTextarea").val();
-    loader.show($("#loading"));
-    var sendDate = new Date().getTime();
-    request.get(`api/s?ds=cn&q=${searchText}&p=${this.page}`, "search", function (res) {
-      var receiveDate = new Date().getTime();
-      var responseTimeMs = receiveDate - sendDate;
-      res.responseTimes = responseTimeMs / 1000;
-      _this.renderContent(res || {});
-    });
-    // 关闭loading层
-    loader.hide($("#loading"));
+
+    if (searchText !== null && searchText !== "") {
+      loader.show($("#loading"));
+      var sendDate = new Date().getTime();
+      request.get(`api/s?ds=cn&q=${searchText}&p=${this.page}`, "search", function (res) {
+        var receiveDate = new Date().getTime();
+        var responseTimeMs = receiveDate - sendDate;
+        res.responseTimes = responseTimeMs / 1000;
+        _this.renderContent(res || {});
+      });
+      // 关闭loading层
+      loader.hide($("#loading"));
+    } else {
+      _this.renderContent({});
+    }
   };
 
   _this.init = function () {
@@ -226,7 +234,9 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   /**
    * 检索
    */
-  $("#resultSearchBtn").on("click", function (e) {});
+  $("#resultSearchBtn").on("click", function (e) {
+    _this.init();
+  });
 
   /**
    * 二次检索
