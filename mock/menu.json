@@ -18,11 +18,6 @@
           "title": "说明书",
           "href": "page/Specification/index.html",
           "target": "_self"
-        },
-        {
-          "title": "PDF全文",
-          "href": "page/PDFBook/index.html",
-          "target": "_self"
         }
       ]
     },
@@ -69,7 +64,11 @@
           "href": "page/ExaminationSearch/index.html",
           "target": "_self"
         },
-
+        {
+          "title": "PDF全文",
+          "href": "page/PatentInformation/index.html",
+          "target": "_self"
+        },
         {
           "title": "专利权评价报告",
           "href": "page/PatentEvaluationReport/index.html",

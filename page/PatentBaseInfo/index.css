@@ -9,17 +9,19 @@
 }
 .result-img-content {
   position: absolute;
-  height: 300px;
-  width: 300px;
-  top: 90px;
-  right: 650px;
+  height: 30%;
+  width: 20%;
+  top: 0px;
+  right: 21%;
+  overflow: auto;
 }
 .result-sumary-content {
   position: absolute;
-  height: 300px;
-  width: 300px;
-  top: 90px;
-  right: 340px;
+  height: 30%;
+  width: 20%;
+  top: 0px;
+  right: 15px;
+  overflow: auto;
 }
 /** 中间内容 **/
 .result-body {

@@ -94,6 +94,13 @@ layui.define("patNodataPage", function (exports) {
           </div>
         {{#  }); }}
       {{# }}}
+        <div class="result-img-content">
+          <img id="resultImgContent" />
+        </div>
+        <div class="result-sumary-content">
+          <span style="display: block; font-size: 14px; color: #999999; line-height: 30px; height: 30px">摘要</span>
+          <span id="resultSumaryContent"></span>
+        </div>
       `;
 
   exports("resultpat", temp);
