@@ -184,7 +184,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
       data = this.requirePreview(path, container);
     };
 
-    this.requirePreview = function (path, selector) {
+    this.requirePreview = function (path, selector, option) {
       var v = new Date().getTime();
       $.ajax({
         url: path.indexOf("?") > -1 ? path + "&v=" + v : path + "?v=" + v,
@@ -192,6 +192,14 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         dataType: "html",
         async: false,
         success: function (data) {
+          if (option) {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.text = `
+              var option = ${JSON.stringify(option.data)}
+            `;
+            document.getElementById(option.id).appendChild(script);
+          }
           $(selector).html(data);
         },
         error: function (xhr, textstatus, thrown) {

@@ -11,6 +11,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   var _this = {
     page: 1,
     pageSize: 10,
+    searchText: "",
   };
   // 输入框自动调整
   _this.resizeTextarea = function () {
@@ -44,13 +45,14 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     });
   }
   $("#expandTextarea").val(value);
+  _this.searchText = value;
   _this.resizeTextarea();
 
   /**
    * 查询左侧选择框 lazy
    */
   _this.getSelectorContent = function (sel) {
-    var searchText = $("#expandTextarea").val();
+    var searchText = _this.searchText;
     if (searchText !== null && searchText !== "") {
       request.get(`api/ration?q=${searchText}&c=${sel.value}`, "statistic", function (res) {
         var temp = "";
@@ -104,7 +106,6 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * @param {*} res
    */
   _this.renderContent = function (res) {
-    debugger;
     // 数据
     // var fieldview = document.getElementById("fieldsContent");
     laytpl(resultlistpat).render(res.patents || [], function (html) {
@@ -166,12 +167,12 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
 
   _this.initContent = function () {
     // 得到检索条件 查询
-    var searchText = $("#expandTextarea").val();
+    var searchText = _this.searchText;
 
     if (searchText !== null && searchText !== "") {
       loader.show($("#loading"));
       var sendDate = new Date().getTime();
-      request.get(`api/s?ds=cn&q=${searchText}&p=${this.page}`, "search", function (res) {
+      request.get(`api/s?ds=cn&q=${searchText}&p=${_this.page}`, "search", function (res) {
         var receiveDate = new Date().getTime();
         var responseTimeMs = receiveDate - sendDate;
         res.responseTimes = responseTimeMs / 1000;
@@ -196,9 +197,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
 
   _this.init();
 
+  /**
+   * 去往详情页
+   */
   function gotoResultPage(value) {
-    layui.sessionData("session", { key: "resultId", value: value });
-    window.open("/result.html?id=" + value, "_blank");
+    window.open("/result.html?id=" + value + "&q=" + _this.searchText + "&p=" + _this.page, "_blank");
   }
 
   /**
@@ -208,14 +211,14 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     var value = $(e.currentTarget).data().value;
     gotoResultPage(value);
   });
-  /**
-   * 去往详情页
-   */
   $("#searchResult").on("click", ".fileds-item-title", function (e) {
     var value = $(e.currentTarget).data().value;
     gotoResultPage(value);
   });
 
+  /**
+   * 异步加载纬度
+   */
   $("#searchResult").on("click", ".layui-nav-item", function (e) {
     var id = $(e.currentTarget).attr("id");
     var value = id.split("-").pop();
@@ -234,14 +237,23 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   /**
    * 检索
    */
-  $("#resultSearchBtn").on("click", function (e) {
+  $("#resultSearchBtn").on("click", function () {
+    _this.searchText = $("#expandTextarea").val();
     _this.init();
   });
 
   /**
    * 二次检索
    */
-  $("#resultSecondSearchBtn").on("click", function (e) {});
+  $("#resultSecondSearchBtn").on("click", function (e) {
+    var v = $("#expandTextarea").val();
+    if (v == _this.searchText) {
+      _this.init();
+    } else {
+      _this.searchText = _this.searchText += " AND " + v;
+      _this.init();
+    }
+  });
 
   /**
    * 全选

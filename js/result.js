@@ -1,35 +1,43 @@
-layui.use(["element", "layuipotal", "laypage", "element", "loader"], function () {
+layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], function () {
   var $ = layui.jquery,
     layuipotal = layui.layuipotal,
     laypage = layui.laypage,
     element = layui.element,
+    request = layui.request,
     element = layui.element;
-  var _this = {};
+  var _this = {
+    page: 1,
+    pageSize: 10,
+  };
   //动态加载CSS
   layui.link("./page/PatentBaseInfo/index.css");
-  /**
-   * 详情内容
-   * @param {*} path
-   */
 
   /**
    * 右侧列表
    * @param {*} res
    */
-  _this.renderList = function (res) {
+  _this.renderList = function (res, id) {
+    var idxSelected = 1;
+    var hasIndex = 0;
     if (res.total > 0) {
       var patents = res.patents || [];
       var html = "";
       patents.map(function (item, index) {
-        if (index == 0) {
-          html += '<div class="result-list-item active" data-value="' + item.id + '">';
+        if (item.id == id) {
+          hasIndex = index;
+          idxSelected = index + 1;
+        }
+      });
+      patents.map(function (item, index) {
+        if (index == hasIndex) {
+          html += '<div class="result-list-item active" data-value="' + item.id + '" data-index=' + index + ">";
           html += '   <div class="flex">';
           html += "    <span>" + (index + 1) + ".</span>";
           html += '    <span class="ml10 title active" title="' + item.title + '">' + item.title + "</span>" + "</div>";
           html += '   <div class="subtitle active">' + item.id + "</div>";
           html += "</div>";
         } else {
-          html += '<div class="result-list-item" data-value="' + item.id + '">';
+          html += '<div class="result-list-item" data-value="' + item.id + '" data-index=' + index + ">";
           html += '   <div class="flex">';
           html += "    <span>" + (index + 1) + ".</span>";
           html += '    <span class="ml10 title" title="' + item.title + '">' + item.title + "</span>" + "</div>";
@@ -40,7 +48,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
 
       $(".result-list-content").html(html);
 
-      $(".title-count").html("1 /" + res.total);
+      $(".title-count").html((res.page - 1) * 10 + idxSelected + "/" + res.total);
       // 分页
       laypage.render({
         elem: "pageNavagete",
@@ -51,8 +59,18 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
         groups: 2,
         prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
         next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',
+        jump: function (obj, first) {
+          //obj包含了当前分页的所有参数，比如：
+          // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+          // console.log(obj.limit); //得到每页显示的条数
+          if (!first) {
+            _this.page = obj.curr;
+            _this.initCont();
+          }
+        },
       });
 
+      _this.total = res.total || 0;
       element.init();
     }
   };
@@ -64,20 +82,18 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
    * @param {*} showlist
    */
   _this.renderCont = function (value, type, showlist) {
-    // _this.resultId = layui.sessionData("session").resultId || "";
     if (showlist) {
       $(".layuimini-content-list").show();
     } else {
       $(".layuimini-content-list").hide();
     }
     if (type == "path") {
-      layuipotal.requirePreview(value, ".layuimini-content-page");
+      layuipotal.requirePreview(value + "?id=" + _this.id, ".layuimini-content-page", { id: "resultContentPage", data: { id: _this.id } });
     } else {
-      // type == 'name'
       var ahref = $(".layui-left-menu").find('a[title = "' + value + '"]');
       if (ahref.length > 0) {
         var v = ahref.parent().data().value;
-        layuipotal.requirePreview(v, ".layuimini-content-page");
+        layuipotal.requirePreview(v + "?id=" + _this.id, ".layuimini-content-page", { id: "resultContentPage", data: { id: _this.id } });
       }
     }
   };
@@ -85,8 +101,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
   // 其他页面信息 | 法律信息之下
   _this.getData = function (refresh = false, cb) {
     //将基本信息放在session里面
-    var number = layui.sessionData("session").resultId || "CN101941693B";
-    var url = `https://www.infopat.net/patent/v2/${number}`;
+    var url = `https://www.infopat.net/patent/v2/${_this.id}`;
     if (refresh) {
       url += "?refresh=1";
     }
@@ -145,10 +160,17 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
     });
   };
 
+  _this.getParamFromUri = function (name) {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`); // 构造一个含有目标参数的正则表达式对象
+    const r = window.location.search.substr(1).match(reg); // 匹配目标参数
+    if (r != null) return decodeURI(r[2]);
+    return null; // 返回参数值
+  };
+
   _this.initCont = function () {
     // 查询右侧分页
-    $.getJSON("mock/searchresult.json", function (res, status) {
-      _this.renderList(res || {});
+    request.get(`api/s?ds=cn&q=${_this.searchText}&p=${_this.page}`, "search", function (res) {
+      _this.renderList(res || {}, _this.id);
     });
 
     // 中间基础信息
@@ -161,7 +183,12 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
   /**
    * 左侧菜单
    */
-  _this.initMenu = function (data) {
+  _this.initMenu = function () {
+    // 初始化参数
+    _this.page = _this.getParamFromUri("p");
+    _this.searchText = _this.getParamFromUri("q");
+    _this.id = _this.getParamFromUri("id");
+
     // 菜单数据
     $.getJSON("mock/menu.json", function (data) {
       if (data != null) {
@@ -199,6 +226,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
   };
 
   _this.initMenu();
+
   /**
    * 菜单点击事件
    */
@@ -229,11 +257,9 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader"], function ()
     $(this).find(".subtitle").addClass("active");
 
     // 纪录当前专利编码
-    var v = $(this).data().value;
-    layui.sessionData("session", {
-      key: "resultId",
-      value: v,
-    });
+    var c = (_this.page - 1) * 10 + Number($(this).data().index + 1);
+    $(".title-count").html(c.toString() + " / " + _this.total.toString());
+    _this.id = $(this).data().value;
     // 联动左侧
     $(".layui-nav-item").removeClass("layui-this");
     $(".layui-left-menu").find('a[title = "基础信息"]').parent().addClass("layui-this");
