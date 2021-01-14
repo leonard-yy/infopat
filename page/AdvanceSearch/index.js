@@ -1,25 +1,27 @@
 function initPage() {
-  layui.use(["laytpl", "layer", "form", "advancepat", "fieldspat"], function () {
+  layui.use(["laytpl", "layer", "form", "advancepat", "fieldspat", "laydate"], function () {
     var $ = layui.jquery,
       laytpl = layui.laytpl,
       layer = layui.layer,
-      advancepat = layui.advancepat;
-    fieldspat = layui.fieldspat;
-    form = layui.form;
+      advancepat = layui.advancepat,
+      laydate = layui.laydate,
+      fieldspat = layui.fieldspat,
+      form = layui.form;
     //动态加载CSS
     layui.link("./page/AdvanceSearch/index.css");
     var _this = {};
-    _this.pageData = [];
-
+    _this.fieldsData = [];
+    _this.dateId = 0;
     function addItem(name) {
-      var itemArr = _this.pageData.filter(function (d, i) {
+      var itemArr = _this.fieldsData.filter(function (d, i) {
         return name == d.name;
       });
+      var dateId = null;
       if (itemArr && itemArr.length > 0) {
         var item = itemArr[0];
         var itemHtml = '<div class="layui-form-item flex search-index-item" style="align-items:center" name="' + name + '">';
         itemHtml += '<div class="layui-input-inline" style="flex:2;">';
-        itemHtml += '<select name="' + name + '" class="layui-form-select">';
+        itemHtml += '<select name="' + name + '" class="layui-form-select" stype="selectRelation" >';
         itemHtml += '<option value="AND" selected>AND</option>';
         itemHtml += '<option value="OR">OR</option>';
         itemHtml += '<option value="NOT">NOT</option>';
@@ -29,7 +31,7 @@ function initPage() {
         itemHtml += '<div style="flex:1;text-align:right;padding-right:10px;">' + name + "</div>";
 
         itemHtml += '<div class="layui-input-inline" style="flex:6">';
-        itemHtml += '<select name="' + name + '" class="layui-form-select" style="flex:1">';
+        itemHtml += '<select name="' + name + '" class="layui-form-select" style="flex:1" stype="selectType" >';
         itemHtml += '<option value="">请选择' + name + "</option>";
         if (item.selector && item.selector.length > 0) {
           layui.each(item.selector, function (idx, s) {
@@ -39,9 +41,24 @@ function initPage() {
 
         itemHtml += "</select> ";
         itemHtml += " </div>";
-        itemHtml += '<div class="layui-input-inline" style="flex:6;"> ';
-        itemHtml += '<input type="text" name="' + name + '" placeholder="请输入' + name + '" autocomplete="off" class="layui-input">';
-        itemHtml += "</div>";
+
+        if (item.isDate) {
+          dateId = _this.dateId++;
+          itemHtml += '<div class="layui-inline flex" style="flex:6;">';
+          itemHtml += '   <div class="layui-input-inline" style="flex:6;width:auto;">';
+          itemHtml += '     <input type="text" name="' + name + '" id="dateStart' + dateId + '" placeholder="请选择日期" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">';
+          itemHtml += "   </div>";
+          itemHtml += '   <div class="layui-form-mid" style="flex:2;text-align: center;">-</div>';
+          itemHtml += '   <div class="layui-input-inline" style="flex:6;width:auto;">';
+          itemHtml += '     <input type="text" id="dateEnd' + dateId + '" placeholder="请选择日期" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">';
+          itemHtml += "   </div>";
+          itemHtml += " </div>";
+        } else {
+          itemHtml += '<div class="layui-input-inline" style="flex:6;"> ';
+          itemHtml += '   <input type="text" name="' + name + '" placeholder="请输入' + name + '" autocomplete="off" class="layui-input">';
+          itemHtml += "</div>";
+        }
+
         itemHtml += '<div class="layui-input-inline flex" style="flex:1; align-items: center; cursor:pointer;">';
         itemHtml += '<i class="layui-icon layui-icon-subtraction" id="delSearchItem" name="' + name + '"></i> ';
         itemHtml += "</div>";
@@ -51,32 +68,47 @@ function initPage() {
       if (last.length > 0) {
         var lastItem = $(".search-index-item[name=" + name + "]")[last.length - 1];
         $(lastItem).after(itemHtml);
+        if (item.isDate) {
+          laydate.render({
+            elem: "#dateStart" + dateId,
+          });
+          laydate.render({
+            elem: "#dateEnd" + dateId,
+          });
+        }
+
         form.render();
       }
     }
 
     // 渲染模板以及数据到dom元素里去
     function renderContent() {
-      if (_this.pageData.length > 0) {
+      if (_this.fieldsData.length > 0) {
         var advview = document.getElementById("adv-body-advance");
         var fieldview = document.getElementById("adv-body-fields");
         // 上面检索项
-        laytpl(advancepat).render(_this.pageData, function (html) {
+        laytpl(advancepat).render(_this.fieldsData, function (html) {
           // 高级检索
           advview.innerHTML = html;
+          laydate.render({
+            elem: "#dateStart",
+          });
+          laydate.render({
+            elem: "#dateEnd",
+          });
           form.render();
         });
 
         // 下面指令
-        laytpl(fieldspat).render(_this.pageData, function (html) {
+        laytpl(fieldspat).render(_this.fieldsData, function (html) {
           fieldview.innerHTML = html;
         });
       }
     }
 
     _this.init = function () {
-      $.getJSON("mock/advance.json", function (res, status) {
-        _this.pageData = res.data;
+      $.getJSON("mock/filterFields.json", function (res, status) {
+        _this.fieldsData = res.data;
         renderContent();
       });
     };
@@ -94,22 +126,49 @@ function initPage() {
         return val !== undefined && val !== "";
       });
 
+      var error = false;
+      var errorMsg = "";
       if (hasValue && hasValue.length > 0) {
         hasValue.each(function () {
           var val = $(this).val();
           var name = $(this).attr("name");
-          var selectType = $(this).parent().parent().find('select[stype = "selectType"]');
-          var selectRel = $(this).parent().parent().find('select[stype = "selectRelation"]');
-          if (selectType.val() == undefined || selectType.val() == "") {
-            layer.msg("请选择" + name);
-          } else {
-            indexStr += selectRel.val() + " " + selectType.val() + ":(" + val + ") ";
 
-            if (indexStr.startsWith("AND")) indexStr = indexStr.replace("AND ", "");
-            if (indexStr.startsWith("OR")) indexStr = indexStr.replace("OR ", "");
-            if (indexStr.startsWith("NOT")) indexStr = indexStr.replace("NOT ", "");
+          if (name == "日期") {
+            var selectType = $(this).parent().parent().parent().find('select[stype = "selectType"]');
+            var selectRel = $(this).parent().parent().parent().find('select[stype = "selectRelation"]');
+            // ad:[2021-01-12 TO 2021-01-13]
+            var endVal = $(this).parent().next().next().find("input").val();
+            if (!endVal || endVal == "") {
+              error = true;
+              errorMsg = "请输入日期";
+              return;
+            }
+            if (selectType.val() == undefined || selectType.val() == "") {
+              error = true;
+              errorMsg = "请输入" + name + "类型";
+            } else {
+              var dateVal = val + " TO " + endVal;
+              indexStr += selectRel.val() + " " + selectType.val() + ":[" + dateVal + "] ";
+            }
+          } else {
+            var selectType = $(this).parent().parent().find('select[stype = "selectType"]');
+            var selectRel = $(this).parent().parent().find('select[stype = "selectRelation"]');
+            if (selectType.val() == undefined || selectType.val() == "") {
+              error = true;
+              errorMsg = "请输入" + name + "类型";
+            } else {
+              indexStr += selectRel.val() + " " + selectType.val() + ":(" + val + ") ";
+            }
           }
+          if (indexStr.startsWith("AND")) indexStr = indexStr.replace("AND ", "");
+          if (indexStr.startsWith("OR")) indexStr = indexStr.replace("OR ", "");
+          if (indexStr.startsWith("NOT")) indexStr = indexStr.replace("NOT ", "");
         });
+      }
+
+      if (error) {
+        layer.msg(errorMsg);
+      } else {
         if (indexStr !== "") {
           $("#instruceTexteat").val(indexStr);
         }

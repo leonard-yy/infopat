@@ -118,7 +118,7 @@
           "value": "adm"
         }
       ],
-      "isDate": false
+      "isDate": true
     },
     {
       "name": "分类",

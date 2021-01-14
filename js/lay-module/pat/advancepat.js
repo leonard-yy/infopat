@@ -39,9 +39,23 @@ layui.define("patNodataPage", function (exports) {
           </select> 
         </div>
 
-        <div class="layui-input-inline" style="flex:6;">  
-          <input type="text" name={{item.name}} placeholder={{"请输入" + item.name || ""}} autocomplete="off" class="layui-input">
-        </div>
+        {{#  if(item.isDate) { }}
+          <div class="layui-inline flex" style="flex:6;">
+            <div class="layui-input-inline" style="flex:6;width:auto;">
+              <input type="text" id="dateStart" name={{item.name}} placeholder="请选择日期" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid" style="flex:2;text-align: center;">-</div>
+
+            <div class="layui-input-inline" style="flex:6;width:auto;">
+              <input type="text" id="dateEnd" placeholder="请选择日期" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        {{#   } else { }}
+          <div class="layui-input-inline" style="flex:6;">  
+            <input type="text" name={{item.name}} placeholder={{"请输入" + item.name || ""}} autocomplete="off" class="layui-input">
+          </div>
+        {{#   } }}
+
         <div class="layui-input-inline flex" style="flex:1; align-items: center; cursor:pointer;">
             <i class="layui-icon layui-icon-addition" id="addSearchItem" name={{item.name}}></i> 
         </div>
