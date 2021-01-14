@@ -160,6 +160,10 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     });
   };
 
+  /**
+   * uri参数
+   * @param {*} name
+   */
   _this.getParamFromUri = function (name) {
     const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`); // 构造一个含有目标参数的正则表达式对象
     const r = window.location.search.substr(1).match(reg); // 匹配目标参数

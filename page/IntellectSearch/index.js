@@ -14,33 +14,12 @@ layui.use(["layuipotal", "loader"], function () {
   $containerDom.append(checkbox);
 
   /**
-   * 去列表页面 本页跳转
-   */
-  function gotoListPage() {
-    layui.sessionData("session", { key: "listValue", value: "I" });
-    window.location.href = "/list.html";
-  }
-  /**
    * 检索
    */
   $("#intelSearchBtn").on("click", function () {
     var value = $("#intelSearchInput").val();
-    var cValue = [];
-    $("#choose-country")
-      .find('input[value="checked"]')
-      .each(function () {
-        cValue.push($(this).data().value);
-      });
     if (value && value !== "") {
-      layui.sessionData("session", {
-        key: "intellectSearchValue",
-        value: value,
-      });
-      layui.sessionData("session", {
-        key: "advanceCountryValue",
-        value: cValue,
-      });
-      gotoListPage();
+      window.location.href = "/list.html?s=" + value + "&dp=CHINA&ds=CN,TW,HK,MO";
     }
   });
 });

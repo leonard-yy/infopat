@@ -119,25 +119,42 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         var $menuDom = $(".search-menu");
         $menuDom.append('<div class="search-country-selector" id="choose-country"></div>');
         var _this = this;
-        $.getJSON("mock/tree.json", function (res, status) {
+        $.getJSON("mock/country.json", function (res, status) {
           _this.getTreeDom(res.data || []);
         });
       }
     };
 
+    /**
+     * 国家选择树
+     * @param {*} data
+     */
     this.getTreeDom = function (data) {
       var $selectorDom = $(".search-country-selector");
       var getParentNode = function (item) {
         // 叶子节点  COUNTRY-PARENT-VALUE
-        var tpl = '<div class="search-country-item with-parent">';
+        if (item.value == "NORMAL") {
+          return "";
+        }
+        var tpl = "";
+        if (item.value == "ALL") {
+          tpl = '<div class="search-country-item mb10">';
+        } else {
+          tpl = '<div class="search-country-item with-parent">';
+        }
+
         tpl += '      <div class="squared-checkbox">';
-        tpl += '          <input type="checkbox" class="tree-search-parent" ';
+        if (item.value == "CHINA") {
+          tpl += '          <input type="checkbox" class="tree-search-parent" value="checked" ';
+        } else {
+          tpl += '          <input type="checkbox" class="tree-search-parent" ';
+        }
         tpl += '              id="COUNTRY-PARENT-' + item.value + '" />';
         tpl += '               <label class="country-checkbox-parent" for="COUNTRY-PARENT-';
         tpl += item.value + '" />';
         tpl += "      </div>";
         tpl += '      <span class="block-back ml10"/>';
-        tpl += '      <span class="ml10 search-country-title with-parent" >' + item.title + "</span>";
+        tpl += '      <span class="ml10 search-country-title with-parent ellipsis-text" style="flex:1" title="' + item.title + '">' + item.title + "</span>";
         tpl += "   </div>";
         return tpl;
       };
@@ -145,14 +162,18 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         // 子节点  COUNTRY-PARENT-VALUE
         var tpl = '<div class="search-country-item">';
         tpl += '      <div class="squared-checkbox">';
-        tpl += '          <input type="checkbox" class="tree-search-child" ';
+        if (item.parent == "CHINA") {
+          tpl += '          <input type="checkbox" class="tree-search-child" value="checked" ';
+        } else {
+          tpl += '          <input type="checkbox" class="tree-search-child" ';
+        }
         tpl += '              parent="' + item.parent + '" ';
         tpl += '              id="COUNTRY-CHILD-' + item.value + '" />';
         tpl += '          <label class="country-checkbox-child" ';
         tpl += '              for="COUNTRY-CHILD-' + item.value + '" />';
         tpl += "      </div>";
         tpl += '      <span class="block-back ml10"/>';
-        tpl += '      <span class="ml10" >' + item.title + "</span>";
+        tpl += '      <span class="ml10 ellipsis-text" style="flex:1" title="' + item.title + '">' + item.title + "</span>";
         tpl += "   </div>";
         return tpl;
       };
@@ -317,12 +338,20 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
       $("#choose-country")
         .find("input[parent = " + value + "]")
         .attr("value", "unchecked");
+      // 特殊 全球
+      if (value == "ALL") {
+        $("#choose-country").find("input").attr("value", "unchecked");
+      }
     } else {
       // 选择
       $(e.currentTarget).prev().attr("value", "checked");
       $("#choose-country")
         .find("input[parent = " + value + "]")
         .attr("value", "checked");
+      // 特殊 全球
+      if (value == "ALL") {
+        $("#choose-country").find("input").attr("value", "checked");
+      }
     }
   });
 

@@ -75,7 +75,7 @@
         .search-country-item {
           display: flex;
           align-items: center;
-          padding: 5px 10px;
+          padding: 0px 10px;
           .block-back {
             height: 16px;
             width: 16px;
@@ -283,7 +283,7 @@
             font-family: PingFangSC-Regular;
             font-size: 14px;
             color: #333333;
-            line-height: 30px;
+            line-height: 24px;
             &.normal {
               font-weight: 500;
             }
@@ -323,6 +323,9 @@
         }
         .layui-nav-itemed > .layui-nav-child {
           background-color: #ffffff !important;
+        }
+        .layui-nav-child {
+          line-height: 24px;
         }
       }
       .result-content-container {
@@ -482,6 +485,7 @@
     display: flex;
     align-items: center;
     padding: 5px 6px;
+    flex-wrap: wrap;
   }
   .search-country-layer {
     max-width: 140px;
@@ -603,6 +607,12 @@
 }
 .algcenter {
   align-items: center;
+}
+.ellipsis-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
 }
 .slef-search-btn {
   display: inline-block;

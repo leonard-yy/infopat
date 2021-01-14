@@ -29,25 +29,6 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   // 自定义输入框
   document.onkeydown = _this.resizeTextarea;
 
-  var listValue = layui.sessionData("session").listValue;
-  var value = "";
-  if (listValue === "A") {
-    value = layui.sessionData("session").advanceSearchValue;
-    layui.sessionData("session", {
-      key: "advanceSearchValue",
-      value: "",
-    });
-  } else {
-    value = layui.sessionData("session").intellectSearchValue;
-    layui.sessionData("session", {
-      key: "intellectSearchValue",
-      value: "",
-    });
-  }
-  $("#expandTextarea").val(value);
-  _this.searchText = value;
-  _this.resizeTextarea();
-
   /**
    * 查询左侧选择框 lazy
    */
@@ -89,8 +70,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             }
           });
           // 筛选
-          var sxhtml = '<span class="slef-search-btn normal select-of-result" id="' + sel.value + '" style="width: 80px">筛选</span>';
-          var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" id="' + sel.value + '" style="width: 80px">过滤</span>';
+          var sxhtml = '<span class="slef-search-btn normal select-of-result" data-value="' + sel.value + '" style="width: 80px;height:24px;line-height:24px">筛选</span>';
+          var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" data-value="' + sel.value + '" style="width: 80px;height:24px;line-height:24px">过滤</span>';
           temp += '       <dd class="result-selector-filter">' + sxhtml + glhtml + "</dd>";
           temp += "    </dl>";
           $("#T-" + sel.value + " dl").remove();
@@ -99,6 +80,17 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         }
       });
     }
+  };
+
+  /**
+   * uri参数
+   * @param {*} name
+   */
+  _this.getParamFromUri = function (name) {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`); // 构造一个含有目标参数的正则表达式对象
+    const r = window.location.search.substr(1).match(reg); // 匹配目标参数
+    if (r != null) return decodeURI(r[2]);
+    return null; // 返回参数值
   };
 
   /**
@@ -124,7 +116,6 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         //obj包含了当前分页的所有参数，比如：
         // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
         // console.log(obj.limit); //得到每页显示的条数
-
         if (!first) {
           _this.page = obj.curr;
           _this.initContent();
@@ -147,10 +138,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
 
       layui.each(data, function (index, item) {
         temp += '<li class="layui-nav-item layui-nav-itemed" id="T-' + item.value + '">';
-        // 自定义叶子节点
-        // temp += '<div class="result-selector-item bb">';
         temp += '  <a class="result-selector-title result-selector-item bb" >' + item.name + "</a>";
-        // temp += "</div>";
         temp += "</li>";
       });
       temp += "</ul>";
@@ -190,7 +178,12 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     if (currentMenu !== "LIST") {
       return;
     }
-
+    // 初始化输入框
+    var value = _this.getParamFromUri("s");
+    $("#expandTextarea").val(value);
+    _this.searchText = value;
+    // _this.resizeTextarea();
+    // 初始化页面
     _this.initSelector();
     _this.initContent();
   };
@@ -367,51 +360,71 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   });
 
   /**
+   * 筛选过滤
+   */
+  $("#searchResult").on("click", ".select-of-result", function (e) {});
+  $("#searchResult").on("click", ".filter-of-result", function (e) {});
+
+  /**
    * 全球按钮
    */
   $("#quanqiuSelector").on("click", function (e) {
     var getParentNode = function (item) {
+      var parentChecked = _this.getParamFromUri("dp");
       // 叶子节点  COUNTRY-PARENT-VALUE
       var tpl = '<div class="search-country-layer">';
       tpl += '      <div class="squared-checkbox">';
-      tpl += '          <input type="checkbox" class="tree-search-parent" ';
+      if (parentChecked && parentChecked.indexOf(item.value) !== -1) {
+        tpl += '          <input type="checkbox" class="tree-search-parent" value="checked" ';
+      } else {
+        tpl += '          <input type="checkbox" class="tree-search-parent" ';
+      }
       tpl += '              id="COUNTRY-PARENT-' + item.value + '" />';
       tpl += '               <label class="country-layer-parent" for="COUNTRY-PARENT-';
       tpl += item.value + '" />';
       tpl += "      </div>";
-      tpl += '      <span class="ml10 over-text" title="' + item.title + '">' + item.title + "</span>";
+      tpl += '      <span class="ml10 search-country-title with-parent ellipsis-text" style="flex:1" title="' + item.title + '">' + item.title + "</span>";
       tpl += "   </div>";
       return tpl;
     };
+
     var getChildNode = function (item) {
+      var childChecked = _this.getParamFromUri("ds");
       // 子节点  COUNTRY-PARENT-VALUE
       var tpl = '<div class="search-country-layer">';
       tpl += '      <div class="squared-checkbox">';
-      tpl += '          <input type="checkbox" class="tree-search-child" ';
+      if (childChecked && childChecked.indexOf(item.value) !== -1) {
+        tpl += '          <input type="checkbox" class="tree-search-child" value="checked" ';
+      } else {
+        tpl += '          <input type="checkbox" class="tree-search-child" ';
+      }
       tpl += '              parent="' + item.parent + '" ';
       tpl += '              id="COUNTRY-CHILD-' + item.value + '" />';
       tpl += '          <label class="country-layer-child" ';
       tpl += '              for="COUNTRY-CHILD-' + item.value + '" />';
       tpl += "      </div>";
       tpl += '      <span class="block-back ml10"/>';
-      tpl += '      <span class="ml10 over-text"title="' + item.title + '">' + item.title + "</span>";
+      tpl += '      <span class="ml10 ellipsis-text" style="flex:1" title="' + item.title + '">' + item.title + "</span>";
       tpl += "   </div>";
       return tpl;
     };
 
     var content = '<div style="padding:20px;" class="layer-country-checkbox">';
-    $.getJSON("mock/tree.json", function (res, status) {
+    $.getJSON("mock/country.json", function (res, status) {
       var data = res.data;
 
       data.map(function (item, index) {
-        if (item.title == "中国" || item.title == "全球") {
-          var temp = '<div class="layer-line-parent inlineBlock">';
-        } else {
-          var temp = '<div class="layer-line-parent">';
+        var temp = "";
+        if (item.value !== "NORMAL") {
+          if (item.title == "中国" || item.title == "全球") {
+            temp = '<div class="layer-line-parent inlineBlock">';
+          } else {
+            temp = '<div class="layer-line-parent">';
+          }
+          temp += getParentNode(item);
+          temp += "</div>";
         }
 
-        temp += getParentNode(item);
-        temp += "</div>";
         if (item.children && item.children.length > 0) {
           temp += '<div class="layer-line-child">';
           item.children.map(function (child, idx) {

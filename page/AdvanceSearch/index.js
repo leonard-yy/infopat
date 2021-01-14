@@ -82,13 +82,6 @@ function initPage() {
     };
 
     _this.init();
-    /**
-     * 去列表页面
-     */
-    function gotoListPage() {
-      layui.sessionData("session", { key: "listValue", value: "A" });
-      window.open("/list.html", "_blank");
-    }
 
     /**
      * 生成检索式
@@ -129,22 +122,29 @@ function initPage() {
     $("#instruceSearch").on("click", function () {
       // 纪录本页查询值
       var value = $("#instruceTexteat").val();
-      var cValue = [];
-      $("#")
-        .find('input[value="checked"]')
-        .each(function () {
-          cValue.push($(this).data().value);
-        });
       if (value && value !== "") {
-        layui.sessionData("session", {
-          key: "advanceSearchValue",
-          value: value,
+        // 纪录国家选择树的值
+        var contryChecked = "";
+        $('.tree-search-child[value = "checked"]').each(function (i, e) {
+          var id = $(this).attr("id");
+          var v = id.split("-").pop();
+          if (i == 0) {
+            contryChecked += v;
+          } else {
+            contryChecked += "," + v;
+          }
         });
-        layui.sessionData("session", {
-          key: "intellectCountryValue",
-          value: cValue,
+        var contryChecked2 = "";
+        $('.tree-search-parent[value = "checked"]').each(function (i, e) {
+          var id = $(this).attr("id");
+          var v = id.split("-").pop();
+          if (i == 0) {
+            contryChecked2 += v;
+          } else {
+            contryChecked2 += "," + v;
+          }
         });
-        gotoListPage();
+        window.open("/list.html?s=" + value + "&ds=" + contryChecked + "&dp=" + contryChecked2, "_blank");
       }
     });
 

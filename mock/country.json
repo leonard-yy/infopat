@@ -1,0 +1,653 @@
+{
+  "data": [
+    {
+      "title": "中国",
+      "value": "CHINA",
+      "isLeaf": true
+    },
+    {
+      "title": "全球",
+      "value": "ALL",
+      "isLeaf": true
+    },
+    {
+      "title": "通用",
+      "value": "NORMAL",
+      "isLeaf": true,
+      "children": [
+        {
+          "title": "中国",
+          "value": "CN",
+          "isLeaf": false,
+          "parent": "CHINA"
+        },
+        {
+          "title": "中国台湾",
+          "value": "TW",
+          "isLeaf": false,
+          "parent": "CHINA"
+        },
+        {
+          "title": "中国香港",
+          "value": "HK",
+          "isLeaf": false,
+          "parent": "CHINA"
+        },
+        {
+          "title": "中国澳门",
+          "value": "MO",
+          "isLeaf": false,
+          "parent": "CHINA"
+        },
+        {
+          "title": "美国",
+          "value": "US",
+          "isLeaf": false,
+          "parent": "NORMAL"
+        },
+        {
+          "title": "日本",
+          "value": "JP",
+          "isLeaf": false,
+          "parent": "NORMAL"
+        },
+        {
+          "title": "韩国",
+          "value": "KR",
+          "isLeaf": false,
+          "parent": "NORMAL"
+        },
+        {
+          "title": "欧盟",
+          "value": "EP",
+          "isLeaf": false,
+          "parent": "NORMAL"
+        },
+        {
+          "title": "WO",
+          "value": "WIPO",
+          "isLeaf": false,
+          "parent": "NORMAL"
+        }
+      ]
+    },
+    {
+      "title": "欧洲国家",
+      "value": "EUROPE",
+      "isLeaf": true,
+      "children": [
+        {
+          "title": "德国",
+          "value": "DE",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "英国",
+          "value": "GB",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "法国",
+          "value": "FR",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "俄罗斯",
+          "value": "RU",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "瑞士",
+          "value": "CH",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "冰岛",
+          "value": "IS",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "丹麦",
+          "value": "DK",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "希腊",
+          "value": "GR",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "捷克",
+          "value": "CZ",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "挪威",
+          "value": "NO",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "芬兰",
+          "value": "FI",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "荷兰",
+          "value": "NL",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "波兰",
+          "value": "PL",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "瑞典",
+          "value": "SE",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "爱尔兰",
+          "value": "IE",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "比利时",
+          "value": "BE",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "匈牙利",
+          "value": "HU",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+
+        {
+          "title": "意大利",
+          "value": "IT",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "西班牙",
+          "value": "SE",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "乌克兰",
+          "value": "UA",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "葡萄牙",
+          "value": "PT",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+
+        {
+          "title": "奥地利",
+          "value": "AT",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "马耳他",
+          "value": "MT",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "摩纳哥",
+          "value": "MC",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "葡萄牙",
+          "value": "PT",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+
+        {
+          "title": "卢森堡",
+          "value": "LU",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "立陶宛",
+          "value": "LT",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "前苏联",
+          "value": "SU",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "南斯拉夫",
+          "value": "YU",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "斯洛伐克",
+          "value": "SK",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+
+        {
+          "title": "圣马力诺",
+          "value": "SM",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "罗马尼亚",
+          "value": "RO",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "塞尔维亚",
+          "value": "RS",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "摩尔多瓦",
+          "value": "MD",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "拉脱维亚",
+          "value": "LV",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+
+        {
+          "title": "克罗地亚",
+          "value": "HR",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "格鲁吉亚",
+          "value": "GE",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "爱沙尼亚",
+          "value": "EE",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "塞浦路斯",
+          "value": "CY",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "波斯尼亚和黑塞哥维那",
+          "value": "BA",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        },
+        {
+          "title": "欧亚专利组织",
+          "value": "EA",
+          "isLeaf": false,
+          "parent": "EUROPE"
+        }
+      ]
+    },
+    {
+      "title": "亚洲国家",
+      "value": "ASIA",
+      "isLeaf": true,
+      "children": [
+        {
+          "title": "印度",
+          "value": "IN",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "沙特阿拉伯",
+          "value": "SA",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "约旦",
+          "value": "JO",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "越南",
+          "value": "VN",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "泰国",
+          "value": "TH",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "蒙古",
+          "value": "MN",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+
+        {
+          "title": "以色列",
+          "value": "IL",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "新加坡",
+          "value": "SG",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "菲律宾",
+          "value": "PH",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "土耳其",
+          "value": "TR",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+
+        {
+          "title": "亚美尼亚",
+          "value": "AM",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "马来西亚",
+          "value": "MY",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "印度尼西亚",
+          "value": "ID",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "吉尔吉斯斯坦",
+          "value": "KG",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+
+        {
+          "title": "塔吉克斯坦",
+          "value": "TJ",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "哈萨克斯坦",
+          "value": "KZ",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "乌兹别克斯坦",
+          "value": "UZ",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "海湾地区阿拉伯国家合作委员会专利局",
+          "value": "GC",
+          "isLeaf": false,
+          "parent": "ASIA"
+        },
+        {
+          "title": "澳大利亚",
+          "value": "AU",
+          "isLeaf": false,
+          "parent": "ASIA"
+        }
+      ]
+    },
+    {
+      "title": "非洲国家",
+      "value": "AFRICA",
+      "isLeaf": true,
+      "children": [
+        {
+          "title": "南非",
+          "value": "ZA",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "埃及",
+          "value": "EG",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "肯尼亚",
+          "value": "KE",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+
+        {
+          "title": "摩洛哥",
+          "value": "MA",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+
+        {
+          "title": "马拉维",
+          "value": "MW",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "赞比亚",
+          "value": "ZM",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+
+        {
+          "title": "突尼斯",
+          "value": "TN",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "阿尔及利亚",
+          "value": "DZ",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "津巴布韦",
+          "value": "ZW",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "非洲知识产权组织",
+          "value": "OA",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        },
+        {
+          "title": "非洲地区工业产权组织",
+          "value": "AP",
+          "isLeaf": false,
+          "parent": "AFRICA"
+        }
+      ]
+    },
+    {
+      "title": "美洲国家",
+      "value": "AMERICA",
+      "isLeaf": true,
+      "children": [
+        {
+          "title": "巴西",
+          "value": "BR",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "智利",
+          "value": "CL",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "秘鲁",
+          "value": "PE",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "古巴",
+          "value": "CU",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "加拿大",
+          "value": "CA",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "墨西哥",
+          "value": "MX",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+
+        {
+          "title": "阿根廷",
+          "value": "AR",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+
+        {
+          "title": "乌拉圭",
+          "value": "UY",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "巴拿马",
+          "value": "PA",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "厄瓜多尔",
+          "value": "EC",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "危地马拉",
+          "value": "GT",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "洪都拉斯",
+          "value": "HN",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+
+        {
+          "title": "尼加拉瓜",
+          "value": "NI",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+
+        {
+          "title": "萨尔瓦多",
+          "value": "SV",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "哥斯达黎加",
+          "value": "CR",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "哥伦比亚",
+          "value": "CO",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+        {
+          "title": "多米尼加共和国",
+          "value": "DM",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        },
+
+        {
+          "title": "特立尼达和多巴哥",
+          "value": "TT",
+          "isLeaf": false,
+          "parent": "AMERICA"
+        }
+      ]
+    }
+  ]
+}
