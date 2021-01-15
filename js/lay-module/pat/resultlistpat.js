@@ -42,7 +42,7 @@ layui.define("patNodataPage", function (exports) {
                         {{#  } }} 
                     </div>
                     <div style="flex; width: 100px;">
-                        <i class="layui-icon layui-icon-star fork-star" style="color:#F7B500;cursor:pointer"></i>
+                        <i class="layui-icon layui-icon-star fork-star" id={{"FORK-KEY-"+ item.id}} style="color:#F7B500;cursor:pointer"></i>
                         <span>收藏</span>
                     </div>
                    

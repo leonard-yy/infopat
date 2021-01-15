@@ -50,7 +50,7 @@ function initPage() {
           itemHtml += "   </div>";
           itemHtml += '   <div class="layui-form-mid" style="flex:2;text-align: center;">-</div>';
           itemHtml += '   <div class="layui-input-inline" style="flex:6;width:auto;">';
-          itemHtml += '     <input type="text" id="dateEnd' + dateId + '" placeholder="请选择日期" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">';
+          itemHtml += '     <input type="text" id="dateEnd' + dateId + '" sdate="true" placeholder="请选择日期" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">';
           itemHtml += "   </div>";
           itemHtml += " </div>";
         } else {
@@ -217,6 +217,7 @@ function initPage() {
       // 清空输入框
       $("#searchForm").find("input[name]").val("");
       // 清空日期
+      $("#searchForm").find("input[sdate]").val("");
     });
     /**
      * 添加检索项

@@ -47,7 +47,7 @@ layui.define("patNodataPage", function (exports) {
             <div class="layui-form-mid" style="flex:2;text-align: center;">-</div>
 
             <div class="layui-input-inline" style="flex:6;width:auto;">
-              <input type="text" id="dateEnd" placeholder="请选择日期" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+              <input type="text" id="dateEnd" sdate="true" placeholder="请选择日期" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
             </div>
           </div>
         {{#   } else { }}

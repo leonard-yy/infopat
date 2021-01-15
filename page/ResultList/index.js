@@ -277,7 +277,14 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     var checkValue = [];
     checkedInput.each(function () {
       var id = $(this).parent().find("input").attr("id");
-      checkValue.push(id.split("-").pop());
+      var v = id.split("-").pop();
+      checkValue.push(v);
+
+      $("#FORK-KEY-" + v).removeClass("layui-icon-star");
+      $("#FORK-KEY-" + v).addClass("layui-icon-star-fill");
+      $("#FORK-KEY-" + v)
+        .next()
+        .html("取消收藏");
     });
     layer.msg(checkValue.toString());
   });
