@@ -199,7 +199,7 @@
             border-radius: 6px;
             font-size: 14px;
             font-family: PingFangSC-Regular;
-            overflow: hidden;
+            // overflow: hidden;
             word-wrap: break-word;
           }
           textarea:hover {
@@ -244,6 +244,38 @@
       flex: 1;
       display: flex;
       overflow-x: auto;
+      .result-left-filter {
+        width: 200px;
+        .filter-item {
+          margin: 10px;
+          padding: 12px;
+          box-shadow: 0 0 0 1px #a9d5de inset, 0 0 0 0 transparent;
+          background-color: #f8ffff;
+          color: #276f86;
+          position: relative;
+          .key-word {
+            color: #14a3f3;
+          }
+          .key-type {
+            color: #000000;
+          }
+          .close-icon-self {
+            height: 12px;
+            width: 12px;
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            background: gray;
+            color: #ffffff;
+            line-height: 9px;
+            font-size: 12px;
+            text-align: center;
+            display: inline-block;
+            border-radius: 6px;
+            cursor: pointer;
+          }
+        }
+      }
       .result-left-selector {
         background: #ffffff;
         width: 200px;
