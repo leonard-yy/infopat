@@ -13,7 +13,6 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
   layuipotal = new (function () {
     // 智能检索 I 高级检索 A
     this.currentPage = "I";
-
     this.init = function (url) {
       //自定义loading样式
       loader.show($("#loading"));
@@ -268,23 +267,31 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
    * 头部菜单点击事件
    */
   $("body").on("click", "[top-menu-item]", function () {
-    //自定义loading样式
+    // 未采用组件，前期没确认路由跳转 可优化
     var menuName = $(this).attr("top-menu-item");
-    if (window.location.href.indexOf("list") !== -1) {
-      layui.sessionData("session", {
-        key: "currentPage",
-        value: menuName === "intellectSearch" ? "I" : "A",
-      });
-      window.location.href = "/index.html";
-      return;
-    }
-    if ((menuName === "intellectSearch" && layuipotal.currentPage == "I") || (menuName === "advanceSearch" && layuipotal.currentPage == "A")) {
-      return;
-    }
 
     $(".search-left-menu-item").removeClass("active");
     $(".sch-icon").removeClass("active");
 
+    // 不在首页 点击子节点
+    if (window.location.href.indexOf("index") == -1) {
+      if (menuName === "intellectSearch") {
+        layui.sessionData("session", {
+          key: "currentPage",
+          value: "I",
+        });
+        window.location.href = "/index.html";
+        return;
+      }
+      if (menuName === "advanceSearch") {
+        layui.sessionData("session", {
+          key: "currentPage",
+          value: "A",
+        });
+        window.location.href = "/index.html";
+        return;
+      }
+    }
     if (menuName === "intellectSearch" && layuipotal.currentPage !== "I") {
       layuipotal.currentPage = "I";
       layuipotal.initSearchPage("I");
@@ -292,6 +299,10 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
     if (menuName === "advanceSearch" && layuipotal.currentPage !== "A") {
       layuipotal.currentPage = "A";
       layuipotal.initSearchPage("A");
+    }
+    if (menuName === "favorite") {
+      window.location.href = "/favorite.html";
+      layuipotal.currentPage = "F";
     }
   });
 
