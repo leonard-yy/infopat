@@ -8,24 +8,48 @@
           "value": "ti"
         },
         {
-          "name": "中文摘要",
-          "value": "cab"
-        },
-        {
-          "name": "标题中文和英文",
-          "value": "ceti"
+          "name": "中文标题",
+          "value": "cti"
         },
         {
           "name": "英文标题",
           "value": "eti"
         },
         {
-          "name": "权利要求",
-          "value": "cl"
+          "name": "标题中文和英文",
+          "value": "ceti"
+        },
+        {
+          "name": "摘要",
+          "value": "ab"
+        },
+        {
+          "name": "中文摘要",
+          "value": "cab"
+        },
+        {
+          "name": "英文摘要",
+          "value": "eab"
         },
         {
           "name": "标题与摘要的中英文",
           "value": "cets"
+        },
+        {
+          "name": "权利要求",
+          "value": "cl"
+        },
+        {
+          "name": "英文权利要求",
+          "value": "ecl"
+        },
+        {
+          "name": "说明书",
+          "value": "d"
+        },
+        {
+          "name": "英文说明书",
+          "value": "eds"
         }
       ],
       "isDate": false
@@ -38,12 +62,20 @@
           "value": "ap"
         },
         {
+          "name": "第一申请人",
+          "value": "fap"
+        },
+        {
           "name": "发明人",
           "value": "in"
         },
         {
-          "name": "第一申请人",
-          "value": "fap"
+          "name": "代理人",
+          "value": "at"
+        },
+        {
+          "name": "代理机构",
+          "value": "ag"
         },
         {
           "name": "申请人地址",
@@ -54,32 +86,8 @@
           "value": "aee"
         },
         {
-          "name": "申请日期年",
-          "value": "ady"
-        },
-        {
-          "name": "申请人",
-          "value": "ap"
-        },
-        {
-          "name": "发明人",
-          "value": "in"
-        },
-        {
-          "name": "第一申请人",
-          "value": "fap"
-        },
-        {
-          "name": "申请人地址",
-          "value": "addr"
-        },
-        {
-          "name": "专利权人",
-          "value": "aee"
-        },
-        {
-          "name": "申请日期年",
-          "value": "ady"
+          "name": "当前专利权人",
+          "value": "caee"
         }
       ],
       "isDate": false
@@ -114,8 +122,29 @@
           "value": "dd"
         },
         {
+          "name": "公开(公告)日期年",
+          "value": "ddy"
+        },
+        {
+          "name": "公开(公告)日期月",
+          "value": "ddm"
+        },
+        {
+          "name": "申请日期",
+          "value": "ad"
+        },
+
+        {
+          "name": "申请日期年",
+          "value": "ady"
+        },
+        {
           "name": "申请日期月",
           "value": "adm"
+        },
+        {
+          "name": "PCT进入国家阶段日",
+          "value": "pctDate"
         }
       ],
       "isDate": true
@@ -128,8 +157,72 @@
           "value": "ipc"
         },
         {
+          "name": "IPC主分类",
+          "value": "ipc-main"
+        },
+        {
+          "name": "IPC主分类-大类",
+          "value": "ipcm-class"
+        },
+        {
+          "name": "IPC主分类-小类",
+          "value": "ipcm-subclass"
+        },
+        {
+          "name": "IPC主分类-部",
+          "value": "ipcm-section"
+        },
+        {
+          "name": "IPC主分类-大组",
+          "value": "ipcm-group"
+        },
+        {
+          "name": "IPC主分类-小组",
+          "value": "ipcm-subgroup"
+        },
+        {
+          "name": "IPC分类-大类",
+          "value": "ipc-class"
+        },
+        {
+          "name": "IPC分类-小类",
+          "value": "ipc-subclass"
+        },
+        {
+          "name": "IPC分类-部",
+          "value": "ipc-section"
+        },
+        {
+          "name": "IPC分类-大组",
+          "value": "ipc-group"
+        },
+        {
           "name": "IPC分类-小组",
           "value": "ipc-subgroup"
+        },
+        {
+          "name": "洛迦诺分类",
+          "value": "loc"
+        },
+        {
+          "name": "USPC分类号",
+          "value": "uspc"
+        },
+        {
+          "name": "USPC大类",
+          "value": "uspcc"
+        },
+        {
+          "name": "CPC联合专利分类",
+          "value": "cpc"
+        },
+        {
+          "name": "日本F-term分类",
+          "value": "ft"
+        },
+        {
+          "name": "日本FI分类",
+          "value": "fi"
         }
       ],
       "isDate": false
@@ -156,8 +249,114 @@
           "value": "type:"
         },
         {
+          "name": "语言",
+          "value": "lang"
+        },
+        {
+          "name": "城市",
+          "value": "city"
+        },
+        {
           "name": "申请人类型",
           "value": "apt"
+        },
+        {
+          "name": "专利权人类型",
+          "value": "aeet"
+        },
+        {
+          "name": "维持年份",
+          "value": "maintainYears"
+        },
+
+        {
+          "name": "国家代码",
+          "value": "cc"
+        },
+        {
+          "name": "申请人邮编",
+          "value": "ap-zip"
+        },
+        {
+          "name": "当前专利权人类型",
+          "value": "caeet"
+        },
+        {
+          "name": "引证数",
+          "value": "citedCount"
+        },
+
+        {
+          "name": "申请人国家代码",
+          "value": "acc"
+        },
+        {
+          "name": "国家",
+          "value": "country"
+        },
+        {
+          "name": "申请人类型",
+          "value": "apt"
+        },
+        {
+          "name": "代理机构代码",
+          "value": "agc"
+        },
+        {
+          "name": "被引证数",
+          "value": "citingCount"
+        },
+        {
+          "name": "文献类型",
+          "value": "kc"
+        },
+        {
+          "name": "省份",
+          "value": "province"
+        },
+        {
+          "name": "法律标签",
+          "value": "legalTag"
+        },
+        {
+          "name": "评级",
+          "value": "level"
+        },
+        {
+          "name": "裁判文书省",
+          "value": "judgment.province"
+        },
+        {
+          "name": "裁判文书法院",
+          "value": "judgment.court"
+        },
+        {
+          "name": "裁判文书案号",
+          "value": "judgment.caseId"
+        },
+        {
+          "name": "裁判文书被告",
+          "value": "judgment.defendant"
+        },
+        {
+          "name": "裁判文标题",
+          "value": "judgment.title"
+        },
+        {
+          "name": "裁判文书原告",
+          "value": "judgment.accuser"
+        },
+        {
+          "name": "裁判文书日期",
+          "value": "judgment.date"
+        },
+        {
+          "name": "裁判文书市",
+          "value": "judgment.city"
+        },
+        {
+          "name": "法律事件(转让，质押)",
+          "value": "legalEvent"
         }
       ],
       "isDate": false

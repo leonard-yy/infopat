@@ -169,7 +169,7 @@
     display: flex;
     flex-direction: column;
     .result-header {
-      min-height: 80px;
+      height: 70px;
       width: 100%;
       display: flex;
       align-items: center;
@@ -181,25 +181,25 @@
         font-size: 14px;
         // border: 1px solid #efefef;
         border-radius: 6px;
-        min-height: 60px;
+        min-height: 46px;
         padding-left: 20px;
 
         .expand-textarea {
           flex: 1;
-          padding: 10px;
+          padding: 5px 10px;
           position: relative;
           textarea {
             width: 100%;
-            padding: 15px 10px 10px 10px;
-            min-height: 60px;
+            padding: 5px;
+            max-height: 60px;
             resize: none;
             border: 1px solid #e6e6e6;
             background-color: rgba(239, 239, 239, 0.5);
             line-height: 24px;
+            height: 42px;
             border-radius: 6px;
             font-size: 14px;
             font-family: PingFangSC-Regular;
-            // overflow: hidden;
             word-wrap: break-word;
           }
           textarea:hover {
@@ -224,8 +224,8 @@
           }
           pre {
             width: 100%;
-            padding: 15px 10px 10px 10px;
-            margin: 0 0 20px 0;
+            padding: 5px;
+            margin: 0;
             border: 1px solid #e6e6e6;
             min-height: 60px;
             resize: none;
@@ -244,6 +244,7 @@
       flex: 1;
       display: flex;
       overflow-x: auto;
+      .result-left-second,
       .result-left-filter {
         width: 200px;
         .filter-item {

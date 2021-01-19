@@ -12,32 +12,44 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     page: 1,
     pageSize: 10,
     searchText: "",
+    filterData: {},
+    orignData: {},
+    secondText: null,
+    selectQuery: {},
+    filterQuery: {},
   };
   // 输入框自动调整
-  // _this.resizeTextarea = function () {
-  //   var textarea = document.getElementById("expandTextarea");
-  //   var pre = document.getElementById("preTextarea");
-  //   if (textarea !== null && pre !== null) {
-  //     pre.innerHTML = textarea.value;
-  //     var realHeight = pre.offsetHeight; //offsetHeight = height + padding + border
-  //     if (realHeight > 82) textarea.style.height = realHeight + 24 - 22 + "px";
-  //     //加24为一行的高度，减22为padding和border
-  //     else textarea.style.height = realHeight - 22 + "px";
-  //   }
-  // };
+  _this.resizeTextarea = function () {
+    var textarea = document.getElementById("expandTextarea");
+    var pre = document.getElementById("preTextarea");
+    if (textarea !== null && pre !== null) {
+      pre.innerHTML = textarea.value;
+      var realHeight = pre.offsetHeight; //offsetHeight = height + padding + border
+      if (realHeight > 60) textarea.style.height = realHeight + 24 - 12 + "px";
+      //加24为一行的高度，减22为padding和border
+      else textarea.style.height = realHeight - 12 + "px";
+    }
+  };
 
   // 自定义输入框
-  // document.onkeydown = _this.resizeTextarea;
+  document.onkeydown = _this.resizeTextarea;
 
   /**
+   * 懒加载
    * 查询左侧选择框 lazy
    */
   _this.getSelectorContent = function (sel) {
     var searchText = _this.searchText;
     if (searchText !== null && searchText !== "") {
+      // 二次检索
+      if (_this.secondText && _this.secondText != "") {
+        searchText += _this.secondText;
+      }
       request.get(`api/ration?q=${searchText}&c=${sel.value}`, "statistic", function (res) {
         var temp = "";
         var data = res.analysis_total || [];
+        _this.filterData[sel.value] = data;
+        _this.orignData[sel.value] = data;
         if (data.length > 0) {
           temp += '   <dl class="layui-nav-child">';
           layui.each(data, function (index, item) {
@@ -94,6 +106,106 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           element.render("nav");
         }
       });
+    }
+  };
+
+  /**
+   * 过滤 筛选
+   * 左侧选择框
+   */
+  _this.filterSelectorContent = function (name, code, type, key, all) {
+    var data = _this.filterData[code] || [];
+    var filter = [];
+    if (all) {
+      filter = _this.orignData[code];
+    } else {
+      if (type === "select") {
+        layui.each(data, function (index, item) {
+          if (item.children && item.children.length > 0) {
+            var tempItem = Object.assign({}, item);
+            tempItem.children = [];
+            layui.each(item.children, function (idx, child) {
+              if (key.indexOf(child.key) !== -1 || all) tempItem.children.push(child);
+            });
+            filter.push(tempItem);
+          } else {
+            if (key.indexOf(item.key) !== -1 || all) filter.push(item);
+          }
+        });
+      } else {
+        layui.each(data, function (index, item) {
+          if (item.children && item.children.length > 0) {
+            var tempItem = Object.assign({}, item);
+            tempItem.children = [];
+            layui.each(item.children, function (idx, child) {
+              if (key.indexOf(child.key) === -1 || all) tempItem.children.push(child);
+            });
+            filter.push(tempItem);
+          } else {
+            if (key.indexOf(item.key) === -1 || all) filter.push(item);
+          }
+        });
+      }
+    }
+
+    // 重新纪录值
+    _this.filterData = filter;
+
+    if (filter.length > 0) {
+      var temp = "";
+      temp += '   <dl class="layui-nav-child">';
+      layui.each(filter, function (index, item) {
+        if (item.children && item.children.length > 0) {
+          temp += "    <dd>";
+          temp += '      <div class="result-selector-item">';
+          temp += '      <div class="squared-checkbox">';
+          temp += '          <input type="checkbox" class="result-select-child" ';
+          temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
+          temp += '          <label class="result-selector-parent"/>';
+          temp += "      </div>";
+          temp += '      <span class="block-back ml10"/>';
+          temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
+          temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
+          temp += "     </div>";
+          temp += "   </dd>";
+          layui.each(item.children, function (idx, child) {
+            temp += '<dd class="fliter-child">';
+            temp += '      <div class="result-selector-item child">';
+            temp += '      <div class="squared-checkbox">';
+            temp += '                <input type="checkbox" class="result-select-child" ';
+            temp += '              id="RESULT-FILTER-CHILD-' + child.key + '" parent="' + item.key + '"/>';
+            temp += '          <label class="result-selector-child" />';
+            temp += "      </div>";
+            temp += '      <span class="ml10 result-selector-title normal" >' + child.key + "</span>";
+            temp += '       <span class="filter-count">(' + (child.count || 0) + ")</span>";
+            temp += "   </div>";
+            temp += "</dd>";
+          });
+        } else {
+          temp += '    <dd class="fliter-child">';
+          temp += '      <div class="result-selector-item">';
+          temp += '      <div class="squared-checkbox">';
+          temp += '          <input type="checkbox" class="result-select-child" ';
+          temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
+          temp += '          <label class="result-selector-parent"/>';
+          temp += "      </div>";
+          temp += '      <span class="block-back ml10"/>';
+          temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
+          temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
+          temp += "     </div>";
+          temp += "   </dd>";
+        }
+      });
+      // 筛选
+      var sxhtml = '<span class="slef-search-btn normal select-of-result" data-value="' + code + '" data-name="' + name + '"';
+      sxhtml += 'style="width: 80px;height:24px;line-height:24px">筛选</span>';
+      var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" data-value="' + code + '" data-name="' + name + '"';
+      glhtml += '" style="width: 80px;height:24px;line-height:24px">过滤</span>';
+      temp += '       <dd class="result-selector-filter">' + sxhtml + glhtml + "</dd>";
+      temp += "    </dl>";
+      $("#T-" + code + " dl").remove();
+      $("#T-" + code).append(temp);
+      element.render("nav");
     }
   };
 
@@ -181,13 +293,29 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     if (searchText !== null && searchText !== "") {
       loader.show($("#loading"));
       var sendDate = new Date().getTime();
+      // 二次检索
+      if (_this.secondText && _this.secondText != "") {
+        searchText += _this.secondText;
+      }
+      // 过滤筛选
+      for (let key in _this.filterQuery) {
+        if (_this.filterQuery[key] != null) {
+          searchText += " NOT " + key + ":" + _this.filterQuery[key];
+        }
+      }
+      for (let key in _this.selectQuery) {
+        if (_this.selectQuery[key] != null) {
+          searchText += " AND " + key + ":" + _this.selectQuery[key];
+        }
+      }
+      console.log(searchText);
       request.get(`api/s?ds=cn&q=${searchText}&p=${_this.page}`, "search", function (res) {
         var receiveDate = new Date().getTime();
         var responseTimeMs = receiveDate - sendDate;
         res.responseTimes = responseTimeMs / 1000;
         _this.renderContent(res || {});
       });
-      // 关闭loading层
+      // // 关闭loading层
       loader.hide($("#loading"));
     } else {
       _this.renderContent({});
@@ -200,6 +328,9 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   _this.renderPage = function () {
     _this.initSelector();
     _this.initContent();
+    // 初始化条件
+    _this.filterQuery = {};
+    _this.selectQuery = {};
   };
 
   // 初始化页面
@@ -212,7 +343,6 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     var value = _this.getParamFromUri("s");
     $("#expandTextarea").val(value);
     _this.searchText = value;
-
     _this.renderPage();
   };
 
@@ -259,6 +389,9 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * 检索
    */
   $("#resultSearchBtn").on("click", function () {
+    // 清除左侧筛选框
+    $(".result-left-filter").html("");
+    $(".result-left-second").html("");
     _this.searchText = $("#expandTextarea").val();
     _this.renderPage();
   });
@@ -267,13 +400,22 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * 二次检索
    */
   $("#resultSecondSearchBtn").on("click", function (e) {
+    // 清除左侧筛选框
+    $(".result-left-filter").html("");
     var v = $("#expandTextarea").val();
     if (v == _this.searchText) {
       _this.renderPage();
     } else {
-      _this.searchText = _this.searchText += " AND " + v;
+      _this.secondText = " AND " + v;
       _this.renderPage();
     }
+    // 生成筛选提示框
+    var content = '<div class="filter-item select-modal">';
+    content += '<span class="close-icon-self" data-type="second">x</span>';
+    content += '<span class="key-word">二次检索 </span>';
+    content += '<span class="key-type">' + _this.searchText + " AND " + v + " </span>";
+    content += "</div>";
+    $(".result-left-second").html(content);
   });
 
   /**
@@ -406,10 +548,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     // 生成新的
     if (checked.length > 0) {
       var content = '<div class="filter-item select-modal" name="' + name + '">';
-      content += '<span class="close-icon-self">x</span>';
+      content += '<span class="close-icon-self" data-value="' + filterCode + '" data-name="' + name + '" data-type="select">x</span>';
       content += '<span class="key-word">筛选 </span>';
       content += '<span class="key-type">' + name + " </span>";
       var filterText = "(";
+      var key = "";
       checked.each(function (i, e2) {
         var id = $(e2).attr("id");
         var parent = $(e2).attr("parent");
@@ -418,13 +561,17 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           // 无父节点
           if (i == 0) {
             filterText += value;
+            key += value;
           } else {
+            key += "," + value;
             filterText += " AND " + value;
           }
         } else {
           if (i == 0) {
+            key += value;
             filterText += parent + " AND " + value;
           } else {
+            key += "," + value;
             filterText += " OR " + parent + " AND " + value;
           }
         }
@@ -433,13 +580,35 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += filterText;
       content += "</div>";
       $(".result-left-filter").append(content);
+      // 重新渲染左侧节点
+      _this.filterSelectorContent(name, filterCode, "select", key, false);
       // TODO 重新查询
+      _this.selectQuery[filterCode] = filterText;
+      _this.page = 1;
+      _this.initContent();
     }
   });
 
+  // 清除提示框按钮
   $("#searchResult").on("click", ".close-icon-self", function (e) {
+    // 清除元素
     $(this).parent().remove();
+    var type = $(this).data().type;
+    if (type == "second") {
+      _this.secondText = null;
+    } else {
+      var name = $(this).data().name;
+      var filterCode = $(this).data().value;
+      if (type == "filter") {
+        _this.filterQuery[filterCode] = null;
+      } else {
+        _this.selectQuery[filterCode] = null;
+      }
+      _this.filterSelectorContent(name, filterCode, null, null, true);
+    }
     // TODO 重新查询
+    _this.page = 1;
+    _this.initContent();
   });
 
   /**
@@ -454,10 +623,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     // 生成新的
     if (checked.length > 0) {
       var content = '<div class="filter-item filter-modal" name="' + name + '">';
-      content += '<span class="close-icon-self">x</span>';
+      content += '<span class="close-icon-self" data-value="' + filterCode + '" data-name="' + name + 'data-type="filter">x</span>';
       content += '<span class="key-word">过滤 </span>';
       content += '<span class="key-type">' + name + " </span>";
       var filterText = "(";
+      var key = "";
       checked.each(function (i, e2) {
         var id = $(e2).attr("id");
         var parent = $(e2).attr("parent");
@@ -465,14 +635,18 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         if (!parent) {
           // 无父节点
           if (i == 0) {
+            key += value;
             filterText += value;
           } else {
+            key += "," + value;
             filterText += " NOT " + value;
           }
         } else {
           if (i == 0) {
+            key += value;
             filterText += parent + " NOT " + value;
           } else {
+            key += "," + value;
             filterText += " OR " + parent + " NOT " + value;
           }
         }
@@ -481,7 +655,12 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += filterText;
       content += "</div>";
       $(".result-left-filter").append(content);
+      // 重新渲染左侧节点
+      _this.filterSelectorContent(name, filterCode, "filter", key, false);
       // TODO 重新查询
+      _this.filterQuery[filterCode] = filterText;
+      _this.page = 1;
+      _this.initContent();
     }
   });
 
