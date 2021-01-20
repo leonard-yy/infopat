@@ -99,54 +99,36 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
   };
 
   // 其他页面信息 | 法律信息之下
-  _this.getData = function (refresh = false, cb) {
+  _this.getData = function () {
+    // var url = `https://www.infopat.net/patent/v2/${_this.id}`;
+    var url = `infopat/${_this.id}`;
     //将基本信息放在session里面
-    var url = `https://www.infopat.net/patent/v2/${_this.id}`;
-    if (refresh) {
-      url += "?refresh=1";
-    }
-    $.ajax({
-      type: "GET",
-      url: url,
-      success: function (result) {
-        //返回成功进行响应操作
-        if (result.data) {
-          let AllInfo = result.data;
-          // 放到session里，减少重复请求
-          layui.sessionData("session", {
-            key: "allInfo",
-            value: AllInfo,
-          });
-          let basicInfo = AllInfo["申请信息"] || {};
-          layui.sessionData("session", {
-            key: "basicInfo",
-            value: {
-              updateDate: AllInfo["查询时间"] || "--",
-              status: basicInfo["案件状态"] || "--",
-              number: basicInfo["专利号码"] || "--",
-              flNumber: basicInfo["主分类号"] || "--",
-              name: basicInfo["专利名称"] || "--",
-              applicationDate: basicInfo["申请日期"] || "",
-              applicant: (basicInfo["申请人"] && basicInfo["申请人"].join("、")) || "--",
-              inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
-              Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
-              agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
-            },
-          });
-          cb && cb();
-        } else {
-          layui.sessionData("session", {
-            key: "allInfo",
-            value: {},
-          });
-          layui.sessionData("session", {
-            key: "basicInfo",
-            value: {},
-          });
-          alert(result.message);
-        }
-      },
-      error: function () {
+    request.ajax(url, function (result) {
+      //返回成功进行响应操作
+      if (result.data) {
+        let AllInfo = result.data;
+        // 放到session里，减少重复请求
+        layui.sessionData("session", {
+          key: "allInfo",
+          value: AllInfo,
+        });
+        let basicInfo = AllInfo["申请信息"] || {};
+        layui.sessionData("session", {
+          key: "basicInfo",
+          value: {
+            updateDate: AllInfo["查询时间"] || "--",
+            status: basicInfo["案件状态"] || "--",
+            number: basicInfo["专利号码"] || "--",
+            flNumber: basicInfo["主分类号"] || "--",
+            name: basicInfo["专利名称"] || "--",
+            applicationDate: basicInfo["申请日期"] || "",
+            applicant: (basicInfo["申请人"] && basicInfo["申请人"].join("、")) || "--",
+            inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
+            Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
+            agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
+          },
+        });
+      } else {
         layui.sessionData("session", {
           key: "allInfo",
           value: {},
@@ -155,8 +137,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
           key: "basicInfo",
           value: {},
         });
-      },
-      complete: function () {},
+      }
     });
   };
 

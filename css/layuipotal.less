@@ -507,6 +507,75 @@
       }
     }
   }
+  .search-favorite-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    .time-range-container {
+      width: 200px;
+      height: 100%;
+      background-color: #ffffff;
+
+      .layui-nav-tree .layui-nav-item a {
+        color: #000 !important;
+        background-color: transparent !important;
+        line-height: 55px;
+        height: 55px;
+      }
+      .layui-nav-item a:hover {
+        background-image: linear-gradient(90deg, #5268d3 0%, #5ba0d8 100%) !important;
+        background-color: transparent !important;
+        color: #ffffff !important;
+      }
+      .layui-nav-more {
+        border-color: #999999 transparent transparent;
+      }
+      .layui-nav-itemed > a .layui-nav-more {
+        border-color: transparent transparent #999999;
+      }
+      .layui-this,
+      .layui-this > a {
+        background-color: transparent !important;
+        background-image: linear-gradient(90deg, #5268d3 0%, #5ba0d8 100%) !important;
+      }
+      .layui-side,
+      .layui-side-scroll,
+      .layui-nav-tree {
+        width: 100% !important;
+        background-color: #ffffff !important;
+      }
+      .layui-nav-itemed > .layui-nav-child {
+        background-color: #ffffff !important;
+      }
+      .layui-nav-child {
+        line-height: 24px;
+      }
+    }
+    .patent-list-container {
+      flex: 1;
+      padding: 20px;
+      background-color: #efefef;
+      .list-content {
+        background-color: #ffffff;
+        padding: 20px;
+        .result-common-title {
+          display: flex;
+          justify-content: flex-start;
+          padding: 14px 25px 4px 25px;
+          align-items: center;
+          height: 54px;
+          line-height: 36px;
+          .title-block {
+            background-image: linear-gradient(179deg, #5268d3 0%, #5ba0d8 100%);
+            height: 14px;
+            width: 4px;
+            display: inline-block;
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .layer-country-checkbox {
@@ -542,6 +611,7 @@
     }
   }
 }
+
 .layui-layer-btn .layui-layer-btn0 {
   display: inline-block;
   height: 32px;
@@ -555,6 +625,7 @@
   font-size: 12px;
   font-family: PingFangSC-Regular;
 }
+
 .layui-layer-btn .layui-layer-btn1 {
   display: inline-block;
   height: 32px;

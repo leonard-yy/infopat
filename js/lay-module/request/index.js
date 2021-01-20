@@ -42,5 +42,18 @@ layui.define(function (exports) {
     });
   };
 
+  request.ajax = function (url, cb = function () {}) {
+    $.ajax({
+      url: url,
+      type: "get",
+      success: function (data) {
+        cb(data);
+      },
+      error: function (xhr, textstatus, thrown) {
+        console.log("error", thrown);
+      },
+    });
+  };
+
   exports("request", request);
 });
