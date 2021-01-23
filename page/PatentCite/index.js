@@ -1,7 +1,8 @@
 function initPage() {
-  layui.use(["patNodataPage"], function () {
+  layui.use(["patNodataPage", "request"], function () {
     var $ = layui.jquery,
-      patNodataPage = layui.patNodataPage;
+      patNodataPage = layui.patNodataPage,
+      request = layui.request;
 
     function renderTableTop(data) {
       if (data && data.length > 0) {
@@ -71,12 +72,30 @@ function initPage() {
       $(selector).html(patNodataPage.getNoDataTips(tips));
     }
 
-    $.getJSON("mock/resultInfo.json", function (res, status) {
-      var citeData = res.citeData;
-      var citeData2 = res.citeData2;
-      renderTableTop(citeData);
-      renderTableBottom(citeData2);
-    });
+    function init() {
+      var p = request.getParamFromUri("p");
+      var q = request.getParamFromUri("q");
+      var id = request.getParamFromUri("id");
+      request.get(`api/s?ds=cn&q=${q}&p=${p}`, "search", function (res) {
+        if (res) {
+          request.get(`api/patent/citing?id=${id}`, "search", function (res2) {
+            if (res2) {
+              renderTableTop(res2.citedList);
+              renderTableBottom(res2.patentXref);
+            }
+          });
+        }
+      });
+    }
+
+    init();
+
+    // $.getJSON("mock/resultInfo.json", function (res, status) {
+    //   var citeData = res.citeData;
+    //   var citeData2 = res.citeData2;
+    //   renderTableTop(citeData);
+    //   renderTableBottom(citeData2);
+    // });
   });
 }
 

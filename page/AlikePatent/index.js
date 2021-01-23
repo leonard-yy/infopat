@@ -1,7 +1,8 @@
 function initPage() {
-  layui.use(["table", "patNodataPage"], function () {
+  layui.use(["table", "patNodataPage", "request"], function () {
     var $ = layui.jquery,
-      patNodataPage = layui.patNodataPage;
+      patNodataPage = layui.patNodataPage,
+      request = layui.request;
 
     function renderTable(data) {
       if (data && data.length > 0) {
@@ -19,7 +20,7 @@ function initPage() {
           html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";
           html += "<td>" + item.documentDate + "</td>";
           html += '<td style="max-width:350px" title="' + item.applicant + '">' + item.applicant + "</td>";
-          html += '<td style="max-width:350px" title="' + item.assignee + '">' + item.assignee + "</td>";
+          html += '<td style="max-width:350px" title="' + item.inventor + '">' + item.inventor + "</td>";
           html += "</tr>";
         });
         html += "     </tbody>";
@@ -30,10 +31,26 @@ function initPage() {
       }
     }
 
-    $.getJSON("mock/resultInfo.json", function (res, status) {
-      var alikeData = res.alikeData;
-      renderTable(alikeData);
-    });
+    function init() {
+      var p = request.getParamFromUri("p");
+      var q = request.getParamFromUri("q");
+      var id = request.getParamFromUri("id");
+      request.get(`api/s?ds=cn&q=${q}&p=${p}`, "search", function (res) {
+        if (res) {
+          request.get(`api/patent/like?id=${id}`, "search", function (res2) {
+            if (res2) {
+              renderTable(res2.patentLikeList);
+            }
+          });
+        }
+      });
+    }
+
+    // $.getJSON("mock/resultInfo.json", function (res, status) {
+    //   var alikeData = res.alikeData;
+    //   renderTable(alikeData);
+    // });
+    init();
   });
 }
 

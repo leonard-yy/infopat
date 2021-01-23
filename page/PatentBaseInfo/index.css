@@ -210,10 +210,15 @@
 /** 权利要求书 **/
 #claimsContent {
   padding: 20px;
+  line-height: 30px;
+  letter-spacing: 2px;
+  white-space: pre-line;
 }
 #specificationContent {
-  line-height: 32px;
+  line-height: 30px;
+  letter-spacing: 2px;
   padding: 25px;
+  white-space: pre-line;
 }
 .claim-item {
   line-height: 32px;
