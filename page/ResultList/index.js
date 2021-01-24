@@ -309,7 +309,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         }
       }
       console.log(searchText);
-      request.get(`api/s?ds=cn&q=${searchText}&p=${_this.page}`, "search", function (res) {
+      request.get(`api/s?ds=US&q=${searchText}&p=${_this.page}`, "search", function (res) {
         var receiveDate = new Date().getTime();
         var responseTimeMs = receiveDate - sendDate;
         res.responseTimes = responseTimeMs / 1000;
@@ -567,12 +567,24 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             filterText += " AND " + value;
           }
         } else {
-          if (i == 0) {
-            key += value;
-            filterText += parent + " AND " + value;
+          //  国家匹配规则不一致 单独编写
+          if (filterCode == "countryCode") {
+            if (i == 0) {
+              filterText = "(";
+              key += value;
+              filterText += "ds:" + parent + ") AND type:(" + value;
+            } else {
+              key += "," + value;
+              filterText += " OR " + value;
+            }
           } else {
-            key += "," + value;
-            filterText += " OR " + parent + " AND " + value;
+            if (i == 0) {
+              key += value;
+              filterText += parent + " AND " + value;
+            } else {
+              key += "," + value;
+              filterText += " OR " + parent + " AND " + value;
+            }
           }
         }
       });
@@ -642,12 +654,24 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             filterText += " NOT " + value;
           }
         } else {
-          if (i == 0) {
-            key += value;
-            filterText += parent + " NOT " + value;
+          //  国家匹配规则不一致 单独编写
+          if (filterCode == "countryCode") {
+            if (i == 0) {
+              key += value;
+              filterText = "(";
+              filterText += "ds:" + parent + ") NOT type:(" + value;
+            } else {
+              key += "," + value;
+              filterText += " OR " + value;
+            }
           } else {
-            key += "," + value;
-            filterText += " OR " + parent + " NOT " + value;
+            if (i == 0) {
+              key += value;
+              filterText += parent + " NOT " + value;
+            } else {
+              key += "," + value;
+              filterText += " OR " + parent + " NOT " + value;
+            }
           }
         }
       });

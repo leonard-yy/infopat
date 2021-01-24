@@ -11,7 +11,7 @@ function initPage() {
         html += '        <col width="80"><col width="150"><col width="150"><col width="150"><col width="150"><col><col width="150"><col>';
         html += "     </colgroup>";
         html += "     <thead><tr>";
-        html += "        <th>序号</th><th>公开(公告)号</th><th>公开(公告)日</th><th>申请日</th><th>专利类型</th><th>标题</th><th>法律状态</th><th>申请人</th>";
+        html += "        <th>序号</th><th>公开(公告)号</th><th>>申请号</th><th>申请日</th><th>专利类型</th><th>标题</th><th>法律状态</th><th>申请人</th>";
         html += "     </tr></thead>";
         html += "     <tbody>";
         data.map(function (item, index) {
@@ -19,8 +19,8 @@ function initPage() {
 
           html += "<tr>";
           html += '<td style="min-width:60px">' + (index + 1) + "</td>";
-          html += "<td>" + item.documentNumber + "</td>";
-          html += '<td style="min-width:110px">' + item.documentDate + "</td>";
+          html += "<td>" + item.id + "</td>";
+          html += '<td style="min-width:110px">' + item.applicationNumber + "</td>";
           html += "<td>" + item.applicationDate + "</td>";
           html += "<td>" + item.type + "</td>";
           html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";
@@ -43,7 +43,7 @@ function initPage() {
         html += '        <col width="80"><col width="150"><col width="150"><col width="150"><col width="150"><col><col width="150"><col>';
         html += "     </colgroup>";
         html += "     <thead><tr>";
-        html += "        <th>序号</th><th>公开(公告)号</th><th>公开(公告)日</th><th>申请日</th><th>专利类型</th><th>标题</th><th>法律状态</th><th>申请人</th>";
+        html += "        <th>序号</th><th>公开(公告)号</th><th>申请号</th><th>申请日</th><th>专利类型</th><th>标题</th><th>法律状态</th><th>申请人</th>";
         html += "     </tr></thead>";
         html += "     <tbody>";
         data.map(function (item, index) {
@@ -51,8 +51,8 @@ function initPage() {
 
           html += "<tr>";
           html += '<td style="min-width:60px">' + (index + 1) + "</td>";
-          html += "<td>" + item.documentNumber + "</td>";
-          html += '<td style="min-width:110px">' + item.documentDate + "</td>";
+          html += "<td>" + item.id + "</td>";
+          html += '<td style="min-width:110px">' + item.applicationNumber + "</td>";
           html += "<td>" + item.applicationDate + "</td>";
           html += "<td>" + item.type + "</td>";
           html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";

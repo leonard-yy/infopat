@@ -32,7 +32,7 @@ layui.define("patNodataPage", function (exports) {
                         <div class="yq-img ml20 inlineBlock"></div>
                         {{#  } }} 
                         {{#  if(item.type === "发明公开"){ }}
-                            <div class="fmsq-img ml20 inlineBlock"></div>
+                            <div class="fmgk-img ml20 inlineBlock"></div>
                         {{#  } }} 
                         {{#  if(item.type === "外观设计"){ }}
                             <div class="wgsj-img ml20 inlineBlock"></div>

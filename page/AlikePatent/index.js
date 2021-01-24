@@ -1,7 +1,8 @@
 function initPage() {
-  layui.use(["table", "patNodataPage", "request"], function () {
+  layui.use(["table", "patNodataPage", "request", "loader"], function () {
     var $ = layui.jquery,
       patNodataPage = layui.patNodataPage,
+      loader = layui.loader,
       request = layui.request;
 
     function renderTable(data) {
@@ -35,13 +36,19 @@ function initPage() {
       var p = request.getParamFromUri("p");
       var q = request.getParamFromUri("q");
       var id = request.getParamFromUri("id");
+      loader.show($("#loading"));
       request.get(`api/s?ds=cn&q=${q}&p=${p}`, "search", function (res) {
         if (res) {
           request.get(`api/patent/like?id=${id}`, "search", function (res2) {
             if (res2) {
               renderTable(res2.patentLikeList);
+              loader.hide($("#loading"));
+            } else {
+              loader.hide($("#loading"));
             }
           });
+        } else {
+          loader.hide($("#loading"));
         }
       });
     }
