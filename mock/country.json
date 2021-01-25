@@ -59,13 +59,13 @@
         },
         {
           "title": "欧盟",
-          "value": "EP",
+          "value": "EU",
           "isLeaf": false,
           "parent": "NORMAL"
         },
         {
-          "title": "WO",
-          "value": "WIPO",
+          "title": "WIPO",
+          "value": "WO",
           "isLeaf": false,
           "parent": "NORMAL"
         }
@@ -249,7 +249,7 @@
         },
         {
           "title": "南斯拉夫",
-          "value": "YU",
+          "value": "SH",
           "isLeaf": false,
           "parent": "EUROPE"
         },

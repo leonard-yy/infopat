@@ -44,11 +44,13 @@
 }
 .result-body .result-content-item .result-content-img {
   margin: 8px 10px 0 10px;
+  width: 160px;
   cursor: pointer;
+  display: inline-table;
 }
 .result-body .result-content-item .result-content-img img {
-  height: 160px;
-  width: 160px;
+  height: auto;
+  width: 100%;
 }
 .result-body .result-content-item .content-filed-item .title {
   font-size: 14px;

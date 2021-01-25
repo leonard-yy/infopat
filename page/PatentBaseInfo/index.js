@@ -39,7 +39,7 @@ function initPage() {
           });
 
           $("#resultSumaryContent").html(patent.summary);
-          $("#resultImgContent").attr("src", patent.imagePath);
+          $("#resultImgContent").attr("src", "api/img?v=1&key=" + patent.imagePath);
         });
       }
     };

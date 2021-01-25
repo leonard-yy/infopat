@@ -171,7 +171,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         tpl += '          <label class="country-checkbox-child" ';
         tpl += '              for="COUNTRY-CHILD-' + item.value + '" />';
         tpl += "      </div>";
-        tpl += '      <span class="block-back ml10"/>';
+        tpl += '      <span class="ml10 flag flag-' + item.value.toLowerCase() + '"/>';
         tpl += '      <span class="ml10 ellipsis-text" style="flex:1" title="' + item.title + '">' + item.title + "</span>";
         tpl += "   </div>";
         return tpl;
