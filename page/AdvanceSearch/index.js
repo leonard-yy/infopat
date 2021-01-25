@@ -12,6 +12,11 @@ function initPage() {
     var _this = {};
     _this.fieldsData = [];
     _this.dateId = 0;
+
+    /**
+     * 添加索引项
+     * @param {} name
+     */
     function addItem(name) {
       var itemArr = _this.fieldsData.filter(function (d, i) {
         return name == d.name;
@@ -203,6 +208,10 @@ function initPage() {
             contryChecked2 += "," + v;
           }
         });
+        if (contryChecked2.indexOf("ALL") !== -1) {
+          contryChecked = "all";
+          contryChecked2 = "all";
+        }
         window.open("/list.html?s=" + value + "&ds=" + contryChecked + "&dp=" + contryChecked2, "_blank");
       }
     });

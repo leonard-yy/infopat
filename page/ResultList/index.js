@@ -17,6 +17,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     secondText: null,
     selectQuery: {},
     filterQuery: {},
+    selectedCountry: null,
+    selectedCountryDp: null,
   };
   // 输入框自动调整
   _this.resizeTextarea = function () {
@@ -34,6 +36,9 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   // 自定义输入框
   document.onkeydown = _this.resizeTextarea;
 
+  _this.selectedCountry = request.getParamFromUri("ds");
+  _this.selectedCountryDp = request.getParamFromUri("dp");
+
   /**
    * 懒加载
    * 查询左侧选择框 lazy
@@ -45,7 +50,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       if (_this.secondText && _this.secondText != "") {
         searchText += _this.secondText;
       }
-      request.get(`api/ration?q=${searchText}&c=${sel.value}`, "statistic", function (res) {
+      request.get(`api/ration?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&c=${sel.value}`, "statistic", function (res) {
         var temp = "";
         var data = res.analysis_total || [];
         _this.filterData[sel.value] = data;
@@ -125,11 +130,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             var tempItem = Object.assign({}, item);
             tempItem.children = [];
             layui.each(item.children, function (idx, child) {
-              if (key.indexOf(child.key) !== -1 || all) tempItem.children.push(child);
+              if (key.indexOf(child.key) !== -1) tempItem.children.push(child);
             });
             filter.push(tempItem);
           } else {
-            if (key.indexOf(item.key) !== -1 || all) filter.push(item);
+            if (key.indexOf(item.key) !== -1) filter.push(item);
           }
         });
       } else {
@@ -138,18 +143,15 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             var tempItem = Object.assign({}, item);
             tempItem.children = [];
             layui.each(item.children, function (idx, child) {
-              if (key.indexOf(child.key) === -1 || all) tempItem.children.push(child);
+              if (key.indexOf(child.key) === -1) tempItem.children.push(child);
             });
             filter.push(tempItem);
           } else {
-            if (key.indexOf(item.key) === -1 || all) filter.push(item);
+            if (key.indexOf(item.key) === -1) filter.push(item);
           }
         });
       }
     }
-
-    // 重新纪录值
-    _this.filterData = filter;
 
     if (filter.length > 0) {
       var temp = "";
@@ -207,17 +209,6 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       $("#T-" + code).append(temp);
       element.render("nav");
     }
-  };
-
-  /**
-   * uri参数
-   * @param {*} name
-   */
-  _this.getParamFromUri = function (name) {
-    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`); // 构造一个含有目标参数的正则表达式对象
-    const r = window.location.search.substr(1).match(reg); // 匹配目标参数
-    if (r != null) return decodeURI(r[2]);
-    return null; // 返回参数值
   };
 
   /**
@@ -308,8 +299,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           searchText += " AND " + key + ":" + _this.selectQuery[key];
         }
       }
-      console.log(searchText);
-      request.get(`api/s?ds=US&q=${searchText}&p=${_this.page}`, "search", function (res) {
+      request.get(`api/s?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&p=${_this.page}`, "search", function (res) {
         var receiveDate = new Date().getTime();
         var responseTimeMs = receiveDate - sendDate;
         res.responseTimes = responseTimeMs / 1000;
@@ -340,7 +330,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       return;
     }
     // 初始化输入框
-    var value = _this.getParamFromUri("s");
+    var value = request.getParamFromUri("s");
     $("#expandTextarea").val(value);
     _this.searchText = value;
     _this.renderPage();
@@ -693,11 +683,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    */
   $("#quanqiuSelector").on("click", function (e) {
     var getParentNode = function (item) {
-      var parentChecked = _this.getParamFromUri("dp");
+      var parentChecked = _this.selectedCountryDp;
       // 叶子节点  COUNTRY-PARENT-VALUE
       var tpl = '<div class="search-country-layer">';
       tpl += '      <div class="squared-checkbox">';
-      if (parentChecked && parentChecked.indexOf(item.value) !== -1) {
+      if ((parentChecked && parentChecked.indexOf(item.value) !== -1) || parentChecked == "all") {
         tpl += '          <input type="checkbox" class="tree-search-parent" value="checked" ';
       } else {
         tpl += '          <input type="checkbox" class="tree-search-parent" ';
@@ -712,11 +702,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     };
 
     var getChildNode = function (item) {
-      var childChecked = _this.getParamFromUri("ds");
+      var childChecked = _this.selectedCountry;
       // 子节点  COUNTRY-PARENT-VALUE
       var tpl = '<div class="search-country-layer">';
       tpl += '      <div class="squared-checkbox">';
-      if (childChecked && childChecked.indexOf(item.value) !== -1) {
+      if ((childChecked && childChecked.indexOf(item.value) !== -1) || childChecked == "all") {
         tpl += '          <input type="checkbox" class="tree-search-child" value="checked" ';
       } else {
         tpl += '          <input type="checkbox" class="tree-search-child" ';
@@ -772,13 +762,33 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         area: ["800px", "500px"],
         yes: function () {
           var c = $("#layerSelector").find(".layer-line-child").find('input[value = "checked"]');
-          var checked = "";
-          c.each(function () {
+          var checkedC = "";
+          c.each(function (i) {
             var id = $(this).attr("id");
             var value = id.split("-").pop();
-            checked += value;
+            if (i == 0) {
+              checkedC += value;
+            } else {
+              checkedC += "," + value;
+            }
           });
-          layer.msg(checked);
+          var d = $("#layerSelector").find(".layer-line-parent").find('input[value = "checked"]');
+          var checkedD = "";
+          d.each(function (i) {
+            var id = $(this).attr("id");
+            var value = id.split("-").pop();
+            if (i == 0) {
+              checkedD += value;
+            } else {
+              checkedD += "," + value;
+            }
+          });
+          _this.selectedCountry = checkedC;
+          _this.selectedCountryDp = checkedD;
+          if ($("#layerSelector").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value") == "checked") {
+            _this.selectedCountry = "all";
+            _this.selectedCountryDp = "all";
+          }
           layer.close(index);
         },
         btn2: function () {
@@ -799,12 +809,28 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           $("#layerSelector")
             .find("input[parent = " + value + "]")
             .attr("value", "unchecked");
+          $("#layerSelector").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "unchecked");
+          // 特殊 全球
+          if (value == "ALL") {
+            $("#layerSelector").find("input").attr("value", "unchecked");
+          }
         } else {
           // 选择
           $(e.currentTarget).prev().attr("value", "checked");
           $("#layerSelector")
             .find("input[parent = " + value + "]")
             .attr("value", "checked");
+          // 特殊 全球
+          if (value == "ALL") {
+            $("#layerSelector").find("input").attr("value", "checked");
+          } else {
+            // 检查全球
+            var allCountry = $("#layerSelector").find("input");
+            var checkedCountry = $("#layerSelector").find("input[value=checked]");
+            if (allCountry.length == checkedCountry.length + 1) {
+              $("#layerSelector").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "checked");
+            }
+          }
         }
       });
 
@@ -821,6 +847,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           $("#layerSelector")
             .find("#COUNTRY-PARENT-" + value)
             .attr("value", "unchecked");
+          $("#layerSelector").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "unchecked");
         } else {
           // 检查满足是否全选
           var all = $("#layerSelector").find("input[parent = " + value + "]");
@@ -830,6 +857,12 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             $("#layerSelector")
               .find("#COUNTRY-PARENT-" + value)
               .attr("value", "checked");
+          }
+          // 检查全球
+          var allCountry = $("#layerSelector").find("input");
+          var checkedCountry = $("#layerSelector").find("input[value=checked]");
+          if (allCountry.length == checkedCountry.length + 1) {
+            $("#layerSelector").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "checked");
           }
         }
       });

@@ -346,6 +346,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
     if (input.length > 0) {
       // 取消
       $(e.currentTarget).prev().attr("value", "unchecked");
+      $("#choose-country").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "unchecked");
       $("#choose-country")
         .find("input[parent = " + value + "]")
         .attr("value", "unchecked");
@@ -363,6 +364,12 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
       if (value == "ALL") {
         $("#choose-country").find("input").attr("value", "checked");
       }
+      // 检查全球
+      var allCountry = $("#choose-country").find("input");
+      var checkedCountry = $("#choose-country").find("input[value=checked]");
+      if (allCountry.length == checkedCountry.length + 1) {
+        $("#choose-country").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "checked");
+      }
     }
   });
 
@@ -374,8 +381,9 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
     var id = $(e.currentTarget).parent().find("input").attr("parent");
     var value = id.split("-").pop();
     if (input.length > 0) {
-      $(e.currentTarget).prev().attr("value", "unchecked");
       // 取消全选
+      $(e.currentTarget).prev().attr("value", "unchecked");
+      $("#choose-country").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "unchecked");
       $("#choose-country")
         .find("#COUNTRY-PARENT-" + value)
         .attr("value", "unchecked");
@@ -388,6 +396,12 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         $("#choose-country")
           .find("#COUNTRY-PARENT-" + value)
           .attr("value", "checked");
+      }
+      // 检查全球
+      var allCountry = $("#choose-country").find("input");
+      var checkedCountry = $("#choose-country").find("input[value=checked]");
+      if (allCountry.length == checkedCountry.length + 1) {
+        $("#choose-country").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "checked");
       }
     }
   });

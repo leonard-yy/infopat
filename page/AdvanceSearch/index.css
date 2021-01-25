@@ -27,7 +27,6 @@
 .fields-content {
   margin: 0;
   display: flex;
-  align-items: center;
   line-height: 50px;
 }
 .fields-label {
@@ -36,11 +35,12 @@
   font-size: 14px;
   text-align: left;
   font-weight: bold;
+  padding-top: 20px;
 }
 .fields-box {
   width: 100%;
   margin: 0;
-  padding: 5px 10px;
+  padding: 5px 2%;
   background-color: rgba(232, 233, 234, 0.4);
   border-radius: 6px;
 }
@@ -48,9 +48,9 @@
   font-family: PingFangSC-Regular;
   font-size: 14px;
   color: #1e48ac;
-  margin-right: 50px;
   display: inline-block;
   cursor: pointer;
+  width: 18%;
 }
 
 .op-btn {
