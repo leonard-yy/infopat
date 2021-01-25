@@ -19,7 +19,26 @@ layui.use(["layuipotal", "loader"], function () {
   $("#intelSearchBtn").on("click", function () {
     var value = $("#intelSearchInput").val();
     if (value && value !== "") {
-      window.location.href = "/list.html?s=" + value + "&dp=CHINA&ds=CN,TW,HK,MO";
+      var dp = "";
+      var ds = "";
+      var cn = $("#btn-chn").attr("value") == "checked";
+      var cnOth = $("#btn-chn-other").attr("value") == "checked";
+      var foreign = $("#btn-foreign").attr("value") == "checked";
+      if (cn) {
+        ds += ",CN";
+      }
+      if (cnOth) {
+        ds += ",TW,HK,MO";
+      }
+      if (foreign) {
+        ds += "ALL";
+      }
+      if (ds.startsWith(",")) ds = ds.replace(",", "");
+      if (ds.indexOf("ALL") !== -1) ds = "ALL";
+      if (cn && cnOth) {
+        dp = "CHINA";
+      }
+      window.location.href = "/list.html?s=" + value + `&dp=${dp}&ds=${ds}`;
     }
   });
 });

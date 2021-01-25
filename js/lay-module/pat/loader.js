@@ -8,7 +8,6 @@ layui.define("layer", function (exports) {
         shade: false,
         content: $ele,
         success: function (layero) {
-          $ele.addClass("wrapperSearch");
           $ele.show();
           Splitting();
         },

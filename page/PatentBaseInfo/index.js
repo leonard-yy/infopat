@@ -1,9 +1,10 @@
 function initPage() {
-  layui.use(["laytpl", "layer", "form", "request", "resultpat"], function () {
+  layui.use(["laytpl", "layer", "form", "request", "resultpat", "loader"], function () {
     var $ = layui.jquery,
       laytpl = layui.laytpl,
       resultpat = layui.resultpat,
-      request = layui.request;
+      request = layui.request,
+      loader = layui.loader;
     form = layui.form;
     //动态加载CSS
     layui.link("./page/PatentBaseInfo/index.css");
@@ -11,7 +12,9 @@ function initPage() {
     var render = function () {
       if (option && option.id) {
         var fieldview = document.getElementById("resultBaseInfo");
+        loader.show($("#loading"));
         request.get(`api/patent/base?id=${option.id}`, "search", function (res) {
+          loader.hide($("#loading"));
           var patent = res.patent;
           // 标题
           $("#pageTitle").html(patent.id + "  " + patent.title);

@@ -24,13 +24,20 @@ body {
   align-items: center;
   z-index: 999;
   position: absolute;
-  top: 70px;
-  left: 0;
-  bottom: 0;
-  right: 0;
   background: rgba(0, 0, 0, 0.4);
   pointer-events: none;
-  max-height: calc(100vh - 70px);
+}
+.result-wrapper {
+  top: 20px;
+  left: 200px;
+  bottom: 20px;
+  right: 320px;
+}
+.list-wrapper {
+  top: 175px;
+  left: 220px;
+  bottom: 15px;
+  right: 20px;
 }
 
 /* .wrapper.wrapperAll {

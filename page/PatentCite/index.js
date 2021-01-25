@@ -1,8 +1,9 @@
 function initPage() {
-  layui.use(["patNodataPage", "request"], function () {
+  layui.use(["patNodataPage", "request", "loader"], function () {
     var $ = layui.jquery,
       patNodataPage = layui.patNodataPage,
-      request = layui.request;
+      request = layui.request,
+      loader = layui.loader;
 
     function renderTableTop(data) {
       if (data && data.length > 0) {
@@ -76,14 +77,18 @@ function initPage() {
       var p = request.getParamFromUri("p");
       var q = request.getParamFromUri("q");
       var id = request.getParamFromUri("id");
+      loader.show($("#loading"));
       request.get(`api/s?ds=cn&q=${q}&p=${p}`, "search", function (res) {
         if (res) {
           request.get(`api/patent/citing?id=${id}`, "search", function (res2) {
+            loader.hide($("#loading"));
             if (res2) {
               renderTableTop(res2.citedList);
               renderTableBottom(res2.patentXref);
             }
           });
+        } else {
+          loader.hide($("#loading"));
         }
       });
     }

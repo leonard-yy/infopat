@@ -299,14 +299,14 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           searchText += " AND " + key + ":" + _this.selectQuery[key];
         }
       }
+
       request.get(`api/s?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&p=${_this.page}`, "search", function (res) {
+        loader.hide($("#loading"));
         var receiveDate = new Date().getTime();
         var responseTimeMs = receiveDate - sendDate;
         res.responseTimes = responseTimeMs / 1000;
         _this.renderContent(res || {});
       });
-      // // 关闭loading层
-      loader.hide($("#loading"));
     } else {
       _this.renderContent({});
     }
