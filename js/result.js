@@ -154,7 +154,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
 
   _this.initCont = function () {
     // 查询右侧分页
-    request.get(`api/s?ds=cn&q=${_this.searchText}&p=${_this.page}`, "search", function (res) {
+    request.get(`api/s?ds=cn&q=${_this.searchText}&p=${_this.page}`, function (res) {
       _this.renderList(res || {}, _this.id);
     });
 

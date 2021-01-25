@@ -78,9 +78,9 @@ function initPage() {
       var q = request.getParamFromUri("q");
       var id = request.getParamFromUri("id");
       loader.show($("#loading"));
-      request.get(`api/s?ds=cn&q=${q}&p=${p}`, "search", function (res) {
+      request.get(`api/s?ds=cn&q=${q}&p=${p}`, function (res) {
         if (res) {
-          request.get(`api/patent/citing?id=${id}`, "search", function (res2) {
+          request.get(`api/patent/citing?id=${id}`, function (res2) {
             loader.hide($("#loading"));
             if (res2) {
               renderTableTop(res2.citedList);

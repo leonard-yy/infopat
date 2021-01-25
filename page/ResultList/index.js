@@ -52,7 +52,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       if (_this.secondText && _this.secondText != "") {
         searchText += _this.secondText;
       }
-      request.get(`api/ration?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&c=${sel.value}`, "statistic", function (res) {
+      request.get(`api/ration?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&c=${sel.value}`, function (res) {
         var temp = "";
         var data = res.analysis_total || [];
         _this.filterData[sel.value] = data;
@@ -312,7 +312,6 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       }
       request.get(
         url,
-        "search",
         function (res) {
           loader.hide($("#loading"));
           var receiveDate = new Date().getTime();

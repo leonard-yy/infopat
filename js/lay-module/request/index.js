@@ -16,18 +16,11 @@ layui.define(function (exports) {
     return str;
   };
 
-  request.get = function (url, tokenType = "search", cb = function () {}, err = function () {}) {
-    var t = "";
-    if (tokenType === "search") {
-      t = token;
-    }
-    if (tokenType === "statistic") {
-      t = token2;
-    }
+  request.get = function (url, cb = function () {}, err = function () {}) {
     if (url.indexOf("?") !== -1) {
-      url += `&t=${t}&v=${v}`;
+      url += `&v=${v}`;
     } else {
-      url += `?t=${t}&v=${v}`;
+      url += `?&v=${v}`;
     }
 
     $.ajax({

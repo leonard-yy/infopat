@@ -13,7 +13,7 @@ function initPage() {
       if (option && option.id) {
         var fieldview = document.getElementById("resultBaseInfo");
         loader.show($("#loading"));
-        request.get(`api/patent/base?id=${option.id}`, "search", function (res) {
+        request.get(`api/patent/base?id=${option.id}`, function (res) {
           loader.hide($("#loading"));
           var patent = res.patent;
           // 标题
