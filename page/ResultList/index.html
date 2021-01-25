@@ -25,8 +25,19 @@
           <span class="slef-search-btn ml20" id="selectAllResult" style="width: 100px">全选</span>
           <span class="slef-search-btn ml20" id="collectSelectedResult" style="width: 100px">收藏</span>
         </div>
-        <div class="flex" style="align-items: center">
-          <span>排序</span>
+        <div class="layer-form flex" style="align-items: center">
+          <!-- 感叹号表示降序，如果不加表示升序。 -->
+          <div name="sort" class="slef-sort-select" id="sortType">
+            <span style="color: #333333">排序<i class="layui-icon layui-icon-down ml5" style="font-size: 12px; color: #999999"></i></span>
+            <div class="dropdown-container">
+              <div class="option sort-option" value="!relation"><i class="layui-icon layui-icon-return reverse-dowm"></i>相关度</div>
+              <div class="option sort-option" value="!applicationDate"><i class="layui-icon layui-icon-return reverse-dowm"></i>申请日期</div>
+              <div class="option sort-option" value="applicationDate"><i class="layui-icon layui-icon-return reverse-up"></i>申请日期</div>
+              <div class="option sort-option" value="!documentDate"><i class="layui-icon layui-icon-return reverse-dowm"></i>公开/公告日</div>
+              <div class="option sort-option" value="documentDate"><i class="layui-icon layui-icon-return reverse-up"></i>公开/公告日</div>
+              <div class="option sort-option" value="!rank"><i class="layui-icon layui-icon-return reverse-dowm"></i>专利评级</div>
+            </div>
+          </div>
           <span class="ml10 title-color">检索结果：</span>
           <span class="ml10 value-color" id="resultCount">0条</span>
           <span class="ml10 title-color">耗时：</span>

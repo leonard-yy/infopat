@@ -16,7 +16,7 @@ layui.define(function (exports) {
     return str;
   };
 
-  request.get = function (url, tokenType = "search", cb = function () {}) {
+  request.get = function (url, tokenType = "search", cb = function () {}, err = function () {}) {
     var t = "";
     if (tokenType === "search") {
       t = token;
@@ -37,12 +37,13 @@ layui.define(function (exports) {
         cb(data);
       },
       error: function (xhr, textstatus, thrown) {
+        err(xhr);
         console.log("error", thrown);
       },
     });
   };
 
-  request.ajax = function (url, cb = function () {}) {
+  request.ajax = function (url, cb = function () {}, err = function () {}) {
     $.ajax({
       url: url,
       type: "get",
@@ -50,6 +51,7 @@ layui.define(function (exports) {
         cb(data);
       },
       error: function (xhr, textstatus, thrown) {
+        err(xhr);
         console.log("error", thrown);
       },
     });

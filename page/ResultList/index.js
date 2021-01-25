@@ -19,6 +19,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     filterQuery: {},
     selectedCountry: null,
     selectedCountryDp: null,
+    sort: null,
   };
   // 输入框自动调整
   _this.resizeTextarea = function () {
@@ -39,6 +40,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   _this.selectedCountry = request.getParamFromUri("ds");
   _this.selectedCountryDp = request.getParamFromUri("dp");
 
+  form.render();
   /**
    * 懒加载
    * 查询左侧选择框 lazy
@@ -279,34 +281,49 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    */
   _this.initContent = function () {
     // 得到检索条件 查询
-    var searchText = _this.searchText;
+    var q = _this.searchText;
 
-    if (searchText !== null && searchText !== "") {
+    if (q !== null && q !== "") {
       loader.show($("#loading"));
       var sendDate = new Date().getTime();
       // 二次检索
       if (_this.secondText && _this.secondText != "") {
-        searchText += _this.secondText;
+        q += _this.secondText;
       }
       // 过滤筛选
       for (let key in _this.filterQuery) {
         if (_this.filterQuery[key] != null) {
-          searchText += " NOT " + key + ":" + _this.filterQuery[key];
+          q += " NOT " + key + ":" + _this.filterQuery[key];
         }
       }
       for (let key in _this.selectQuery) {
         if (_this.selectQuery[key] != null) {
-          searchText += " AND " + key + ":" + _this.selectQuery[key];
+          q += " AND " + key + ":" + _this.selectQuery[key];
         }
       }
-
-      request.get(`api/s?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&p=${_this.page}`, "search", function (res) {
-        loader.hide($("#loading"));
-        var receiveDate = new Date().getTime();
-        var responseTimeMs = receiveDate - sendDate;
-        res.responseTimes = responseTimeMs / 1000;
-        _this.renderContent(res || {});
-      });
+      // 排序
+      var s = _this.sort;
+      var p = _this.page;
+      var ds = _this.selectedCountry.toLowerCase();
+      var url = `api/s?ds=${ds}&q=${q}&p=${p}`;
+      if (s != null) {
+        url += "&s=" + s;
+        _this.sort = null; // 重置
+      }
+      request.get(
+        url,
+        "search",
+        function (res) {
+          loader.hide($("#loading"));
+          var receiveDate = new Date().getTime();
+          var responseTimeMs = receiveDate - sendDate;
+          res.responseTimes = responseTimeMs / 1000;
+          _this.renderContent(res || {});
+        },
+        function (err) {
+          loader.hide($("#loading"));
+        }
+      );
     } else {
       _this.renderContent({});
     }
@@ -447,6 +464,15 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         .html("取消收藏");
     });
     layer.msg(checkValue.toString());
+  });
+
+  /**
+   * 排序
+   */
+  $("#searchResult").on("click", ".sort-option", function (e) {
+    _this.sort = $(this).attr("value");
+    _this.page = 1;
+    _this.initContent();
   });
 
   /**
