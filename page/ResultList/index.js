@@ -306,7 +306,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       var s = _this.sort;
       var p = _this.page;
       var ds = _this.selectedCountry.toLowerCase();
-      var url = `api/s?ds=${ds}&q=${q}&p=${p}`;
+      var url = `api/s?ds=${ds}&q=${q}&p=${p}&hl=1`;
       if (s != null) {
         url += "&sort=" + s;
         _this.sort = null; // 重置

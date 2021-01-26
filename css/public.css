@@ -9,6 +9,10 @@
 .layuimini-form>.layui-form-item>.layui-input-block {margin-left:150px !important;}
 .layuimini-form>.layui-form-item>.layui-input-block >tip {display:inline-block;margin-top:10px;line-height:10px;font-size:10px;color:#a29c9c;}
 
+em {
+    color: red;
+}
+
 .flag {
     display: inline-block;
     width: 16px;

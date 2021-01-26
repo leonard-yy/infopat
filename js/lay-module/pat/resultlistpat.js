@@ -70,11 +70,11 @@ layui.define("patNodataPage", function (exports) {
                 <div class="content-fileds-item">
                     <div class="content-fileds-item" style="width:400px">
                         <span class="tips-title">申请人：</span>
-                        <span class="tips-value ml10" title={{item.applicant}} >{{item.applicant}}</span>
+                        <span class="tips-value ml10" title={{item.applicant.replace("<em>","").replace("</em>","")}} >{{item.applicant}}</span>
                     </div>
                     <div class="content-fileds-item" style="width:400px">
                         <span class="tips-title">发明人：</span>
-                        <span class="tips-value ml10" title={{item.inventor}} >{{item.inventor}}</span>
+                        <span class="tips-value ml10" title={{item.inventor.replace("<em>","").replace("</em>","")}} >{{item.inventor}}</span>
                     </div>
                 </div>
 
