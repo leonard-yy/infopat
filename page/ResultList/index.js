@@ -307,7 +307,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       var ds = _this.selectedCountry.toLowerCase();
       var url = `api/s?ds=${ds}&q=${q}&p=${p}`;
       if (s != null) {
-        url += "&s=" + s;
+        url += "&sort=" + s;
         _this.sort = null; // 重置
       }
       request.get(
@@ -587,7 +587,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             if (i == 0) {
               filterText = "(";
               key += value;
-              filterText += "ds:" + parent + ") AND type:(" + value;
+              filterText += "ds:" + parent.toLowerCase() + ") AND type:(" + value;
             } else {
               key += "," + value;
               filterText += " OR " + value;
@@ -674,7 +674,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             if (i == 0) {
               key += value;
               filterText = "(";
-              filterText += "ds:" + parent + ") NOT type:(" + value;
+              filterText += "ds:" + parent.toLowerCase() + ") NOT type:(" + value;
             } else {
               key += "," + value;
               filterText += " OR " + value;
