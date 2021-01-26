@@ -77,18 +77,21 @@ function initPage() {
       var p = request.getParamFromUri("p");
       var q = request.getParamFromUri("q");
       var id = request.getParamFromUri("id");
-      loader.show($("#loading"));
+      $("#citeContent").loding("start");
+      $("#citedContent").loding("start");
       request.get(`api/s?ds=cn&q=${q}&p=${p}`, function (res) {
         if (res) {
           request.get(`api/patent/citing?id=${id}`, function (res2) {
-            loader.hide($("#loading"));
+            $("#citeContent").loding("stop");
+            $("#citedContent").loding("stop");
             if (res2) {
               renderTableTop(res2.citedList);
               renderTableBottom(res2.patentXref);
             }
           });
         } else {
-          loader.hide($("#loading"));
+          $("#citeContent").loding("stop");
+          $("#citedContent").loding("stop");
         }
       });
     }

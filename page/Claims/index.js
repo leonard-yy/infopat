@@ -9,11 +9,11 @@ function initPage() {
       var p = request.getParamFromUri("p");
       var q = request.getParamFromUri("q");
       var id = request.getParamFromUri("id");
-      loader.show($("#loading"));
+      $("#claimsContent").loding("start");
       request.get(`api/s?ds=cn&q=${q}&p=${p}`, function (res) {
         if (res) {
           request.get(`api/patent/claims?id=${id}`, function (res2) {
-            loader.hide($("#loading"));
+            $("#claimsContent").loding("stop");
             if (res2 && res2.patent) {
               $("#claimsContent").html(res2.patent.claims);
             } else {
@@ -21,7 +21,7 @@ function initPage() {
             }
           });
         } else {
-          loader.hide($("#loading"));
+          $("#claimsContent").loding("start");
         }
       });
     }

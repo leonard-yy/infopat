@@ -158,16 +158,16 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
   };
 
   _this.initCont = function () {
+    // 其他页面数据
+    _this.getData();
+
     // 查询右侧分页
-    request.get(`api/s?ds=cn&q=${_this.searchText}&p=${_this.page}`, function (res) {
+    request.get(_this.getParamFromUri("url").replace(/TANDT/g, "&"), function (res) {
       _this.renderList(res || {}, _this.id);
     });
 
     // 中间基础信息
     _this.renderCont("基础信息", "name", true);
-
-    // 其他页面数据
-    _this.getData();
   };
 
   /**
@@ -175,10 +175,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
    */
   _this.initMenu = function () {
     // 初始化参数
-    _this.page = _this.getParamFromUri("p");
-    _this.searchText = _this.getParamFromUri("q");
     _this.id = _this.getParamFromUri("id");
-
     // 菜单数据
     $.getJSON("mock/menu.json", function (data) {
       if (data != null) {

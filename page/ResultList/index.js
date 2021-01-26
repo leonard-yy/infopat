@@ -20,6 +20,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     selectedCountry: null,
     selectedCountryDp: null,
     sort: null,
+    resultUrl: "",
   };
   // 输入框自动调整
   _this.resizeTextarea = function () {
@@ -284,7 +285,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     var q = _this.searchText;
 
     if (q !== null && q !== "") {
-      loader.show($("#loading"));
+      $("#fieldsContent").loding("start");
       var sendDate = new Date().getTime();
       // 二次检索
       if (_this.secondText && _this.secondText != "") {
@@ -310,17 +311,18 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         url += "&sort=" + s;
         _this.sort = null; // 重置
       }
+      _this.resultUrl = url.replace(/\&/g, "TANDT");
       request.get(
         url,
         function (res) {
-          loader.hide($("#loading"));
+          $("#fieldsContent").loding("stop");
           var receiveDate = new Date().getTime();
           var responseTimeMs = receiveDate - sendDate;
           res.responseTimes = responseTimeMs / 1000;
           _this.renderContent(res || {});
         },
         function (err) {
-          loader.hide($("#loading"));
+          $("#fieldsContent").loding("stop");
         }
       );
     } else {
@@ -358,7 +360,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * 去往详情页
    */
   function gotoResultPage(value) {
-    window.open("/result.html?id=" + value + "&q=" + _this.searchText + "&p=" + _this.page, "_blank");
+    window.open(`/result.html?id=${value}&url=${_this.resultUrl}`, "_blank");
   }
 
   /**

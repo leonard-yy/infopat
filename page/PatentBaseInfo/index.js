@@ -12,9 +12,9 @@ function initPage() {
     var render = function () {
       if (option && option.id) {
         var fieldview = document.getElementById("resultBaseInfo");
-        loader.show($("#loading"));
+        $("#resultBaseInfo").loding("start");
         request.get(`api/patent/base?id=${option.id}`, function (res) {
-          loader.hide($("#loading"));
+          $("#resultBaseInfo").loding("stop");
           var patent = res.patent;
           // 标题
           $("#pageTitle").html(patent.id + "  " + patent.title);

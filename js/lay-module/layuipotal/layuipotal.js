@@ -14,8 +14,6 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
     // 智能检索 I 高级检索 A
     this.currentPage = "I";
     this.init = function (url) {
-      //自定义loading样式
-      loader.show($("#loading"));
       $.getJSON(url, function (data, status) {
         if (data == null) {
           layuimini.msg_error("暂无菜单信息");
@@ -25,8 +23,6 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
       }).fail(function () {
         layuimini.msg_error("菜单接口有误");
       });
-      //关闭loading层
-      loader.hide($("#loading"));
 
       var currentMenu = layui.sessionData("session").currentMenu;
       if (currentMenu === "INDEX") {

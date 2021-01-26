@@ -36,19 +36,21 @@ function initPage() {
       var p = request.getParamFromUri("p");
       var q = request.getParamFromUri("q");
       var id = request.getParamFromUri("id");
-      loader.show($("#loading"));
+      $("#AlikePatentContent").loding("start");
       request.get(`api/s?ds=cn&q=${q}&p=${p}`, function (res) {
         if (res) {
           request.get(`api/patent/like?id=${id}`, function (res2) {
             if (res2) {
               renderTable(res2.patentLikeList);
+              $("#AlikePatentContent").loding("stop");
               loader.hide($("#loading"));
             } else {
+              $("#AlikePatentContent").loding("stop");
               loader.hide($("#loading"));
             }
           });
         } else {
-          loader.hide($("#loading"));
+          $("#AlikePatentContent").loding("stop");
         }
       });
     }

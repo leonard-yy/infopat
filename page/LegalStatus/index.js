@@ -20,8 +20,7 @@ layui.use(["laytpl", "patBasicInfo", "lsTable"], function () {
         }
       },
       error: function () {
-        $(".detailInfo")
-          .html(`<div class="table-container-common table-item"  id='zl-flzt-table'>
+        $(".detailInfo").html(`<div class="table-container-common table-item"  id='zl-flzt-table'>
         <div class="table-title-common table-title">法律状态信息</div>
       <div class="no-data-onepage">
         <img src="./images/nodata.png" alt="_" />
@@ -47,10 +46,7 @@ layui.use(["laytpl", "patBasicInfo", "lsTable"], function () {
     //根据链接查询法律全文状态信息
     $(".detailInfo").loding("start");
     getDataList(qwflUrl, function (data) {
-      var flUrl =
-        data["法律状态信息"] && data["法律状态信息"]["事务数据"]
-          ? data["法律状态信息"]["事务数据"]
-          : null;
+      var flUrl = data["法律状态信息"] && data["法律状态信息"]["事务数据"] ? data["法律状态信息"]["事务数据"] : null;
       //根据链接查询法律状态信息
       if (!flUrl) {
         return;

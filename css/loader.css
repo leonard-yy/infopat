@@ -26,20 +26,11 @@ body {
   position: absolute;
   background: rgba(0, 0, 0, 0.4);
   pointer-events: none;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
-.result-wrapper {
-  top: 20px;
-  left: 200px;
-  bottom: 20px;
-  right: 320px;
-}
-.list-wrapper {
-  top: 175px;
-  left: 220px;
-  bottom: 15px;
-  right: 20px;
-}
-
 /* .wrapper.wrapperAll {
   max-height: 100%;
   pointer-events: none;

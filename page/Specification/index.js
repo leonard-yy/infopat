@@ -9,11 +9,11 @@ function initPage() {
       var p = request.getParamFromUri("p");
       var q = request.getParamFromUri("q");
       var id = request.getParamFromUri("id");
-      loader.show($("#loading"));
+      $("#specificationContent").loding("start");
       request.get(`api/s?ds=cn&q=${q}&p=${p}`, function (res) {
         if (res) {
           request.get(`api/patent/desc?id=${id}`, function (res2) {
-            loader.hide($("#loading"));
+            $("#specificationContent").loding("stop");
             if (res2 && res2.patent) {
               var desc = res2.patent.description;
               desc = desc.replace(/\\n/g, "<br/>");
@@ -23,7 +23,7 @@ function initPage() {
             }
           });
         } else {
-          loader.hide($("#loading"));
+          $("#specificationContent").loding("stop");
         }
       });
     }
