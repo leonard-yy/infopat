@@ -189,21 +189,36 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
         menuList.map(function (item, index) {
           var child = item.child || [];
           var needMargin = false;
-          if (index > 0) {
-            needMargin = true;
-          }
+          // 第二栏 间隔
+          if (index > 0) needMargin = true;
+
+          var fisrt = true;
+
           child.map(function (c, idx) {
-            var clazz = needMargin && idx == 0 ? "mt10" : "";
-            if (idx == 0 && index == 0) {
-              _this.firstMenu = c.title;
+            var showMenu = true;
+            var show = c.show || "all";
+            if (show !== "all") {
+              // 自定义菜单匹配规则  -CN- 匹配菜单json 里面的show
+              var filterCode = "-" + _this.id.substring(0, 2) + "-";
+              if (show.indexOf(filterCode) === -1) {
+                showMenu = false;
+              }
             }
-            if (c.active) {
-              html += '<li class="layui-nav-item layui-this ' + clazz + '" data-value="' + c.href + '">';
-            } else {
-              html += '<li class="layui-nav-item ' + clazz + '"data-value="' + c.href + '" data-parent="' + item.name + '">';
+
+            if (showMenu) {
+              if (index == 0 && fisrt) {
+                _this.firstMenu = c.title;
+              }
+              var clazz = needMargin && fisrt ? "mt10" : "";
+              fisrt = false;
+              if (c.active) {
+                html += '<li class="layui-nav-item layui-this ' + clazz + '" data-value="' + c.href + '">';
+              } else {
+                html += '<li class="layui-nav-item ' + clazz + '"data-value="' + c.href + '" data-parent="' + item.name + '">';
+              }
+              html += '     <a href="javascript:;"  title=' + c.title + ">" + c.title + "</a>";
+              html += "  </li>";
             }
-            html += '     <a href="javascript:;"  title=' + c.title + ">" + c.title + "</a>";
-            html += "  </li>";
           });
         });
 
