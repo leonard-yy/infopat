@@ -7,6 +7,13 @@ layui.define(function (exports) {
   var token = "96fe4d35788780783a290ace37190fb8632c9c54";
   var token2 = "a36d36723ce2310f4ec2b8ece87e9b3e7bc263d9";
   var v = 1;
+  // 模拟代理location
+  // 正式环境
+  var apiPrefix = "https://www.infodossier.com/api/";
+  // 测试环境
+  var apiTestPrefix = "https://www.infodossier.test:2080/api/";
+  // 开发环境
+  var apiDevPrefix = "https://www.infopat.net/patent/v2/";
 
   var getParamString = function (param) {
     var str = "";
@@ -17,6 +24,8 @@ layui.define(function (exports) {
   };
 
   request.get = function (url, cb = function () {}, err = function () {}) {
+    // 本地用了nginx代理，无需此行替换 打包放开
+    url = apiDevPrefix + url;
     if (url.indexOf("?") !== -1) {
       url += `&v=${v}`;
     } else {
@@ -37,6 +46,8 @@ layui.define(function (exports) {
   };
 
   request.ajax = function (url, cb = function () {}, err = function () {}) {
+    // 本地用了nginx代理，无需此行替换 打包放开
+    url = apiDevPrefix + url;
     $.ajax({
       url: url,
       type: "get",

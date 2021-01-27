@@ -10,9 +10,9 @@ function initPage() {
       var q = request.getParamFromUri("q");
       var id = request.getParamFromUri("id");
       $("#specificationContent").loding("start");
-      request.get(`api/s?ds=cn&q=${q}&p=${p}`, function (res) {
+      request.get(`adv/s?ds=cn&q=${q}&p=${p}`, function (res) {
         if (res) {
-          request.get(`api/patent/desc?id=${id}`, function (res2) {
+          request.get(`adv/patent/desc?id=${id}`, function (res2) {
             $("#specificationContent").loding("stop");
             if (res2 && res2.patent) {
               var desc = res2.patent.description;

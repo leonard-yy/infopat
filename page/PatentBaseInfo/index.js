@@ -13,7 +13,7 @@ function initPage() {
       if (option && option.id) {
         var fieldview = document.getElementById("resultBaseInfo");
         $("#resultBaseInfo").loding("start");
-        request.get(`api/patent/base?id=${option.id}`, function (res) {
+        request.get(`adv/patent/base?id=${option.id}`, function (res) {
           $("#resultBaseInfo").loding("stop");
           var patent = res.patent;
           // 标题
@@ -42,7 +42,7 @@ function initPage() {
           });
 
           $("#resultSumaryContent").html(patent.summary);
-          $("#resultImgContent").attr("src", "api/img?v=1&key=" + patent.imagePath);
+          $("#resultImgContent").attr("src", "api/adv/img?v=1&key=" + patent.imagePath);
         });
       }
     };

@@ -101,11 +101,11 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
   // 其他页面信息 | 法律信息之下
   _this.getData = function () {
     // 获取基本信息
-    request.get(`api/patent/base?id=${_this.id}`, function (res) {
+    request.get(`adv/patent/base?id=${_this.id}`, function (res) {
       var patent = res.patent;
       var code = patent.applicationNumber.substring(2).replace(".", "");
       // debug_token 调试用，正式环境去除
-      var url = `infopat/${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
+      var url = `patent/${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
       //将基本信息
       request.ajax(url, function (result) {
         //返回成功进行响应操作

@@ -18,7 +18,7 @@ layui.define("patNodataPage", function (exports) {
             </div>
 
             <div class="result-content-img" data-value={{item.id}}>
-                <img src={{"api/img?v=1&key=" + item.imagePath }} data-value={{item.id}} />
+                <img src={{"api/adv/img?v=1&key=" + item.imagePath }} data-value={{item.id}} />
             </div>
 
             <div class="result-content-fileds">

@@ -53,7 +53,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       if (_this.secondText && _this.secondText != "") {
         searchText += _this.secondText;
       }
-      request.get(`api/ration?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&c=${sel.value}`, function (res) {
+      request.get(`adv/ration?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&c=${sel.value}`, function (res) {
         var temp = "";
         var data = res.analysis_total || [];
         _this.filterData[sel.value] = data;
@@ -306,7 +306,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       var s = _this.sort;
       var p = _this.page;
       var ds = _this.selectedCountry.toLowerCase();
-      var url = `api/s?ds=${ds}&q=${q}&p=${p}&hl=1`;
+      var url = `adv/s?ds=${ds}&q=${q}&p=${p}&hl=1`;
       if (s != null) {
         url += "&sort=" + s;
         _this.sort = null; // 重置
