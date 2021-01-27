@@ -42,6 +42,7 @@ function initPage() {
           });
 
           $("#resultSumaryContent").html(patent.summary);
+
           $("#resultImgContent").attr("src", "api/adv/img?v=1&key=" + patent.imagePath);
         });
       }
@@ -49,6 +50,10 @@ function initPage() {
     // 初始化
     render();
   });
+}
+
+function errorLoadImg() {
+  $("#resultImgContent").remove();
 }
 
 initPage();

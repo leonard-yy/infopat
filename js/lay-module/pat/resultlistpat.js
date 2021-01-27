@@ -5,7 +5,6 @@
 layui.define("patNodataPage", function (exports) {
   var patNodata = layui.patNodataPage;
   var noDataTpl = patNodata.html;
-
   var temp = `
       {{#  if(d.length === 0){ }}
         ${noDataTpl}
@@ -18,7 +17,7 @@ layui.define("patNodataPage", function (exports) {
             </div>
 
             <div class="result-content-img" data-value={{item.id}}>
-                <img src={{"api/adv/img?v=1&key=" + item.imagePath }} data-value={{item.id}} />
+                <img src={{"api/adv/img?v=1&key=" + item.imagePath }} data-value={{item.id}} onerror=src="../../../images/default-image.png" />
             </div>
 
             <div class="result-content-fileds">
