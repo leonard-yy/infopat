@@ -15,12 +15,18 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     filterData: {},
     orignData: {},
     secondText: null,
+    extraFilter: null,
     selectQuery: {},
     filterQuery: {},
+    // 区域选项
     selectedCountry: null,
     selectedCountryDp: null,
+    selectedCountryDd: null,
     sort: null,
     resultUrl: "",
+    // 额外检索初始化
+    firinit: true,
+    firinitRation: true,
   };
   // 输入框自动调整
   _this.resizeTextarea = function () {
@@ -40,6 +46,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
 
   _this.selectedCountry = request.getParamFromUri("ds");
   _this.selectedCountryDp = request.getParamFromUri("dp");
+  _this.selectedCountryDd = request.getParamFromUri("dd");
+  _this.extraFilter = request.getParamFromUri("f");
 
   form.render();
   /**
@@ -48,12 +56,35 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    */
   _this.getSelectorContent = function (sel) {
     var searchText = _this.searchText;
+    var ds = _this.selectedCountry;
     if (searchText !== null && searchText !== "") {
       // 二次检索
       if (_this.secondText && _this.secondText != "") {
         searchText += _this.secondText;
       }
-      request.get(`adv/ration?ds=${_this.selectedCountry.toLowerCase()}&q=${searchText}&c=${sel.value}`, function (res) {
+      var selectedCountry = _this.selectedCountry;
+      if (selectedCountry !== "cn" && selectedCountry != "all") {
+        ds = "all";
+        var countryArr = selectedCountry.split(",");
+        if (countryArr.length > 0) {
+          var dsStr = " AND countryCode:(";
+          countryArr.map(function (item, i) {
+            if (i == 0) {
+              dsStr += item;
+            } else {
+              dsStr += " OR " + item;
+            }
+          });
+          dsStr += ")";
+          searchText += dsStr;
+        }
+      }
+      if (_this.extraFilter && _this.firinitRation) {
+        // 覆盖条件
+        q = _this.extraFilter;
+        _this.firinitRation = false;
+      }
+      request.get(`adv/ration?ds=${ds}&q=${searchText}&c=${sel.value}`, function (res) {
         var temp = "";
         var data = res.analysis_total || [];
         _this.filterData[sel.value] = data;
@@ -296,13 +327,44 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   _this.initContent = function () {
     // 得到检索条件 查询
     var q = _this.searchText;
+    // 排序
+    var s = _this.sort;
+    var p = _this.page;
+    // 国家 all cn
+    var ds = _this.selectedCountry;
 
     if (q !== null && q !== "") {
       $("#lodingContent").loding("start");
       var sendDate = new Date().getTime();
+
       // 二次检索
       if (_this.secondText && _this.secondText != "") {
         q += _this.secondText;
+      }
+
+      var selectedCountry = _this.selectedCountry;
+      if (selectedCountry !== "CN" && selectedCountry != "all") {
+        ds = "all";
+        var countryArr = selectedCountry.split(",");
+        if (countryArr.length > 0) {
+          var dsStr = " AND countryCode:(";
+          countryArr.map(function (item, i) {
+            if (i == 0) {
+              dsStr += item;
+            } else {
+              dsStr += " OR " + item;
+            }
+          });
+          dsStr += ")";
+          q += dsStr;
+        }
+      }
+
+      // 筛选过滤时其他条件不变
+      for (let key in _this.selectQuery) {
+        if (_this.selectQuery[key] != null) {
+          q += " AND " + key + ":" + _this.selectQuery[key];
+        }
       }
       // 过滤筛选
       for (let key in _this.filterQuery) {
@@ -310,15 +372,13 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           q += " NOT " + key + ":" + _this.filterQuery[key];
         }
       }
-      for (let key in _this.selectQuery) {
-        if (_this.selectQuery[key] != null) {
-          q += " AND " + key + ":" + _this.selectQuery[key];
-        }
+
+      if (_this.extraFilter && _this.firinit) {
+        // 覆盖条件
+        q = _this.extraFilter;
+        _this.firinit = null;
       }
-      // 排序
-      var s = _this.sort;
-      var p = _this.page;
-      var ds = _this.selectedCountry.toLowerCase();
+
       var url = `adv/s?ds=${ds}&q=${q}&p=${p}&hl=1`;
       if (s != null) {
         url += "&sort=" + s;
@@ -349,6 +409,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   _this.renderPage = function () {
     _this.initSelector();
     _this.initContent();
+
     // 初始化条件
     _this.filterQuery = {};
     _this.selectQuery = {};
@@ -733,6 +794,13 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   $("#quanqiuSelector").on("click", function (e) {
     var getParentNode = function (item) {
       var parentChecked = _this.selectedCountryDp;
+      var checkedStatus = false;
+      if (parentChecked.indexOf("all") !== -1) {
+        checkedStatus = true;
+      }
+      if (parentChecked.indexOf("-" + item.value) !== -1) {
+        checkedStatus = false;
+      }
       // 叶子节点  COUNTRY-PARENT-VALUE
       var tpl = '<div class="search-country-layer">';
       tpl += '      <div class="squared-checkbox">';
@@ -752,10 +820,20 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
 
     var getChildNode = function (item) {
       var childChecked = _this.selectedCountry;
+      var filter = _this.selectedCountryDd;
+      var checkedStatus = false;
+      if (childChecked == "all") {
+        checkedStatus = true;
+      }
+      if (filter) {
+        if (filter.indexOf(item.value) !== -1) {
+          checkedStatus = false;
+        }
+      }
       // 子节点  COUNTRY-PARENT-VALUE
       var tpl = '<div class="search-country-layer">';
       tpl += '      <div class="squared-checkbox">';
-      if ((childChecked && childChecked.indexOf(item.value) !== -1) || childChecked == "all") {
+      if ((childChecked && childChecked.indexOf(item.value) !== -1) || checkedStatus) {
         tpl += '          <input type="checkbox" class="tree-search-child" value="checked" ';
       } else {
         tpl += '          <input type="checkbox" class="tree-search-child" ';
@@ -838,6 +916,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             _this.selectedCountry = "all";
             _this.selectedCountryDp = "all";
           }
+          _this.page = 1;
+          _this.renderPage();
           layer.close(index);
         },
         btn2: function () {
