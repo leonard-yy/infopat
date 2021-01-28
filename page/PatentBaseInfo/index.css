@@ -149,7 +149,7 @@
   overflow: auto;
 }
 .result-list .result-list-item {
-  height: 72px;
+  height: 75px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -174,8 +174,10 @@
 .result-list .result-list-item .title {
   color: #333333;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
+  line-height: 18px;
+  max-height: 36px;
   display: inline-block;
 }
 .result-list .result-list-item .title.active {

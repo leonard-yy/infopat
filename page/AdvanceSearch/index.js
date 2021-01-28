@@ -118,6 +118,39 @@ function initPage() {
       });
     };
 
+    _this.gotoResultPage = function () {
+      // 纪录本页查询值
+      var value = $("#instruceTexteat").val();
+      if (value && value !== "") {
+        // 纪录国家选择树的值
+        var contryChecked = "";
+        $('.tree-search-child[value = "checked"]').each(function (i, e) {
+          var id = $(this).attr("id");
+          var v = id.split("-").pop();
+          if (i == 0) {
+            contryChecked += v;
+          } else {
+            contryChecked += "," + v;
+          }
+        });
+        var contryChecked2 = "";
+        $('.tree-search-parent[value = "checked"]').each(function (i, e) {
+          var id = $(this).attr("id");
+          var v = id.split("-").pop();
+          if (i == 0) {
+            contryChecked2 += v;
+          } else {
+            contryChecked2 += "," + v;
+          }
+        });
+        if (contryChecked2.indexOf("ALL") !== -1) {
+          contryChecked = "all";
+          contryChecked2 = "all";
+        }
+        window.open("/list.html?s=" + value + "&ds=" + contryChecked + "&dp=" + contryChecked2, "_blank");
+      }
+    };
+
     _this.init();
 
     /**
@@ -184,36 +217,7 @@ function initPage() {
      * 检索
      */
     $("#instruceSearch").on("click", function () {
-      // 纪录本页查询值
-      var value = $("#instruceTexteat").val();
-      if (value && value !== "") {
-        // 纪录国家选择树的值
-        var contryChecked = "";
-        $('.tree-search-child[value = "checked"]').each(function (i, e) {
-          var id = $(this).attr("id");
-          var v = id.split("-").pop();
-          if (i == 0) {
-            contryChecked += v;
-          } else {
-            contryChecked += "," + v;
-          }
-        });
-        var contryChecked2 = "";
-        $('.tree-search-parent[value = "checked"]').each(function (i, e) {
-          var id = $(this).attr("id");
-          var v = id.split("-").pop();
-          if (i == 0) {
-            contryChecked2 += v;
-          } else {
-            contryChecked2 += "," + v;
-          }
-        });
-        if (contryChecked2.indexOf("ALL") !== -1) {
-          contryChecked = "all";
-          contryChecked2 = "all";
-        }
-        window.open("/list.html?s=" + value + "&ds=" + contryChecked + "&dp=" + contryChecked2, "_blank");
-      }
+      _this.gotoResultPage();
     });
 
     /**
@@ -265,6 +269,13 @@ function initPage() {
       }
       $("#instruceTexteat").val(value.trimLeft());
       $("#instruceTexteat").focus();
+    });
+
+    $(document).on("keypress", "#advanceSearch", function (event) {
+      if (event.keyCode === 13) {
+        _this.gotoResultPage();
+      }
+      return;
     });
   });
 }

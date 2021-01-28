@@ -148,7 +148,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         tpl += '               <label class="country-checkbox-parent" for="COUNTRY-PARENT-';
         tpl += item.value + '" />';
         tpl += "      </div>";
-        tpl += '      <span class="block-back ml10"/>';
+        // tpl += '      <span class="block-back ml10"/>';
         tpl += '      <span class="ml10 search-country-title with-parent ellipsis-text" style="flex:1" title="' + item.title + '">' + item.title + "</span>";
         tpl += "   </div>";
         return tpl;
@@ -239,7 +239,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         temp += 'value="checked"';
       }
       temp += "/>";
-      temp += '<label for="' + id + '"></label></div>';
+      temp += '<label class="common-checkbox" for="' + id + '"></label></div>';
       return temp;
     };
 

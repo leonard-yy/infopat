@@ -69,7 +69,9 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
               temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
               temp += '          <label class="result-selector-parent"/>';
               temp += "      </div>";
-              temp += '      <span class="block-back ml10"/>';
+              if (sel.value === "countryCode") {
+                temp += '      <span class="ml10 flag flag-' + item.key.toLowerCase() + '"/>';
+              }
               temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
               temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
               temp += "     </div>";
@@ -95,7 +97,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
               temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
               temp += '          <label class="result-selector-parent"/>';
               temp += "      </div>";
-              temp += '      <span class="block-back ml10"/>';
+              // temp += '      <span class="block-back ml10"/>';
               temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
               temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
               temp += "     </div>";
@@ -121,7 +123,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * 过滤 筛选
    * 左侧选择框
    */
-  _this.filterSelectorContent = function (name, code, type, key, all) {
+  _this.filterSelectorContent = function (name, code, type, key, all, parentKey) {
     var data = _this.filterData[code] || [];
     var filter = [];
     if (all) {
@@ -130,12 +132,15 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       if (type === "select") {
         layui.each(data, function (index, item) {
           if (item.children && item.children.length > 0) {
-            var tempItem = Object.assign({}, item);
-            tempItem.children = [];
-            layui.each(item.children, function (idx, child) {
-              if (key.indexOf(child.key) !== -1) tempItem.children.push(child);
-            });
-            filter.push(tempItem);
+            // 父节点
+            if (parentKey.has(item.key)) {
+              var tempItem = Object.assign({}, item);
+              tempItem.children = [];
+              layui.each(item.children, function (idx, child) {
+                if (key.indexOf(child.key) !== -1) tempItem.children.push(child);
+              });
+              filter.push(tempItem);
+            }
           } else {
             if (key.indexOf(item.key) !== -1) filter.push(item);
           }
@@ -143,12 +148,18 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       } else {
         layui.each(data, function (index, item) {
           if (item.children && item.children.length > 0) {
-            var tempItem = Object.assign({}, item);
-            tempItem.children = [];
-            layui.each(item.children, function (idx, child) {
-              if (key.indexOf(child.key) === -1) tempItem.children.push(child);
-            });
-            filter.push(tempItem);
+            if (parentKey.has(item.key)) {
+              var tempItem = Object.assign({}, item);
+              tempItem.children = [];
+              layui.each(item.children, function (idx, child) {
+                if (key.indexOf(child.key) === -1) tempItem.children.push(child);
+              });
+              if (tempItem.children.length > 0) {
+                filter.push(tempItem);
+              }
+            } else {
+              filter.push(item);
+            }
           } else {
             if (key.indexOf(item.key) === -1) filter.push(item);
           }
@@ -168,7 +179,9 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
           temp += '          <label class="result-selector-parent"/>';
           temp += "      </div>";
-          temp += '      <span class="block-back ml10"/>';
+          if (item.key === "countryCode") {
+            temp += '      <span class="ml10 flag flag-' + item.key.toLowerCase() + '"/>';
+          }
           temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
           temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
           temp += "     </div>";
@@ -194,7 +207,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
           temp += '          <label class="result-selector-parent"/>';
           temp += "      </div>";
-          temp += '      <span class="block-back ml10"/>';
+          // temp += '      <span class="block-back ml10"/>';
           temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
           temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
           temp += "     </div>";
@@ -285,7 +298,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     var q = _this.searchText;
 
     if (q !== null && q !== "") {
-      $("#fieldsContent").loding("start");
+      $("#lodingContent").loding("start");
       var sendDate = new Date().getTime();
       // 二次检索
       if (_this.secondText && _this.secondText != "") {
@@ -315,14 +328,14 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       request.get(
         url,
         function (res) {
-          $("#fieldsContent").loding("stop");
+          $("#lodingContent").loding("stop");
           var receiveDate = new Date().getTime();
           var responseTimeMs = receiveDate - sendDate;
           res.responseTimes = responseTimeMs / 1000;
           _this.renderContent(res || {});
         },
         function (err) {
-          $("#fieldsContent").loding("stop");
+          $("#lodingContent").loding("stop");
         }
       );
     } else {
@@ -378,10 +391,14 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   /**
    * 异步加载纬度
    */
-  $("#searchResult").on("click", ".layui-nav-item", function (e) {
+  $("#searchResult").on("click", "li.layui-nav-item", function (e) {
     var id = $(e.currentTarget).attr("id");
     var value = id.split("-").pop();
     if (_this.selector == value) {
+      return;
+    }
+    if (_this.filterData[value]) {
+      // 防止子节点点击加载
       return;
     }
     var s = _this.selectorData.find(function (d) {
@@ -562,6 +579,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     var filterCode = $(this).data().value;
     // 清除已有的
     $('.filter-item.select-modal[name = "' + name + '"]').remove();
+
     // 生成新的
     if (checked.length > 0) {
       var content = '<div class="filter-item select-modal" name="' + name + '">';
@@ -570,6 +588,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += '<span class="key-type">' + name + " </span>";
       var filterText = "(";
       var key = "";
+      var parentKey = new Set();
       checked.each(function (i, e2) {
         var id = $(e2).attr("id");
         var parent = $(e2).attr("parent");
@@ -581,9 +600,10 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             key += value;
           } else {
             key += "," + value;
-            filterText += " AND " + value;
+            filterText += " OR " + value;
           }
         } else {
+          parentKey.add(parent);
           //  国家匹配规则不一致 单独编写
           if (filterCode == "countryCode") {
             if (i == 0) {
@@ -610,7 +630,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += "</div>";
       $(".result-left-filter").append(content);
       // 重新渲染左侧节点
-      _this.filterSelectorContent(name, filterCode, "select", key, false);
+      _this.filterSelectorContent(name, filterCode, "select", key, false, parentKey);
       // TODO 重新查询
       _this.selectQuery[filterCode] = filterText;
       _this.page = 1;
@@ -633,7 +653,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       } else {
         _this.selectQuery[filterCode] = null;
       }
-      _this.filterSelectorContent(name, filterCode, null, null, true);
+      _this.filterSelectorContent(name, filterCode, null, null, true, null);
     }
     // TODO 重新查询
     _this.page = 1;
@@ -657,6 +677,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += '<span class="key-type">' + name + " </span>";
       var filterText = "(";
       var key = "";
+      var parentKey = new Set();
       checked.each(function (i, e2) {
         var id = $(e2).attr("id");
         var parent = $(e2).attr("parent");
@@ -668,9 +689,10 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             filterText += value;
           } else {
             key += "," + value;
-            filterText += " NOT " + value;
+            filterText += " OR " + value;
           }
         } else {
+          parentKey.add(parent);
           //  国家匹配规则不一致 单独编写
           if (filterCode == "countryCode") {
             if (i == 0) {
@@ -697,7 +719,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += "</div>";
       $(".result-left-filter").append(content);
       // 重新渲染左侧节点
-      _this.filterSelectorContent(name, filterCode, "filter", key, false);
+      _this.filterSelectorContent(name, filterCode, "filter", key, false, parentKey);
       // TODO 重新查询
       _this.filterQuery[filterCode] = filterText;
       _this.page = 1;

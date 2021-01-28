@@ -29,18 +29,19 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
         }
       });
       patents.map(function (item, index) {
+        var title = item.title.replace(/<em>/g, "").replace(/<\/em>/g, "");
         if (index == hasIndex) {
           html += '<div class="result-list-item active" data-value="' + item.id + '" data-index=' + index + ">";
           html += '   <div class="flex">';
           html += "    <span>" + (index + 1) + ".</span>";
-          html += '    <span class="ml10 title active" title="' + item.title + '">' + item.title + "</span>" + "</div>";
+          html += '    <span class="ml10 title active" title="' + title + '">' + title + "</span>" + "</div>";
           html += '   <div class="subtitle active">' + item.id + "</div>";
           html += "</div>";
         } else {
           html += '<div class="result-list-item" data-value="' + item.id + '" data-index=' + index + ">";
           html += '   <div class="flex">';
           html += "    <span>" + (index + 1) + ".</span>";
-          html += '    <span class="ml10 title" title="' + item.title + '">' + item.title + "</span>" + "</div>";
+          html += '    <span class="ml10 title" title="' + title + '">' + title + "</span>" + "</div>";
           html += '   <div class="subtitle">' + item.id + "</div>";
           html += "</div>";
         }
@@ -105,7 +106,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       var patent = res.patent;
       var code = patent.applicationNumber.substring(2).replace(".", "");
       // debug_token 调试用，正式环境去除
-      var url = `patent/${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
+      var url = `${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
       //将基本信息
       request.ajax(url, function (result) {
         //返回成功进行响应操作
@@ -146,23 +147,13 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     });
   };
 
-  /**
-   * uri参数
-   * @param {*} name
-   */
-  _this.getParamFromUri = function (name) {
-    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`); // 构造一个含有目标参数的正则表达式对象
-    const r = window.location.search.substr(1).match(reg); // 匹配目标参数
-    if (r != null) return decodeURI(r[2]);
-    return null; // 返回参数值
-  };
-
   _this.initCont = function () {
     // 其他页面数据
     _this.getData();
 
     // 查询右侧分页
-    request.get(_this.getParamFromUri("url").replace(/TANDT/g, "&"), function (res) {
+    var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
+    request.get(url.replace(/p=\d/, "p=" + _this.page), function (res) {
       _this.renderList(res || {}, _this.id);
     });
 
@@ -170,12 +161,21 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     _this.renderCont("基础信息", "name", true);
   };
 
+  _this.getParamFromUri = function (name, url) {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`); // 构造一个含有目标参数的正则表达式对象
+    const r = url.substr(1).match(reg); // 匹配目标参数
+    if (r != null) return decodeURI(r[2]);
+    return null; // 返回参数值
+  };
+
   /**
    * 左侧菜单
    */
   _this.initMenu = function () {
     // 初始化参数
-    _this.id = _this.getParamFromUri("id");
+    _this.id = request.getParamFromUri("id");
+    var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
+    _this.page = _this.getParamFromUri("p", url);
     // 菜单数据
     $.getJSON("mock/menu.json", function (data) {
       if (data != null) {

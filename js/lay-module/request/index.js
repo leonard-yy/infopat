@@ -24,8 +24,8 @@ layui.define(function (exports) {
   };
 
   request.get = function (url, cb = function () {}, err = function () {}) {
-    url = apiTestPrefix + url;
-    // url = nginxDevPrefix + url;
+    // url = apiTestPrefix + url;
+    url = nginxDevPrefix + url;
     if (url.indexOf("?") !== -1) {
       url += `&v=${v}`;
     } else {
@@ -46,8 +46,8 @@ layui.define(function (exports) {
   };
 
   request.ajax = function (url, cb = function () {}, err = function () {}) {
-    url = apiTestPrefix + url;
-    // url = nginxDevPrefix + url;
+    // url = apiTestPrefix + url;
+    url = nginxDevPrefix + url;
     $.ajax({
       url: url,
       type: "get",
