@@ -38,6 +38,8 @@ layui.use(["element", "layer", "layuimini", "layuipotal", "form", "loader"], fun
   //     });
   //   }
   // } catch (error) {}
+
+  layuipotal.requirePreview("page/Header/index.html", ".layui-header.header");
 });
 
 function login() {

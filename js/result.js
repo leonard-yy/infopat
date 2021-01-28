@@ -8,6 +8,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
   var _this = {
     page: 1,
     pageSize: 10,
+    force: false,
   };
   //动态加载CSS
   layui.link("./page/PatentBaseInfo/index.css");
@@ -131,6 +132,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
               inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
               Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
               agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
+              patentInfo: patent,
             },
           });
         } else {
@@ -148,17 +150,62 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
   };
 
   _this.initCont = function () {
-    // 其他页面数据
-    _this.getData();
+    if (!_this.force) {
+      // 其他页面数据
+      _this.getData();
 
-    // 查询右侧分页
-    var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
-    request.get(url.replace(/p=\d/, "p=" + _this.page), function (res) {
-      _this.renderList(res || {}, _this.id);
-    });
+      // 查询右侧分页
+      var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
+      request.get(url.replace(/p=\d/, "p=" + _this.page), function (res) {
+        _this.renderList(res || {}, _this.id);
+      });
 
-    // 中间基础信息
-    _this.renderCont("基础信息", "name", true);
+      // 中间基础信息
+      _this.renderCont("基础信息", "name", true);
+    } else {
+      // 其他页面数据
+      // debug_token 调试用，正式环境去除
+      var url = `${request.getParamFromUri("id")}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
+      //将基本信息
+      request.ajax(url, function (result) {
+        //返回成功进行响应操作
+        if (result.data) {
+          let AllInfo = result.data;
+          // 放到session里，减少重复请求
+          layui.sessionData("session", {
+            key: "allInfo",
+            value: AllInfo,
+          });
+          let basicInfo = AllInfo["申请信息"] || {};
+          layui.sessionData("session", {
+            key: "basicInfo",
+            value: {
+              updateDate: AllInfo["查询时间"] || "--",
+              status: basicInfo["案件状态"] || "--",
+              number: basicInfo["专利号码"] || "--",
+              flNumber: basicInfo["主分类号"] || "--",
+              name: basicInfo["专利名称"] || "--",
+              applicationDate: basicInfo["申请日期"] || "",
+              applicant: (basicInfo["申请人"] && basicInfo["申请人"].join("、")) || "--",
+              inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
+              Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
+              agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
+            },
+          });
+          _this.renderCont("费用信息", "name", true);
+          $(".layuimini-content-list").hide();
+        } else {
+          layui.sessionData("session", {
+            key: "allInfo",
+            value: {},
+          });
+          layui.sessionData("session", {
+            key: "basicInfo",
+            value: {},
+          });
+        }
+      });
+    }
   };
 
   _this.getParamFromUri = function (name, url) {
@@ -173,58 +220,101 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
    */
   _this.initMenu = function () {
     // 初始化参数
-    _this.id = request.getParamFromUri("id");
-    var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
-    _this.page = _this.getParamFromUri("p", url);
-    // 菜单数据
-    $.getJSON("mock/menu.json", function (data) {
-      if (data != null) {
-        var menuList = data.menu || [];
+    var force = request.getParamFromUri("force");
+    var cost = false;
 
-        var html = '<ul class="layui-nav layui-nav-tree" >';
+    // 费用信息
+    if (force) {
+      _this.force = true;
+      // 菜单数据
+      $.getJSON("mock/menu.json", function (data) {
+        if (data != null) {
+          var menuList = data.menu || [];
 
-        menuList.map(function (item, index) {
-          var child = item.child || [];
-          var needMargin = false;
-          // 第二栏 间隔
-          if (index > 0) needMargin = true;
+          var html = '<ul class="layui-nav layui-nav-tree" >';
 
-          var fisrt = true;
-
-          child.map(function (c, idx) {
-            var showMenu = true;
-            var show = c.show || "all";
-            if (show !== "all") {
-              // 自定义菜单匹配规则  -CN- 匹配菜单json 里面的show
-              var filterCode = "-" + _this.id.substring(0, 2) + "-";
-              if (show.indexOf(filterCode) === -1) {
-                showMenu = false;
+          menuList.map(function (item, index) {
+            var child = item.child || [];
+            var fisrt = true;
+            child.map(function (c, idx) {
+              if (c.href == "page/CostInfo/index.html") {
+                if (fisrt) {
+                  _this.firstMenu = c.title;
+                }
+                fisrt = false;
+                html += '<li class="layui-nav-item layui-this" data-value="' + c.href + '">';
+                html += '     <a href="javascript:;"  title=' + c.title + ">" + c.title + "</a>";
+                html += "  </li>";
               }
-            }
-
-            if (showMenu) {
-              if (index == 0 && fisrt) {
-                _this.firstMenu = c.title;
-              }
-              var clazz = needMargin && fisrt ? "mt10" : "";
-              fisrt = false;
-              if (c.active) {
-                html += '<li class="layui-nav-item layui-this ' + clazz + '" data-value="' + c.href + '">';
-              } else {
-                html += '<li class="layui-nav-item ' + clazz + '"data-value="' + c.href + '" data-parent="' + item.name + '">';
-              }
-              html += '     <a href="javascript:;"  title=' + c.title + ">" + c.title + "</a>";
-              html += "  </li>";
-            }
+            });
           });
-        });
+          $(".layui-left-menu").html(html);
+          // 加载页面数据
+          _this.initCont();
+        }
+      });
+    } else {
+      _this.id = request.getParamFromUri("id");
+      var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
+      _this.page = _this.getParamFromUri("p", url);
+      // 菜单数据
+      $.getJSON("mock/menu.json", function (data) {
+        if (data != null) {
+          var menuList = data.menu || [];
 
-        $(".layui-left-menu").html(html);
+          var html = '<ul class="layui-nav layui-nav-tree" >';
 
-        // 加载页面数据
-        _this.initCont();
-      }
-    });
+          menuList.map(function (item, index) {
+            var child = item.child || [];
+            var needMargin = false;
+            // 第二栏 间隔
+            if (index > 0) needMargin = true;
+
+            var fisrt = true;
+
+            child.map(function (c, idx) {
+              var showMenu = true;
+              var show = c.show || "all";
+              // 只展示费用信息
+              if (cost) {
+                showMenu = false;
+                if (c.href == "page/CostInfo/index.html") {
+                  showMenu = true;
+                }
+              } else {
+                if (show !== "all") {
+                  // 自定义菜单匹配规则  -CN- 匹配菜单json 里面的show
+                  var filterCode = "-" + _this.id.substring(0, 2) + "-";
+                  if (show.indexOf(filterCode) === -1) {
+                    showMenu = false;
+                  }
+                }
+              }
+
+              if (showMenu) {
+                if (index == 0 && fisrt) {
+                  _this.firstMenu = c.title;
+                }
+                var clazz = needMargin && fisrt ? "mt10" : "";
+                fisrt = false;
+                if (c.active) {
+                  html += '<li class="layui-nav-item layui-this ' + clazz + '" data-value="' + c.href + '">';
+                } else {
+                  html += '<li class="layui-nav-item ' + clazz + '"data-value="' + c.href + '" data-parent="' + item.name + '">';
+                }
+                html += '     <a href="javascript:;"  title=' + c.title + ">" + c.title + "</a>";
+                html += "  </li>";
+              }
+            });
+          });
+
+          $(".layui-left-menu").html(html);
+
+          // 加载页面数据
+          _this.initCont();
+        }
+      });
+    }
   };
 
   _this.initMenu();

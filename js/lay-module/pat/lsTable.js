@@ -24,10 +24,10 @@ layui.define("patNodataPage", function (exports) {
   </tr>
   {{#  layui.each(d, function(index, item){ }}
     <tr>
-      <td>{{ item['申请（专利）号']  || '--' }} <br/> {{ item['授权公告号']  || '--' }}</td>
-      <td>{{ item['事务数据公告日']  || '--' }}</td>
-      <td>{{ item['事务数据类型']  || '--' }}</td>
-      <td>{{ item['事务数据信息']  || '--' }}</td>
+      <td>{{ item.applicationNumber  || '--' }}</td>
+      <td>{{ item.date  || '--' }}</td>
+      <td>{{ item.type  || '--' }}</td>
+      <td>{{ item.content  || '--' }}</td>
     </tr>
     {{#  }); }}
     {{# }}}

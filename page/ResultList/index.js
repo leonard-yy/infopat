@@ -265,28 +265,62 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   _this.renderContent = function (res) {
     // 数据
     // var fieldview = document.getElementById("fieldsContent");
-    laytpl(resultlistpat).render(res.patents || [], function (html) {
-      $("#fieldsContent").html(html);
-    });
-    // 分页
-    laypage.render({
-      elem: "pageNavagete",
-      count: res.total || 0,
-      first: "首页",
-      last: "尾页",
-      curr: res.page || 1,
-      prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
-      next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',
-      jump: function (obj, first) {
-        //obj包含了当前分页的所有参数，比如：
-        // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-        // console.log(obj.limit); //得到每页显示的条数
-        if (!first) {
-          _this.page = obj.curr;
-          _this.initContent();
+    if (res.patents && res.patents.length > 0) {
+      laytpl(resultlistpat).render(res.patents || [], function (html) {
+        $("#fieldsContent").html(html);
+      });
+      // 分页
+      laypage.render({
+        elem: "pageNavagete",
+        count: res.total || 0,
+        first: "首页",
+        last: "尾页",
+        curr: res.page || 1,
+        prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
+        next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',
+        jump: function (obj, first) {
+          //obj包含了当前分页的所有参数，比如：
+          // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+          // console.log(obj.limit); //得到每页显示的条数
+          if (!first) {
+            _this.page = obj.curr;
+            _this.initContent();
+          }
+        },
+      });
+    } else {
+      // 默认无数据
+      var txt = $("#expandTextarea").val();
+      var extra = "";
+      var id = "";
+      var reg = new RegExp(/\S*\d{12}\.?((\d?|X)|\d?|X?)/);
+      if (reg.test(txt)) {
+        var at = txt.match(/\d{12}\.?\S{1}/);
+        if (at && at[0]) {
+          id = at[0].replace(".", "");
         }
-      },
-    });
+        extra = '或者查看下该专利的<a target="_blank" href="/result.html?force=cost&id=' + id + '" class="hl">费用信息</a>。';
+      }
+      var html = `
+      <div class="tips"> 
+        <div class="tips-line">没有找到符合搜索条件的专利，请输入有效的搜索条件进行查询！</div>
+        <div class="tips-line">没有搜索到相关或相似专利，原因可能是：</div>
+        <div class="tips-line"><span class="point">•</span> 此专利不存在。</div>
+        <div class="tips-line"><span class="point">•</span> 该发明创造目前未公开／未公告，处于保密专利申请的状态。这段时间一般是自申请日起几个月到十几个月，过段时间再来查吧。${extra}</div>
+        <div class="tips-line"><span class="point">•</span> 检索条件不正确。请您核对是否对搜索条件进行了不正确的字段限定。<a target="_blank" href="https://www.infopat.net/" class="hl">查看帮助文档</a></div>
+        <div class="tips-line"><span class="point">•</span> 检索的号码格式不正确。请核对是否输入了符合infoDossier要求的号码格式。<a target="_blank" href="https://www.infopat.net/" class="hl">查看帮助文档</a></div>
+        <div class="tips-line"><span class="point">•</span> 搜索关键词范围太窄。请尝试使用其他关键词或近义词、使用含义更为宽泛的关键词。</div>
+        <div class="tips-line"><span class="point">•</span> 也许是非正常的搜索请求。</div>
+        <div class="tips-line">请特别注意：</div>
+        <div class="tips-line">系统默认会对关键词进行拆分，若不希望分词，请使用""对词语进行限制，以获得更精确的结果。如：关键词使用"柴油汽车发动机" 则只查找包含柴油汽车发动机这几个字紧邻的专利文献</div>
+        <div class="tips-line">通过申请(专利)号时，可以任意输入，可以选择是否带国家代码或者校验位。如:200480028847、CN200480028847、CN200610063434.1</div>
+        <div class="tips-line">通过分类号搜索，可以输入不完整的分类号。如：A61B、 G06F17</div>
+        <div class="tips-line">查日期，可按年、年月、年月日查。如:applicationYear:2007、applicationMonth:2007-08、applicationDate:2007-08-08。</div>
+        <div class="tips-line">更复杂的逻辑查询请参考右上角的<a target="_blank" href="https://www.infopat.net/" class="hl">《帮助文档》</a></div>
+      </div>
+      `;
+      $("#fieldsContent").html(html);
+    }
 
     // 统计
     $("#resultTime").html(res.responseTimes || 0 + "s");

@@ -475,6 +475,23 @@
               line-height: 51px;
               text-align: center;
             }
+            .tips {
+              padding: 20px 25px;
+              .tips-line {
+                height: 38px;
+                line-height: 38px;
+                .point {
+                  margin-left: 10px;
+                  padding: 0 10px 0 0;
+                }
+                .hl {
+                  color: green;
+                  text-decoration: underline;
+                  font-weight: bold;
+                  cursor: pointer;
+                }
+              }
+            }
           }
           .result-footer {
             width: 100%;
@@ -825,7 +842,6 @@
       height: 36px;
       line-height: 36px;
       padding: 2px 10px;
-
       &:hover {
         color: #14a3f3;
         > i {
@@ -849,6 +865,17 @@
         transform: rotate(90deg);
         line-height: 36px;
         height: 36px;
+      }
+      &.menu-option {
+        background-color: #4c4c4c;
+        color: #ffffff;
+        justify-content: center;
+        &:hover {
+          color: #ffffff;
+          > i {
+            color: #ffffff;
+          }
+        }
       }
     }
     &:hover {
