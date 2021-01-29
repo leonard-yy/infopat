@@ -159,9 +159,8 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       request.get(url.replace(/p=\d/, "p=" + _this.page), function (res) {
         _this.renderList(res || {}, _this.id);
       });
-
-      // 中间基础信息
-      _this.renderCont("基础信息", "name", true);
+      // 中间基本信息
+      _this.renderCont("基本信息", "name", true);
     } else {
       // 其他页面数据
       // debug_token 调试用，正式环境去除

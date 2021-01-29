@@ -39,6 +39,12 @@ layui.define("patNodataPage", function (exports) {
                         {{#  if(item.type === "实用新型"){ }}
                             <div class="syxx-img ml20 inlineBlock"></div>
                         {{#  } }} 
+                        {{#  if(item.legalStatus && item.legalStatus !== ''){ }}
+                            <div class="common-img ml20 inlineBlock">{{item.legalStatus}}</div>
+                        {{#  } }} 
+                        {{#  if(item.currentStatus && item.currentStatus !== ''){ }}
+                            <div class="common-img ml20 inlineBlock">{{item.currentStatus}}</div>
+                        {{#  } }} 
                     </div>
                     <div style="flex; width: 100px;">
                         <i class="layui-icon layui-icon-star fork-star" id={{"FORK-KEY-"+ item.id}} style="color:#F7B500;cursor:pointer"></i>

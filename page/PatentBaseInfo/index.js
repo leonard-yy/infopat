@@ -1,10 +1,10 @@
 function initPage() {
-  layui.use(["laytpl", "layer", "form", "request", "resultpat", "loader"], function () {
+  layui.use(["laytpl", "layer", "form", "request", "resultpat", "loader", "picture"], function () {
     var $ = layui.jquery,
       laytpl = layui.laytpl,
       resultpat = layui.resultpat,
       request = layui.request,
-      loader = layui.loader;
+      layer = layui.layer;
     form = layui.form;
     //动态加载CSS
     layui.link("./page/PatentBaseInfo/index.css");
@@ -13,6 +13,7 @@ function initPage() {
       if (option && option.id) {
         var fieldview = document.getElementById("resultBaseInfo");
         var data = layui.sessionData("session").basicInfo;
+
         if (data) {
           var patent = data.patentInfo || {};
           // 标题
@@ -35,6 +36,12 @@ function initPage() {
           }
           // 图片
           $("#pageImg").addClass(imgClass);
+          if (patent.legalStatus) {
+            $("#legalImg").html(patent.legalStatus);
+          }
+          if (patent.currentStatus) {
+            $("#currImg").html(patent.currentStatus);
+          }
 
           laytpl(resultpat).render([patent], function (html) {
             fieldview.innerHTML = html;
@@ -82,6 +89,15 @@ function initPage() {
     };
     // 初始化
     render();
+
+    // 查看图片
+    $("#resultImgContent").on("click", function (e) {
+      $(".preview-image").show();
+      $("#previewImage").attr("src", $(this).attr("src"));
+    });
+    $(".close-preview").on("click", function (e) {
+      $(".preview-image").hide();
+    });
   });
 }
 

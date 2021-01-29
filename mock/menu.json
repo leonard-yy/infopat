@@ -4,7 +4,7 @@
       "name": "base",
       "child": [
         {
-          "title": "基础信息",
+          "title": "基本信息",
           "active": "true",
           "href": "page/PatentBaseInfo/index.html",
           "target": "_self"
