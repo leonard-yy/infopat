@@ -60,18 +60,17 @@ function initPage() {
             var imgClass = "";
             if (patent.type === "发明授权") {
               imgClass = "fmsq-img";
-            }
-            if (patent.type === "有权") {
+            } else if (patent.type === "有权") {
               imgClass = "yq-img";
-            }
-            if (patent.type === "发明公开") {
+            } else if (patent.type === "发明公开") {
               imgClass = "fmgk-img";
-            }
-            if (patent.type === "外观设计") {
+            } else if (patent.type === "外观设计") {
               imgClass = "wgsj-img";
-            }
-            if (patent.type === "实用新型") {
+            } else if (patent.type === "实用新型") {
               imgClass = "syxx-img";
+            } else {
+              imgClass = "default-img";
+              $("#pageImg").html(patent.type);
             }
             // 图片
             $("#pageImg").addClass(imgClass);

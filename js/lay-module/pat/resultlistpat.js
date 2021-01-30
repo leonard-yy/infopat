@@ -39,6 +39,10 @@ layui.define("patNodataPage", function (exports) {
                         {{#  if(item.type === "实用新型"){ }}
                             <div class="syxx-img ml20 inlineBlock"></div>
                         {{#  } }} 
+                        {{#  if(item.type !== "发明授权" && item.type !== "有权" && item.type !== "发明公开" && item.type !== "外观设计" && item.type !== "实用新型") { }}
+                            <div class="default-img ml20 inlineBlock">{{item.type}}</div>
+                        {{#  } }} 
+
                         {{#  if(item.legalStatus && item.legalStatus !== ''){ }}
                             <div class="common-img ml20 inlineBlock">{{item.legalStatus}}</div>
                         {{#  } }} 
