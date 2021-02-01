@@ -350,6 +350,10 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
       if (value == "ALL") {
         $("#choose-country").find("input").attr("value", "unchecked");
       }
+      // 特殊 欧盟
+      if (value == "EUROPE") {
+        $("#choose-country").find('input[id = "COUNTRY-CHILD-EP"]').attr("value", "unchecked");
+      }
     } else {
       // 选择
       $(e.currentTarget).prev().attr("value", "checked");
@@ -359,6 +363,10 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
       // 特殊 全球
       if (value == "ALL") {
         $("#choose-country").find("input").attr("value", "checked");
+      }
+      // 特殊 欧盟
+      if (value == "EUROPE") {
+        $("#choose-country").find('input[id = "COUNTRY-CHILD-EP"]').attr("value", "checked");
       }
       // 检查全球
       var allCountry = $("#choose-country").find("input");

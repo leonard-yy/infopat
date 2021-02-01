@@ -87,7 +87,7 @@ layui.define("patNodataPage", function (exports) {
 
                 <div class="content-filed-item">
                     <div class="tips-title">首项权利要求：</div>
-                    <div class="tips-value ml10">{{item.summary}}</div>
+                    <div class="tips-value ml10" id="firstClaim"></div>
                 </div>
 
             </div>

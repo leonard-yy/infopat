@@ -323,8 +323,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     }
 
     // 统计
-    $("#resultTime").html(res.responseTimes || 0 + "s");
-    $("#resultCount").html(res.total || 0 + "条");
+    $("#resultTime").html((res.responseTimes || 0) + "s");
+    $("#resultCount").html((res.total || 0) + "条");
   };
 
   /**
@@ -583,6 +583,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * 排序
    */
   $("#searchResult").on("click", ".sort-option", function (e) {
+    $(this).addClass("checked").siblings().removeClass("checked");
     _this.sort = $(this).attr("value");
     _this.page = 1;
     _this.initContent();
