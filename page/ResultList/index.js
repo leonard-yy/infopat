@@ -12,12 +12,13 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     page: 1,
     pageSize: 10,
     searchText: "",
-    filterData: {},
     orignData: {},
     secondText: null,
     extraFilter: null,
     selectQuery: {},
     filterQuery: {},
+    selectData: [],
+    selector: new Set(),
     // 区域选项
     selectedCountry: null,
     selectedCountryDp: null,
@@ -50,45 +51,26 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   _this.extraFilter = request.getParamFromUri("f");
 
   form.render();
+
   /**
-   * 懒加载
-   * 查询左侧选择框 lazy
+   * 左侧选择框渲染
+   * @param {*} ds
+   * @param {*} searchText
+   * @param {*} key
    */
-  _this.getSelectorContent = function (sel) {
-    var searchText = _this.searchText;
-    var ds = _this.selectedCountry;
-    if (searchText !== null && searchText !== "") {
-      // 二次检索
-      if (_this.secondText && _this.secondText != "") {
-        searchText += _this.secondText;
+  _this.renderFilterContent = function (ds, searchText, selector) {
+    selector.forEach(function (key) {
+      var name = "";
+      var s = _this.selectorData.find(function (d) {
+        return d.value == key;
+      });
+      if (s !== undefined && s !== null) {
+        name = s.name;
       }
-      var selectedCountry = _this.selectedCountry;
-      if (selectedCountry !== "cn" && selectedCountry != "all") {
-        ds = "all";
-        var countryArr = selectedCountry.split(",");
-        if (countryArr.length > 0) {
-          var dsStr = " AND countryCode:(";
-          countryArr.map(function (item, i) {
-            if (i == 0) {
-              dsStr += item;
-            } else {
-              dsStr += " OR " + item;
-            }
-          });
-          dsStr += ")";
-          searchText += dsStr;
-        }
-      }
-      if (_this.extraFilter && _this.firinitRation) {
-        // 覆盖条件
-        searchText = _this.extraFilter;
-        _this.firinitRation = false;
-      }
-      request.get(`adv/ration?ds=${ds}&q=${searchText}&c=${sel.value}`, function (res) {
-        var temp = "";
+      request.get(`adv/ration?ds=${ds}&q=${searchText}&c=${key}`, function (res) {
         var data = res.analysis_total || [];
-        _this.filterData[sel.value] = data;
-        _this.orignData[sel.value] = data;
+        _this.orignData[key] = data;
+        var temp = "";
         if (data.length > 0) {
           temp += '   <dl class="layui-nav-child">';
           layui.each(data, function (index, item) {
@@ -100,7 +82,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
               temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
               temp += '          <label class="result-selector-parent"/>';
               temp += "      </div>";
-              if (sel.value === "countryCode") {
+              if (key === "countryCode") {
                 temp += '      <span class="ml10 flag flag-' + item.key.toLowerCase() + '"/>';
               }
               temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + (item.name ? item.name : item.key) + "</span>";
@@ -136,126 +118,18 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             }
           });
           // 筛选
-          var sxhtml = '<span class="slef-search-btn normal select-of-result" data-value="' + sel.value + '" data-name="' + sel.name + '"';
+          var sxhtml = '<span class="slef-search-btn normal select-of-result" data-value="' + key + '" data-name="' + name + '"';
           sxhtml += 'style="width: 80px;height:24px;line-height:24px">筛选</span>';
-          var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" data-value="' + sel.value + '" data-name="' + sel.name + '"';
+          var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" data-value="' + key + '" data-name="' + name + '"';
           glhtml += '" style="width: 80px;height:24px;line-height:24px">过滤</span>';
           temp += '       <dd class="result-selector-filter">' + sxhtml + glhtml + "</dd>";
           temp += "    </dl>";
-          $("#T-" + sel.value + " dl").remove();
-          $("#T-" + sel.value).append(temp);
+          $("#T-" + key + " dl").remove();
+          $("#T-" + key).append(temp);
           element.render("nav");
         }
       });
-    }
-  };
-
-  /**
-   * 过滤 筛选
-   * 左侧选择框
-   */
-  _this.filterSelectorContent = function (name, code, type, key, all, parentKey) {
-    var data = _this.filterData[code] || [];
-    var filter = [];
-    if (all) {
-      filter = _this.orignData[code];
-    } else {
-      if (type === "select") {
-        layui.each(data, function (index, item) {
-          if (item.children && item.children.length > 0) {
-            // 父节点
-            if (parentKey.has(item.key)) {
-              var tempItem = Object.assign({}, item);
-              tempItem.children = [];
-              layui.each(item.children, function (idx, child) {
-                if (key.indexOf(child.key) !== -1) tempItem.children.push(child);
-              });
-              filter.push(tempItem);
-            }
-          } else {
-            if (key.indexOf(item.key) !== -1) filter.push(item);
-          }
-        });
-      } else {
-        layui.each(data, function (index, item) {
-          if (item.children && item.children.length > 0) {
-            if (parentKey.has(item.key)) {
-              var tempItem = Object.assign({}, item);
-              tempItem.children = [];
-              layui.each(item.children, function (idx, child) {
-                if (key.indexOf(child.key) === -1) tempItem.children.push(child);
-              });
-              if (tempItem.children.length > 0) {
-                filter.push(tempItem);
-              }
-            } else {
-              filter.push(item);
-            }
-          } else {
-            if (key.indexOf(item.key) === -1) filter.push(item);
-          }
-        });
-      }
-    }
-
-    if (filter.length > 0) {
-      var temp = "";
-      temp += '   <dl class="layui-nav-child">';
-      layui.each(filter, function (index, item) {
-        if (item.children && item.children.length > 0) {
-          temp += "    <dd>";
-          temp += '      <div class="result-selector-item">';
-          temp += '      <div class="squared-checkbox">';
-          temp += '          <input type="checkbox" class="result-select-child" ';
-          temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
-          temp += '          <label class="result-selector-parent"/>';
-          temp += "      </div>";
-          if (item.key === "countryCode") {
-            temp += '      <span class="ml10 flag flag-' + item.key.toLowerCase() + '"/>';
-          }
-          temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + (item.name ? item.name : item.key) + "</span>";
-          temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
-          temp += "     </div>";
-          temp += "   </dd>";
-          layui.each(item.children, function (idx, child) {
-            temp += '<dd class="fliter-child">';
-            temp += '      <div class="result-selector-item child">';
-            temp += '      <div class="squared-checkbox">';
-            temp += '                <input type="checkbox" class="result-select-child" ';
-            temp += '              id="RESULT-FILTER-CHILD-' + child.key + '" parent="' + item.key + '"/>';
-            temp += '          <label class="result-selector-child" />';
-            temp += "      </div>";
-            temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + child.key + "</span>";
-            temp += '       <span class="filter-count">(' + (child.count || 0) + ")</span>";
-            temp += "   </div>";
-            temp += "</dd>";
-          });
-        } else {
-          temp += '    <dd class="fliter-child">';
-          temp += '      <div class="result-selector-item">';
-          temp += '      <div class="squared-checkbox">';
-          temp += '          <input type="checkbox" class="result-select-child" ';
-          temp += '              id="RESULT-FILTER-PARENT-' + item.key + '"/>';
-          temp += '          <label class="result-selector-parent"/>';
-          temp += "      </div>";
-          // temp += '      <span class="block-back ml10"/>';
-          temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + (item.name ? item.name : item.key) + "</span>";
-          temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
-          temp += "     </div>";
-          temp += "   </dd>";
-        }
-      });
-      // 筛选
-      var sxhtml = '<span class="slef-search-btn normal select-of-result" data-value="' + code + '" data-name="' + name + '"';
-      sxhtml += 'style="width: 80px;height:24px;line-height:24px">筛选</span>';
-      var glhtml = '<span class="slef-search-btn normal filter-of-result ml10" data-value="' + code + '" data-name="' + name + '"';
-      glhtml += '" style="width: 80px;height:24px;line-height:24px">过滤</span>';
-      temp += '       <dd class="result-selector-filter">' + sxhtml + glhtml + "</dd>";
-      temp += "    </dl>";
-      $("#T-" + code + " dl").remove();
-      $("#T-" + code).append(temp);
-      element.render("nav");
-    }
+    });
   };
 
   /**
@@ -284,7 +158,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           // console.log(obj.limit); //得到每页显示的条数
           if (!first) {
             _this.page = obj.curr;
-            _this.initContent();
+            _this.search();
           }
         },
       });
@@ -303,20 +177,30 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       }
       var html = `
       <div class="tips"> 
-        <div class="tips-line">没有找到符合搜索条件的专利，请输入有效的搜索条件进行查询！</div>
-        <div class="tips-line">没有搜索到相关或相似专利，原因可能是：</div>
-        <div class="tips-line"><span class="point">•</span> 此专利不存在。</div>
-        <div class="tips-line"><span class="point">•</span> 该发明创造目前未公开／未公告，处于保密专利申请的状态。这段时间一般是自申请日起几个月到十几个月，过段时间再来查吧。${extra}</div>
-        <div class="tips-line"><span class="point">•</span> 检索条件不正确。请您核对是否对搜索条件进行了不正确的字段限定。<a target="_blank" href="https://www.infopat.net/" class="hl">查看帮助文档</a></div>
-        <div class="tips-line"><span class="point">•</span> 检索的号码格式不正确。请核对是否输入了符合infoDossier要求的号码格式。<a target="_blank" href="https://www.infopat.net/" class="hl">查看帮助文档</a></div>
-        <div class="tips-line"><span class="point">•</span> 搜索关键词范围太窄。请尝试使用其他关键词或近义词、使用含义更为宽泛的关键词。</div>
-        <div class="tips-line"><span class="point">•</span> 也许是非正常的搜索请求。</div>
-        <div class="tips-line">请特别注意：</div>
-        <div class="tips-line">系统默认会对关键词进行拆分，若不希望分词，请使用""对词语进行限制，以获得更精确的结果。如：关键词使用"柴油汽车发动机" 则只查找包含柴油汽车发动机这几个字紧邻的专利文献</div>
-        <div class="tips-line">通过申请(专利)号时，可以任意输入，可以选择是否带国家代码或者校验位。如:200480028847、CN200480028847、CN200610063434.1</div>
-        <div class="tips-line">通过分类号搜索，可以输入不完整的分类号。如：A61B、 G06F17</div>
-        <div class="tips-line">查日期，可按年、年月、年月日查。如:applicationYear:2007、applicationMonth:2007-08、applicationDate:2007-08-08。</div>
-        <div class="tips-line">更复杂的逻辑查询请参考右上角的<a target="_blank" href="https://www.infopat.net/" class="hl">《帮助文档》</a></div>
+        <div style="width:600px;text-align: center;">
+          <img src="../../images/nodata.png" style="margin-top:50px"/>
+        </div>
+        <div class="tip-container">
+          <div class="tips-line blod" style="font-size: 16px; color: #333333;">没有找到符合搜索条件的专利，请输入有效的搜索条件进行查询！</div>
+          <div class="tips-line">没有搜索到相关或相似专利，原因可能是：</div>
+          <div class="tips-line"><span class="point">•</span> 此专利不存在。</div>
+          <div class="tips-line"><span class="point">•</span> 该发明创造目前未公开／未公告，处于保密专利申请的状态。这段时间一般是自申请日起几个月到十几个月，</div>
+          <div class="tips-line pd-br"> 过段时间再来查吧。${extra}</div>
+          <div class="tips-line"><span class="point">•</span> 检索条件不正确。请您核对是否对搜索条件进行了不正确的字段限定。<a target="_blank" href="https://www.infopat.net/" class="hl">查看帮助文档</a></div>
+          <div class="tips-line"><span class="point">•</span> 检索的号码格式不正确。请核对是否输入了符合infoDossier要求的号码格式。<a target="_blank" href="https://www.infopat.net/" class="hl">查看帮助文档</a></div>
+          <div class="tips-line"><span class="point">•</span> 搜索关键词范围太窄。请尝试使用其他关键词或近义词、使用含义更为宽泛的关键词。</div>
+          <div class="tips-line"><span class="point">•</span> 也许是非正常的搜索请求。</div>
+          <br/>
+          <br/>
+          <div class="tips-line">请特别注意：</div>
+          <div class="tips-line"><span class="point">•</span>系统默认会对关键词进行拆分，若不希望分词，请使用""对词语进行限制，以获得更精确的结果。</div>
+          <div class="tips-line pd-br"> 如：关键词使用"柴油汽车发动机" 则只查找包含柴油汽车发动机这几个字紧邻的专利文献</div>
+          <div class="tips-line"><span class="point">•</span>通过申请(专利)号时，可以任意输入，可以选择是否带国家代码或者校验位。</div>
+          <div class="tips-line pd-br"> 如:200480028847、CN200480028847、CN200610063434.1</div>
+          <div class="tips-line"><span class="point">•</span>通过分类号搜索，可以输入不完整的分类号。如：A61B、 G06F17</div>
+          <div class="tips-line"><span class="point">•</span>查日期，可按年、年月、年月日查。如:applicationYear:2007、applicationMonth:2007-08、applicationDate:2007-08-08。</div>
+          <div class="tips-line"><span class="point">•</span>更复杂的逻辑查询请参考右上角的<a target="_blank" href="https://www.infopat.net/" class="hl">《帮助文档》</a></div>
+        </div>
       </div>
       `;
       $("#fieldsContent").html(html);
@@ -328,7 +212,107 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   };
 
   /**
-   * 左侧选择
+   * 列表内容
+   */
+  _this.search = function () {
+    // 得到检索条件 查询
+    var q = _this.searchText;
+    // 排序
+    var s = _this.sort;
+    var p = _this.page;
+    // 国家 all cn
+    var ds = _this.selectedCountry;
+
+    if (q !== null && q !== "") {
+      $("#lodingContent").loding("start");
+      var sendDate = new Date().getTime();
+
+      // 二次检索
+      if (_this.secondText && _this.secondText != "") {
+        q += _this.secondText;
+      }
+
+      var selectedCountry = _this.selectedCountry;
+
+      var defaulCc = true;
+      if (_this.selectQuery["countryCode"]) {
+        defaulCc = false;
+        ds = "all";
+        q += " AND " + _this.selectQuery["countryCode"];
+      }
+
+      if (defaulCc && selectedCountry !== "CN" && selectedCountry != "all") {
+        ds = "all";
+        var countryArr = selectedCountry.split(",");
+        if (countryArr.length > 0) {
+          var dsStr = " AND countryCode:(";
+          countryArr.map(function (item, i) {
+            if (i == 0) {
+              dsStr += item;
+            } else {
+              dsStr += " OR " + item;
+            }
+          });
+          dsStr += ")";
+          q += dsStr;
+        }
+      }
+
+      if (_this.filterQuery["countryCode"]) {
+        ds = "all";
+        q += " AND NOT " + _this.filterQuery["countryCode"];
+      }
+
+      // 筛选过滤时其他条件不变
+      for (let key in _this.selectQuery) {
+        if (_this.selectQuery[key] != null && key !== "countryCode") {
+          q += " AND " + key + ":" + _this.selectQuery[key];
+        }
+      }
+      // 过滤筛选
+      for (let key in _this.filterQuery) {
+        if (_this.filterQuery[key] != null && key !== "countryCode") {
+          q += " NOT " + key + ":" + _this.filterQuery[key];
+        }
+      }
+
+      if (_this.extraFilter && _this.firinit) {
+        // 覆盖条件
+        q = _this.extraFilter;
+        _this.firinit = null;
+      }
+
+      var url = `adv/s?ds=${ds}&q=${q}&p=${p}&hl=1`;
+      if (s != null) {
+        url += "&sort=" + s;
+        _this.sort = null; // 重置
+      }
+      _this.resultUrl = url.replace(/\&/g, "TANDT");
+
+      request.get(
+        url,
+        function (res) {
+          $("#lodingContent").loding("stop");
+          var receiveDate = new Date().getTime();
+          var responseTimeMs = receiveDate - sendDate;
+          res.responseTimes = responseTimeMs / 1000;
+          _this.renderContent(res || {});
+        },
+        function (err) {
+          $("#lodingContent").loding("stop");
+        }
+      );
+
+      // 加载过滤筛选条件
+
+      _this.renderFilterContent(ds, q, _this.selector);
+    } else {
+      _this.renderContent({});
+    }
+  };
+
+  /**
+   * 左侧大项初始化
    */
   _this.initSelector = function () {
     $.getJSON("mock/fliterDimension.json", function (res, status) {
@@ -348,102 +332,20 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       $(".result-left-selector").css("width", "200px");
       if (data.length > 0) {
         var firstItem = data[0];
-        _this.getSelectorContent(firstItem);
-        _this.selector = firstItem.value || "";
+        _this.selector.add(firstItem.value || "");
       }
       element.render("nav");
+
+      // 加载数据
+      _this.search();
     });
   };
 
   /**
-   * 列表内容
-   */
-  _this.initContent = function () {
-    // 得到检索条件 查询
-    var q = _this.searchText;
-    // 排序
-    var s = _this.sort;
-    var p = _this.page;
-    // 国家 all cn
-    var ds = _this.selectedCountry;
-
-    if (q !== null && q !== "") {
-      $("#lodingContent").loding("start");
-      var sendDate = new Date().getTime();
-
-      // 二次检索
-      if (_this.secondText && _this.secondText != "") {
-        q += _this.secondText;
-      }
-
-      var selectedCountry = _this.selectedCountry;
-      if (selectedCountry !== "CN" && selectedCountry != "all") {
-        ds = "all";
-        var countryArr = selectedCountry.split(",");
-        if (countryArr.length > 0) {
-          var dsStr = " AND countryCode:(";
-          countryArr.map(function (item, i) {
-            if (i == 0) {
-              dsStr += item;
-            } else {
-              dsStr += " OR " + item;
-            }
-          });
-          dsStr += ")";
-          q += dsStr;
-        }
-      }
-
-      // 筛选过滤时其他条件不变
-      for (let key in _this.selectQuery) {
-        if (_this.selectQuery[key] != null) {
-          q += " AND " + key + ":" + _this.selectQuery[key];
-        }
-      }
-      // 过滤筛选
-      for (let key in _this.filterQuery) {
-        if (_this.filterQuery[key] != null) {
-          q += " NOT " + key + ":" + _this.filterQuery[key];
-        }
-      }
-
-      if (_this.extraFilter && _this.firinit) {
-        // 覆盖条件
-        q = _this.extraFilter;
-        _this.firinit = null;
-      }
-
-      var url = `adv/s?ds=${ds}&q=${q}&p=${p}&hl=1`;
-      if (s != null) {
-        url += "&sort=" + s;
-        _this.sort = null; // 重置
-      }
-      _this.resultUrl = url.replace(/\&/g, "TANDT");
-      request.get(
-        url,
-        function (res) {
-          $("#lodingContent").loding("stop");
-          var receiveDate = new Date().getTime();
-          var responseTimeMs = receiveDate - sendDate;
-          res.responseTimes = responseTimeMs / 1000;
-          _this.renderContent(res || {});
-        },
-        function (err) {
-          $("#lodingContent").loding("stop");
-        }
-      );
-    } else {
-      _this.renderContent({});
-    }
-  };
-
-  /**
-   * 加载页面
+   * 初始化页面
    */
   _this.renderPage = function () {
     _this.initSelector();
-    _this.initContent();
-
     // 初始化条件
     _this.filterQuery = {};
     _this.selectQuery = {};
@@ -458,6 +360,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     // 初始化输入框
     var value = request.getParamFromUri("s");
     $("#expandTextarea").val(value);
+
     _this.searchText = value;
     _this.renderPage();
   };
@@ -489,10 +392,10 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   $("#searchResult").on("click", "li.layui-nav-item", function (e) {
     var id = $(e.currentTarget).attr("id");
     var value = id.split("-").pop();
-    if (_this.selector == value) {
+    if (_this.selector.has(value)) {
       return;
     }
-    if (_this.filterData[value]) {
+    if (_this.orignData[value]) {
       // 防止子节点点击加载
       return;
     }
@@ -500,8 +403,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       return d.value == value;
     });
     if (s !== undefined && s !== null) {
-      _this.getSelectorContent(s);
-      _this.selector = value;
+      _this.selector.add(value);
+      _this.search();
     }
   });
 
@@ -586,7 +489,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     $(this).addClass("checked").siblings().removeClass("checked");
     _this.sort = $(this).attr("value");
     _this.page = 1;
-    _this.initContent();
+    _this.search();
   });
 
   /**
@@ -683,8 +586,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += '<span class="key-word">筛选 </span>';
       content += '<span class="key-type">' + name + " </span>";
       var filterText = "(";
-      var key = "";
       var parentKey = new Set();
+      var parentSelect = {};
       checked.each(function (i, e2) {
         var id = $(e2).attr("id");
         var parent = $(e2).attr("parent");
@@ -693,44 +596,46 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           // 无父节点
           if (i == 0) {
             filterText += value;
-            key += value;
           } else {
-            key += "," + value;
             filterText += " OR " + value;
           }
         } else {
-          parentKey.add(parent);
           //  国家匹配规则不一致 单独编写
           if (filterCode == "countryCode") {
-            if (i == 0) {
-              filterText = "(";
-              key += value;
-              filterText += "ds:" + parent.toLowerCase() + ") AND type:(" + value;
+            if (!parentKey.has(parent)) {
+              parentKey.add(parent);
+              parentSelect[parent] = value;
             } else {
-              key += "," + value;
-              filterText += " OR " + value;
-            }
-          } else {
-            if (i == 0) {
-              key += value;
-              filterText += parent + " AND " + value;
-            } else {
-              key += "," + value;
-              filterText += " OR " + parent + " AND " + value;
+              parentSelect[parent] += "," + value;
             }
           }
         }
       });
       filterText += ")";
+      if (parentKey.size > 0) {
+        var first = true;
+        parentKey.forEach(function (element) {
+          // 遍历Set
+          var sel = parentSelect[element];
+          var typeStr = sel.match(/\,/);
+          typeStr = " AND type: (" + sel.replace(/\,/g, " OR ") + "))";
+          if (first) {
+            first = false;
+            filterText = " (countryCode:" + element + typeStr;
+          } else {
+            filterText += " OR (countryCode:" + element + typeStr;
+          }
+        });
+      }
+
       content += filterText;
       content += "</div>";
       $(".result-left-filter").append(content);
-      // 重新渲染左侧节点
-      _this.filterSelectorContent(name, filterCode, "select", key, false, parentKey);
       // TODO 重新查询
       _this.selectQuery[filterCode] = filterText;
       _this.page = 1;
-      _this.initContent();
+      // 重新渲染左侧节点
+      _this.search();
     }
   });
 
@@ -739,21 +644,18 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     // 清除元素
     $(this).parent().remove();
     var type = $(this).data().type;
+    _this.page = 1;
     if (type == "second") {
       _this.secondText = null;
     } else {
-      var name = $(this).data().name;
       var filterCode = $(this).data().value;
       if (type == "filter") {
         _this.filterQuery[filterCode] = null;
       } else {
         _this.selectQuery[filterCode] = null;
       }
-      _this.filterSelectorContent(name, filterCode, null, null, true, null);
+      _this.search();
     }
-    // TODO 重新查询
-    _this.page = 1;
-    _this.initContent();
   });
 
   /**
@@ -772,8 +674,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += '<span class="key-word">过滤 </span>';
       content += '<span class="key-type">' + name + " </span>";
       var filterText = "(";
-      var key = "";
       var parentKey = new Set();
+      var parentSelect = {};
       checked.each(function (i, e2) {
         var id = $(e2).attr("id");
         var parent = $(e2).attr("parent");
@@ -781,45 +683,47 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         if (!parent) {
           // 无父节点
           if (i == 0) {
-            key += value;
             filterText += value;
           } else {
-            key += "," + value;
             filterText += " OR " + value;
           }
         } else {
-          parentKey.add(parent);
           //  国家匹配规则不一致 单独编写
           if (filterCode == "countryCode") {
-            if (i == 0) {
-              key += value;
-              filterText = "(";
-              filterText += "ds:" + parent.toLowerCase() + ") NOT type:(" + value;
+            if (!parentKey.has(parent)) {
+              parentKey.add(parent);
+              parentSelect[parent] = value;
             } else {
-              key += "," + value;
-              filterText += " OR " + value;
-            }
-          } else {
-            if (i == 0) {
-              key += value;
-              filterText += parent + " NOT " + value;
-            } else {
-              key += "," + value;
-              filterText += " OR " + parent + " NOT " + value;
+              parentSelect[parent] += "," + value;
             }
           }
         }
       });
       filterText += ")";
+
+      if (parentKey.size > 0) {
+        var first = true;
+        parentKey.forEach(function (element) {
+          // 遍历Set
+          var sel = parentSelect[element];
+          var typeStr = sel.match(/\,/);
+          typeStr = " AND type: (" + sel.replace(/\,/g, " OR ") + "))";
+          if (first) {
+            first = false;
+            filterText = " (countryCode:" + element + typeStr;
+          } else {
+            filterText += " AND NOT (countryCode:" + element + typeStr;
+          }
+        });
+      }
+
       content += filterText;
       content += "</div>";
       $(".result-left-filter").append(content);
-      // 重新渲染左侧节点
-      _this.filterSelectorContent(name, filterCode, "filter", key, false, parentKey);
       // TODO 重新查询
       _this.filterQuery[filterCode] = filterText;
       _this.page = 1;
-      _this.initContent();
+      _this.search();
     }
   });
 

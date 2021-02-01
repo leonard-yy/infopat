@@ -95,7 +95,7 @@ layui.define("patNodataPage", function (exports) {
         {{#  }); }}
       {{# }}}
         <div class="result-img-content">
-          <img id="resultImgContent" onerror="errorLoadImg();"/>
+          <img class="zoom-in" id="resultImgContent" onerror="errorLoadImg();"/>
         </div>
         <div class="result-sumary-content">
           <span style="display: block; font-size: 14px; color: #999999; line-height: 30px; height: 30px">摘要</span>

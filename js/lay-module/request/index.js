@@ -23,7 +23,7 @@ layui.define(function (exports) {
     return str;
   };
 
-  request.get = function (url, cb = function () {}, err = function () {}) {
+  request.get = function async(url, cb = function () {}, err = function () {}) {
     // url = apiTestPrefix + url;
     url = nginxDevPrefix + url;
     if (url.indexOf("?") !== -1) {
@@ -31,10 +31,31 @@ layui.define(function (exports) {
     } else {
       url += `?&v=${v}`;
     }
-
     $.ajax({
       url: url,
       type: "get",
+      async: false,
+      success: function (data) {
+        cb(data);
+      },
+      error: function (xhr, textstatus, thrown) {
+        err(xhr);
+        console.log("error", thrown);
+      },
+    });
+  };
+
+  request.delete = function (url, cb = function () {}, err = function () {}) {
+    // url = apiTestPrefix + url;
+    url = nginxDevPrefix + url;
+    if (url.indexOf("?") !== -1) {
+      url += `&v=${v}`;
+    } else {
+      url += `?&v=${v}`;
+    }
+    $.ajax({
+      url: url,
+      type: "delete",
       success: function (data) {
         cb(data);
       },
