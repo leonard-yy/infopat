@@ -445,7 +445,8 @@
 }
 
 .flag.flag-hk {
-  background-position: -176px -80px;
+  /* background-position: -176px -80px; */
+  background-position: -208px -32px;
 }
 
 .flag.flag-hn {
@@ -653,7 +654,8 @@
 }
 
 .flag.flag-mo {
-  background-position: -240px -128px;
+  /* background-position: -240px -128px; */
+  background-position: -208px -32px;
 }
 
 .flag.flag-mp {
@@ -852,7 +854,7 @@
   background-position: 0 -192px;
 }
 
-.flag.flag-sh {
+.flag.flag-yu {
   background-position: -16px -192px;
 }
 
@@ -965,7 +967,8 @@
 }
 
 .flag.flag-tw {
-  background-position: -208px -208px;
+  /* background-position: -208px -208px; */
+  background-position: -208px -32px;
 }
 
 .flag.flag-tz {

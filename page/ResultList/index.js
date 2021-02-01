@@ -81,7 +81,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       }
       if (_this.extraFilter && _this.firinitRation) {
         // 覆盖条件
-        q = _this.extraFilter;
+        searchText = _this.extraFilter;
         _this.firinitRation = false;
       }
       request.get(`adv/ration?ds=${ds}&q=${searchText}&c=${sel.value}`, function (res) {
@@ -103,7 +103,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
               if (sel.value === "countryCode") {
                 temp += '      <span class="ml10 flag flag-' + item.key.toLowerCase() + '"/>';
               }
-              temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
+              temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + (item.name ? item.name : item.key) + "</span>";
               temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
               temp += "     </div>";
               temp += "   </dd>";
@@ -115,7 +115,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
                 temp += '              id="RESULT-FILTER-CHILD-' + child.key + '" parent="' + item.key + '"/>';
                 temp += '          <label class="result-selector-child" />';
                 temp += "      </div>";
-                temp += '      <span class="ml10 result-selector-title normal" >' + child.key + "</span>";
+                temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + child.key + "</span>";
                 temp += '       <span class="filter-count">(' + (child.count || 0) + ")</span>";
                 temp += "   </div>";
                 temp += "</dd>";
@@ -129,7 +129,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
               temp += '          <label class="result-selector-parent"/>';
               temp += "      </div>";
               // temp += '      <span class="block-back ml10"/>';
-              temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
+              temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + (item.name ? item.name : item.key) + "</span>";
               temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
               temp += "     </div>";
               temp += "   </dd>";
@@ -213,7 +213,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           if (item.key === "countryCode") {
             temp += '      <span class="ml10 flag flag-' + item.key.toLowerCase() + '"/>';
           }
-          temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
+          temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + (item.name ? item.name : item.key) + "</span>";
           temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
           temp += "     </div>";
           temp += "   </dd>";
@@ -225,7 +225,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             temp += '              id="RESULT-FILTER-CHILD-' + child.key + '" parent="' + item.key + '"/>';
             temp += '          <label class="result-selector-child" />';
             temp += "      </div>";
-            temp += '      <span class="ml10 result-selector-title normal" >' + child.key + "</span>";
+            temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + child.key + "</span>";
             temp += '       <span class="filter-count">(' + (child.count || 0) + ")</span>";
             temp += "   </div>";
             temp += "</dd>";
@@ -239,7 +239,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           temp += '          <label class="result-selector-parent"/>';
           temp += "      </div>";
           // temp += '      <span class="block-back ml10"/>';
-          temp += '      <span class="ml10 result-selector-title normal" >' + (item.name ? item.name : item.key) + "</span>";
+          temp += '      <span class="ml10 result-selector-title normal" title="' + (item.name ? item.name : item.key) + '">' + (item.name ? item.name : item.key) + "</span>";
           temp += '       <span class="filter-count">(' + (item.count || 0) + ")</span>";
           temp += "     </div>";
           temp += "   </dd>";

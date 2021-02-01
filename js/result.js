@@ -353,9 +353,9 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     _this.id = $(this).data().value;
     // 联动左侧
     $(".layui-nav-item").removeClass("layui-this");
-    $(".layui-left-menu").find('a[title = "基础信息"]').parent().addClass("layui-this");
+    $(".layui-left-menu").find('a[title = "基本信息"]').parent().addClass("layui-this");
 
-    _this.renderCont("基础信息", "name", true);
+    _this.renderCont("基本信息", "name", true);
     _this.getData();
   });
 });

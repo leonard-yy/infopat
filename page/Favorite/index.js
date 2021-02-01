@@ -35,7 +35,7 @@ function initPage() {
               html += "        <col><col><col><col><col><col><col>";
               html += "     </colgroup>";
               html += '     <thead><tr style="height:50px;">';
-              html += "        <th></th><th>公开(公告)号</th><th>标题</th><th>公开(公告)日</th><th>申请日</th><th>申请人</th><th>发明人</th>";
+              html += "        <th></th><th>公布（公告）日</th><th>标题</th><th>公开(公告)日</th><th>申请日</th><th>申请人</th><th>发明人</th>";
               html += "     </tr></thead>";
               html += "     <tbody>";
               data.map(function (item) {

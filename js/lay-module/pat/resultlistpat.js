@@ -24,30 +24,31 @@ layui.define("patNodataPage", function (exports) {
                 <div class="content-fileds-item sp-bt">
                     <div class="content-fileds-item">
                         <span class="title fileds-item-title" data-value={{item.id}}>{{item.title}}</span>
+                        {{#  if(item.type === "发明申请" || item.type === "发明公开"){ }}
+                            <div class="orange-back ml20 inlineBlock">{{item.type}}</div>
+                        {{#  } }} 
                         {{#  if(item.type === "发明授权"){ }}
-                        <div class="fmsq-img ml20 inlineBlock"></div>
-                        {{#  } }} 
-                        {{#  if(item.type === "有权"){ }}
-                        <div class="yq-img ml20 inlineBlock"></div>
-                        {{#  } }} 
-                        {{#  if(item.type === "发明公开"){ }}
-                            <div class="fmgk-img ml20 inlineBlock"></div>
-                        {{#  } }} 
-                        {{#  if(item.type === "外观设计"){ }}
-                            <div class="wgsj-img ml20 inlineBlock"></div>
+                            <div class="red-back ml20 inlineBlock">{{item.type}}</div>
                         {{#  } }} 
                         {{#  if(item.type === "实用新型"){ }}
-                            <div class="syxx-img ml20 inlineBlock"></div>
+                            <div class="green-back ml20 inlineBlock">{{item.type}}</div>
                         {{#  } }} 
-                        {{#  if(item.type !== "发明授权" && item.type !== "有权" && item.type !== "发明公开" && item.type !== "外观设计" && item.type !== "实用新型") { }}
-                            <div class="default-img ml20 inlineBlock">{{item.type}}</div>
+                        {{#  if(item.type === "外观设计"){ }}
+                            <div class="blue-back ml20 inlineBlock">{{item.type}}</div>
+                        {{#  } }} 
+                        {{#  if(item.type === "再颁专利" || item.type === "植物专利"){ }}
+                            <div class="brown-back ml20 inlineBlock">{{item.type}}</div>
+                        {{#  } }} 
+                        {{#  if(item.type === "依法登记的发明"){ }}
+                            <div class="brown-back2 ml20 inlineBlock">{{item.type}}</div>
+                        {{#  } }} 
+                        
+                        {{#  if(item.type !== "发明申请" && item.type !== "发明公开" && item.type !== "发明授权" && item.type !== "实用新型" && item.type !== "外观设计" && item.type !== "依法登记的发明") { }}
+                            <div class="brown-back ml20 inlineBlock">{{item.type}}</div>
                         {{#  } }} 
 
                         {{#  if(item.legalStatus && item.legalStatus !== ''){ }}
                             <div class="common-img ml20 inlineBlock">{{item.legalStatus}}</div>
-                        {{#  } }} 
-                        {{#  if(item.currentStatus && item.currentStatus !== ''){ }}
-                            <div class="common-img ml20 inlineBlock">{{item.currentStatus}}</div>
                         {{#  } }} 
                     </div>
                     <div style="flex; width: 100px;">

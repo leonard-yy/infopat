@@ -59,7 +59,7 @@
         },
         {
           "title": "欧盟",
-          "value": "EU",
+          "value": "EP",
           "isLeaf": false,
           "parent": "NORMAL"
         },
@@ -187,7 +187,7 @@
         },
         {
           "title": "西班牙",
-          "value": "SE",
+          "value": "ES",
           "isLeaf": false,
           "parent": "EUROPE"
         },
@@ -223,13 +223,6 @@
           "parent": "EUROPE"
         },
         {
-          "title": "葡萄牙",
-          "value": "PT",
-          "isLeaf": false,
-          "parent": "EUROPE"
-        },
-
-        {
           "title": "卢森堡",
           "value": "LU",
           "isLeaf": false,
@@ -249,7 +242,7 @@
         },
         {
           "title": "南斯拉夫",
-          "value": "SH",
+          "value": "YU",
           "isLeaf": false,
           "parent": "EUROPE"
         },

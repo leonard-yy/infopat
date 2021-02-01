@@ -118,6 +118,60 @@
   background-size: 90px 28px;
   color: #ffffff;
 }
+.red-back {
+  height: 28px;
+  width: 90px;
+  line-height: 28px;
+  text-align: center;
+  background-image: url(../../images/search/red-back.png);
+  background-size: 90px 28px;
+  color: #ffffff;
+}
+.green-back {
+  height: 28px;
+  width: 90px;
+  line-height: 28px;
+  text-align: center;
+  background-image: url(../../images/search/green-back.png);
+  background-size: 90px 28px;
+  color: #ffffff;
+}
+.blue-back {
+  height: 28px;
+  width: 90px;
+  line-height: 28px;
+  text-align: center;
+  background-image: url(../../images/search/blue-back.png);
+  background-size: 90px 28px;
+  color: #ffffff;
+}
+.brown-back {
+  height: 28px;
+  width: 90px;
+  line-height: 28px;
+  text-align: center;
+  background-image: url(../../images/search/brown-back.png);
+  background-size: 90px 28px;
+  color: #ffffff;
+}
+.brown-back2 {
+  height: 28px;
+  width: 120px;
+  line-height: 28px;
+  text-align: center;
+  background-image: url(../../images/search/brown-back2.png);
+  background-size: 120px 28px;
+  color: #ffffff;
+}
+.orange-back {
+  height: 28px;
+  width: 90px;
+  line-height: 28px;
+  text-align: center;
+  background-image: url(../../images/search/orange-back.png);
+  background-size: 90px 28px;
+  color: #ffffff;
+}
 .default-img {
   height: 28px;
   min-width: 90px;
@@ -285,4 +339,7 @@
 
   line-height: 51px;
   text-align: center;
+}
+#resultImgContent :hover {
+  /* cursor: ; */
 }
