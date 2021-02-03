@@ -13,7 +13,7 @@ function initPage() {
       if (option && option.id) {
         var fieldview = document.getElementById("resultBaseInfo");
         $("#resultBaseInfo").loding("start");
-        request.get(`adv/patent/base?id=${option.id}`, function (res) {
+        request.get(`/api/adv/patent/base?id=${option.id}`, function (res) {
           $("#resultBaseInfo").loding("stop");
           var patent = res.patent;
           // 标题
@@ -56,7 +56,7 @@ function initPage() {
           $("#resultImgContent").attr("src", "api/adv/img?v=1&key=" + patent.imagePath);
 
           // 首项权利要求
-          request.get(`adv/patent/claims?id=${option.id}`, function (res2) {
+          request.get(`/api/adv/patent/claims?id=${option.id}`, function (res2) {
             if (res2 && res2.patent) {
               var claims = res2.patent.claims;
               var claimArr = claims.split(/\d\./);

@@ -67,7 +67,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       if (s !== undefined && s !== null) {
         name = s.name;
       }
-      request.get(`adv/ration?ds=${ds}&q=${searchText}&c=${key}`, function (res) {
+
+      request.get(`/api/adv/ration?ds=${ds}&q=${searchText}&c=${key}`, function (res) {
         var data = res.analysis_total || [];
         _this.orignData[key] = data;
         var temp = "";
@@ -172,7 +173,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         ids.push(item.id);
       });
 
-      request.get(`user/favorites/exists?id=${ids.toString()}`, function (res) {
+      request.get(`/api/user/favorites/exists?id=${ids.toString()}`, function (res) {
         if (res && res.data) {
           var favoriteData = res.data || {};
           layui.each(favoriteData, function (k, v) {
@@ -238,7 +239,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   /**
    * 列表内容
    */
-  _this.search = function () {
+  _this.search = function (ration) {
     // 得到检索条件 查询
     var q = _this.searchText;
     // 排序
@@ -248,7 +249,6 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     var ds = _this.selectedCountry;
 
     if (q !== null && q !== "") {
-      $("#lodingContent").loding("start");
       var sendDate = new Date().getTime();
 
       // 二次检索
@@ -307,13 +307,18 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         _this.firinit = null;
       }
 
-      var url = `adv/s?ds=${ds}&q=${q}&p=${p}&hl=1`;
+      var url = `/api/adv/s?ds=${ds}&q=${q}&p=${p}&hl=1`;
       if (s != null) {
         url += "&sort=" + s;
         _this.sort = null; // 重置
       }
       _this.resultUrl = url.replace(/\&/g, "TANDT");
 
+      if (ration) {
+        _this.renderFilterContent(ds, q, _this.selector);
+        return;
+      }
+      $("#lodingContent").loding("start");
       request.get(
         url,
         function (res) {
@@ -327,9 +332,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           $("#lodingContent").loding("stop");
         }
       );
-
       // 加载过滤筛选条件
-
       _this.renderFilterContent(ds, q, _this.selector);
     } else {
       _this.renderContent({});
@@ -429,7 +432,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     });
     if (s !== undefined && s !== null) {
       _this.selector.add(value);
-      _this.search();
+      _this.search(true);
     }
   });
 
@@ -504,7 +507,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         .html("取消收藏");
     });
     // 收藏接口
-    request.post(`user/favorites?id=${checkValue.toString()}`);
+    request.post(`/api/user/favorites?id=${checkValue.toString()}`);
   });
 
   /**
@@ -598,7 +601,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       $(e.currentTarget).removeClass("layui-icon-star-fill");
       $(e.currentTarget).addClass("layui-icon-star");
       $(e.currentTarget).next().html("收藏");
-      request.delete(`user/favorites?id=${id}`);
+      request.delete(`/api/user/favorites?id=${id}`);
     }
   });
 

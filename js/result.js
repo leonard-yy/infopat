@@ -152,11 +152,11 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
   // 其他页面信息
   _this.getData = function () {
     // 获取基本信息
-    request.get(`adv/patent/base?id=${_this.id}`, function (res) {
+    request.get(`/api/adv/patent/base?id=${_this.id}`, function (res) {
       var patent = res.patent;
       var code = patent.applicationNumber.substring(2).replace(".", "");
       // debug_token 调试用，正式环境去除
-      var url = `patent/${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
+      var url = `/api/patent/${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
       _this.getBasicInfo(url, patent);
     });
   };
@@ -166,7 +166,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       // 强行查看发露信息
       // 其他页面数据
       // debug_token 调试用，正式环境去除
-      var url = `patent/${request.getParamFromUri("id")}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
+      var url = `/api/patent/${request.getParamFromUri("id")}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
       _this.getBasicInfo(url, null);
       _this.renderCont("费用信息", "name", true);
       $(".layuimini-content-list").hide();

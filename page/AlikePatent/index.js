@@ -37,9 +37,9 @@ function initPage() {
       var q = request.getParamFromUri("q");
       var id = option.id;
       $("#AlikePatentContent").loding("start");
-      request.get(`adv/s?ds=cn&q=${q}&p=${p}`, function (res) {
+      request.get(`/api/adv/s?ds=cn&q=${q}&p=${p}`, function (res) {
         if (res) {
-          request.get(`adv/patent/like?id=${id}`, function (res2) {
+          request.get(`/api/adv/patent/like?id=${id}`, function (res2) {
             if (res2) {
               renderTable(res2.patentLikeList);
               $("#AlikePatentContent").loding("stop");

@@ -79,9 +79,9 @@ function initPage() {
       var id = option.id;
       $("#citeContent").loding("start");
       $("#citedContent").loding("start");
-      request.get(`adv/s?ds=cn&q=${q}&p=${p}`, function (res) {
+      request.get(`/api/adv/s?ds=cn&q=${q}&p=${p}`, function (res) {
         if (res) {
-          request.get(`adv/patent/citing?id=${id}`, function (res2) {
+          request.get(`/api/adv/patent/citing?id=${id}`, function (res2) {
             $("#citeContent").loding("stop");
             $("#citedContent").loding("stop");
             if (res2) {

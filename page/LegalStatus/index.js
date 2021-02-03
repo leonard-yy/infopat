@@ -11,7 +11,7 @@ layui.use(["laytpl", "patBasicInfo", "lsTable", "request"], function () {
   var allInfo = layui.sessionData("session").allInfo;
   var id = data.patentInfo.documentNumber;
   // var qwflUrl = allInfo["全文与法律信息"];
-  var qwflUrl = "adv/patent/tx?id=" + id;
+  var qwflUrl = "/api/adv/patent/tx?id=" + id;
   function getDataList(url, cb) {
     request.get(
       url,

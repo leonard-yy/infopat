@@ -9,13 +9,12 @@ layui.define(function (exports) {
   var v = 1;
   // 模拟代理location
   // 正式环境
-  var apiPrefix = "https://www.infodossier.com/api/";
+  var apiPrefix = "https://www.infodossier.com";
   // 测试环境
-  var apiTestPrefix = "http://www.infodossier.test:2080/api/";
+  var apiTestPrefix = "http://www.infodossier.test:2080";
   // nginx 环境
-  var nginxDevPrefix = "api/";
 
-  var realPrefix = nginxDevPrefix;
+  var realPrefix = "";
 
   request.get = function (url, cb = function () {}, err = function () {}) {
     request.ajax(url, {}, "GET", true, cb, err);

@@ -120,7 +120,7 @@ function initPage() {
      * 取消收藏
      */
     function removeFork() {
-      request.deleteAsync(`user/favorites?id=${_this.checked.toString()}`);
+      request.deleteAsync(`/api/user/favorites?id=${_this.checked.toString()}`);
       renderTable();
     }
 
@@ -136,7 +136,7 @@ function initPage() {
     /**
      * 初始化数据
      */
-    request.get(`user/favorites`, function (res) {
+    request.get(`/api/user/favorites`, function (res) {
       if (res && res.data) {
         renderYearSelect(res.data || {});
       }
