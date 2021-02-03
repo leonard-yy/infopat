@@ -1,32 +1,31 @@
 function initPage() {
-  layui.use(["patNodataPage", "element", "layer"], function () {
+  layui.use(["patNodataPage", "element", "layer", "request", "laypage"], function () {
     var $ = layui.jquery,
       patNodataPage = layui.patNodataPage,
       element = layui.element,
-      layer = layui.layer;
+      layer = layui.layer,
+      laypage = layui.laypage,
+      request = layui.request;
     var _this = {
       favoriteData: [],
       chooseDate: null,
       checked: [],
       pageData: [],
+      details: null,
+      page: 1,
     };
 
     function renderTable() {
       var date = _this.chooseDate || null;
+      var details = _this.details || null;
       var noData = true;
-      if (date) {
-        var year = date.substring(0, 4);
-        var yearData = _this.favoriteData.find(function (item) {
-          return item.name == year;
-        });
-        if (yearData) {
-          var value = yearData.value || [];
-          var dateData = value.find(function (item) {
-            return item.key == date;
-          });
-          if (dateData) {
-            $("#chooseDate").html(dateData.key);
-            var data = dateData.data;
+      if (date && details) {
+        $("#favoriteTable").loding("start");
+        $("#chooseDate").html(date);
+        request.get(`${details}&p=${this.page}`, function (res) {
+          $("#favoriteTable").loding("stop");
+          if (res && res.data) {
+            var data = res.data || [];
             _this.pageData = data;
             if (data && data.length > 0) {
               noData = false;
@@ -42,14 +41,14 @@ function initPage() {
                 html += '<tr style="height:50px;">';
                 html += "<td>";
                 html += '   <div class="squared-checkbox mt5">';
-                html += '      <input type="checkbox" id="FAVORITE-' + item.id + '"/>';
+                html += '      <input type="checkbox" id="FAVORITE-' + item.document_number + '"/>';
                 html += '      <label class="favorite-selector"/>';
                 html += "   </div>";
                 html += "</td>";
-                html += "<td>" + item.documentNumber + "</td>";
+                html += "<td>" + item.document_number + "</td>";
                 html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";
-                html += "<td>" + item.documentDate + "</td>";
-                html += "<td>" + item.applicationDate + "</td>";
+                html += "<td>" + item.document_date + "</td>";
+                html += "<td>" + item.application_date + "</td>";
                 html += '<td style="max-width:350px" title="' + item.applicant + '">' + item.applicant + "</td>";
                 html += '<td style="max-width:350px" title="' + item.inventor + '">' + item.inventor + "</td>";
                 html += "</tr>";
@@ -58,8 +57,23 @@ function initPage() {
               html += "   </table>";
               $("#favoriteTable").html(html);
             }
+            laypage.render({
+              elem: "pageNavagete",
+              count: res.total || 0,
+              first: "首页",
+              last: "尾页",
+              curr: res.page || 1,
+              prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
+              next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',
+              jump: function (obj, first) {
+                if (!first) {
+                  _this.page = obj.curr;
+                  renderTable();
+                }
+              },
+            });
           }
-        }
+        });
       }
       if (noData) {
         renderNoData("#favoriteTable", "暂无数据");
@@ -68,24 +82,25 @@ function initPage() {
 
     function renderYearSelect(data) {
       var html = '<ul class="layui-nav layui-nav-tree" >';
-
-      data.map(function (item, index) {
-        var child = item.value || [];
-        html += '  <li class="layui-nav-item" data-value=' + item.name + ">";
-        html += '     <a href="javascript:;" class="blod" title=' + item.name + ">" + item.name + "</a>";
+      var first = true;
+      layui.each(data, function (k, v) {
+        var child = v || [];
+        html += '  <li class="layui-nav-item" data-value=' + k + ">";
+        html += '     <a href="javascript:;" class="blod" title=' + k + ">" + k + "</a>";
         if (child.length > 0) {
           html += '<dl class="layui-nav-child">';
-          child.map(function (c, idx) {
-            if (idx == 0 && index == 0) {
-              _this.chooseDate = c.key;
+          layui.each(child, function (index, c) {
+            if (first) {
+              first = false;
+              _this.chooseDate = c.date;
+              _this.details = c.details;
             }
-            html += '     <dd><a href="javascript:;" class="date-choose-ex">' + c.key + "</a></dd>";
+            html += '     <dd><a href="javascript:;" class="date-choose-ex" data-value=' + c.details + ">" + c.date + "</a></dd>";
           });
         }
         html += "</dl>";
         html += "  </li>";
       });
-
       $(".time-range-content").html(html);
       element.render("nav");
       renderTable();
@@ -103,9 +118,10 @@ function initPage() {
     /**
      * 初始化数据
      */
-    $.getJSON("mock/favoriteData.json", function (res, status) {
-      _this.favoriteData = res.data || [];
-      renderYearSelect(res.data || []);
+    request.get(`api/user/favorites`, function (res) {
+      if (res && res.data) {
+        renderYearSelect(res.data || {});
+      }
     });
 
     // 全选
@@ -127,7 +143,7 @@ function initPage() {
         $(".favorite-selector").prev().attr("value", "checked");
         _this.checked = [];
         _this.pageData.map(function (item) {
-          _this.checked.push(item.id);
+          _this.checked.push(item.document_number);
         });
       }
     });
@@ -138,7 +154,8 @@ function initPage() {
         layer.msg("请选择一条数据取消收藏");
         return;
       }
-      layer.msg(_this.checked.toString());
+      request.delete(`api/user/favorites?id=${_this.checked.toString()}`);
+      renderTable();
     });
 
     /**
@@ -158,6 +175,8 @@ function initPage() {
 
     $(".time-range-container").on("click", ".date-choose-ex", function (e) {
       _this.chooseDate = $(this).text();
+      _this.details = $(this).data().value;
+      console.log("datail", _this.details);
       renderTable();
     });
   });

@@ -9,6 +9,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     page: 1,
     pageSize: 10,
     force: false,
+    showList: true,
   };
   //动态加载CSS
   layui.link("./page/PatentBaseInfo/index.css");
@@ -90,7 +91,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
    * @param {*} showlist
    */
   _this.renderCont = function (value, type, showlist) {
-    if (showlist) {
+    if (showlist && _this.showList) {
       $(".layuimini-content-list").show();
     } else {
       $(".layuimini-content-list").hide();
@@ -106,7 +107,49 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     }
   };
 
-  // 其他页面信息 | 法律信息之下
+  // 获取其他信息 | 法律信息之下
+  _this.getBasicInfo = function (url) {
+    //将基本信息
+    request.ajax(url, function (result) {
+      //返回成功进行响应操作
+      if (result.data) {
+        let AllInfo = result.data;
+        // 放到session里，减少重复请求
+        layui.sessionData("session", {
+          key: "allInfo",
+          value: AllInfo,
+        });
+        let basicInfo = AllInfo["申请信息"] || {};
+        layui.sessionData("session", {
+          key: "basicInfo",
+          value: {
+            updateDate: AllInfo["查询时间"] || "--",
+            status: basicInfo["案件状态"] || "--",
+            number: basicInfo["专利号码"] || "--",
+            flNumber: basicInfo["主分类号"] || "--",
+            name: basicInfo["专利名称"] || "--",
+            applicationDate: basicInfo["申请日期"] || "",
+            applicant: (basicInfo["申请人"] && basicInfo["申请人"].join("、")) || "--",
+            inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
+            Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
+            agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
+            patentInfo: patent,
+          },
+        });
+      } else {
+        layui.sessionData("session", {
+          key: "allInfo",
+          value: {},
+        });
+        layui.sessionData("session", {
+          key: "basicInfo",
+          value: {},
+        });
+      }
+    });
+  };
+
+  // 其他页面信息
   _this.getData = function () {
     // 获取基本信息
     request.get(`adv/patent/base?id=${_this.id}`, function (res) {
@@ -114,97 +157,32 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       var code = patent.applicationNumber.substring(2).replace(".", "");
       // debug_token 调试用，正式环境去除
       var url = `${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
-      //将基本信息
-      request.ajax(url, function (result) {
-        //返回成功进行响应操作
-        if (result.data) {
-          let AllInfo = result.data;
-          // 放到session里，减少重复请求
-          layui.sessionData("session", {
-            key: "allInfo",
-            value: AllInfo,
-          });
-          let basicInfo = AllInfo["申请信息"] || {};
-          layui.sessionData("session", {
-            key: "basicInfo",
-            value: {
-              updateDate: AllInfo["查询时间"] || "--",
-              status: basicInfo["案件状态"] || "--",
-              number: basicInfo["专利号码"] || "--",
-              flNumber: basicInfo["主分类号"] || "--",
-              name: basicInfo["专利名称"] || "--",
-              applicationDate: basicInfo["申请日期"] || "",
-              applicant: (basicInfo["申请人"] && basicInfo["申请人"].join("、")) || "--",
-              inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
-              Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
-              agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
-              patentInfo: patent,
-            },
-          });
-        } else {
-          layui.sessionData("session", {
-            key: "allInfo",
-            value: {},
-          });
-          layui.sessionData("session", {
-            key: "basicInfo",
-            value: {},
-          });
-        }
-      });
+      _this.getBasicInfo(url);
     });
   };
 
   _this.initCont = function () {
-    if (!_this.force) {
-      // 查询右侧分页
+    if (_this.force) {
+      // 强行查看发露信息
+      // 其他页面数据
+      // debug_token 调试用，正式环境去除
+      var url = `${request.getParamFromUri("id")}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
+      _this.getBasicInfo(url);
+      _this.renderCont("费用信息", "name", true);
+      $(".layuimini-content-list").hide();
+      return;
+    }
+    // 查询右侧分页
+    if (_this.showList) {
       var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
       request.get(url.replace(/p=\d*/, "p=" + _this.page), function (res) {
         _this.renderList(res || {}, _this.id);
       });
     } else {
       // 其他页面数据
-      // debug_token 调试用，正式环境去除
-      var url = `${request.getParamFromUri("id")}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
-      //将基本信息
-      request.ajax(url, function (result) {
-        //返回成功进行响应操作
-        if (result.data) {
-          let AllInfo = result.data;
-          // 放到session里，减少重复请求
-          layui.sessionData("session", {
-            key: "allInfo",
-            value: AllInfo,
-          });
-          let basicInfo = AllInfo["申请信息"] || {};
-          layui.sessionData("session", {
-            key: "basicInfo",
-            value: {
-              updateDate: AllInfo["查询时间"] || "--",
-              status: basicInfo["案件状态"] || "--",
-              number: basicInfo["专利号码"] || "--",
-              flNumber: basicInfo["主分类号"] || "--",
-              name: basicInfo["专利名称"] || "--",
-              applicationDate: basicInfo["申请日期"] || "",
-              applicant: (basicInfo["申请人"] && basicInfo["申请人"].join("、")) || "--",
-              inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
-              Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
-              agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
-            },
-          });
-          _this.renderCont("费用信息", "name", true);
-          $(".layuimini-content-list").hide();
-        } else {
-          layui.sessionData("session", {
-            key: "allInfo",
-            value: {},
-          });
-          layui.sessionData("session", {
-            key: "basicInfo",
-            value: {},
-          });
-        }
-      });
+      _this.getData();
+      // 中间基本信息
+      _this.renderCont("基本信息", "name", true);
     }
   };
 
@@ -222,7 +200,6 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     // 初始化参数
     var force = request.getParamFromUri("force");
     var cost = false;
-
     // 费用信息
     if (force) {
       _this.force = true;
@@ -255,8 +232,14 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       });
     } else {
       _this.id = request.getParamFromUri("id");
-      var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
-      _this.page = _this.getParamFromUri("p", url);
+      var url = request.getParamFromUri("url");
+      if (url) {
+        url = url.replace(/TANDT/g, "&");
+        _this.page = _this.getParamFromUri("p", url);
+        _this.showList = true;
+      } else {
+        _this.showList = false;
+      }
 
       // 菜单数据
       $.getJSON("mock/menu.json", function (data) {
