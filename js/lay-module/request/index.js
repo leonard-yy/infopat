@@ -44,6 +44,28 @@ layui.define(function (exports) {
     });
   };
 
+  request.post = function (url, params = {}, cb = function () {}, err = function () {}) {
+    // url = apiTestPrefix + url;
+    url = nginxDevPrefix + url;
+    if (url.indexOf("?") !== -1) {
+      url += `&v=${v}`;
+    } else {
+      url += `?&v=${v}`;
+    }
+    $.ajax({
+      url: url,
+      type: "post",
+      data: params,
+      success: function (data) {
+        cb(data);
+      },
+      error: function (xhr, textstatus, thrown) {
+        err(xhr);
+        console.log("error", thrown);
+      },
+    });
+  };
+
   request.getAsync = function async(url, cb = function () {}, err = function () {}) {
     // url = apiTestPrefix + url;
     url = nginxDevPrefix + url;

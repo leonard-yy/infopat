@@ -165,6 +165,27 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           }
         },
       });
+      // 检查收藏
+
+      let ids = [];
+      layui.each(res.patents, function (index, item) {
+        ids.push(item.id);
+      });
+
+      request.get(`user/favorites/exists?id=${ids.toString()}`, function (res) {
+        if (res && res.data) {
+          var favoriteData = res.data || {};
+          layui.each(favoriteData, function (k, v) {
+            if (v) {
+              $("FORK-KEY-" + key)
+                .addClass("layui-icon-star-fill")
+                .removeClass("layui-icon-star")
+                .next()
+                .html("取消收藏");
+            }
+          });
+        }
+      });
     } else {
       // 默认无数据
       var txt = $("#expandTextarea").val();
@@ -476,14 +497,14 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       var id = $(this).parent().find("input").attr("id");
       var v = id.split("-").pop();
       checkValue.push(v);
-
       $("#FORK-KEY-" + v).removeClass("layui-icon-star");
       $("#FORK-KEY-" + v).addClass("layui-icon-star-fill");
       $("#FORK-KEY-" + v)
         .next()
         .html("取消收藏");
     });
-    layer.msg(checkValue.toString());
+    // 收藏接口
+    request.post(`api/user/favorites?id=${checkValue.toString()}`);
   });
 
   /**
@@ -553,23 +574,31 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       // 取消
       $(e.currentTarget).parent().find("input").attr("value", "unchecked");
     } else {
-      // 取消
+      // 选择
       $(e.currentTarget).parent().find("input").attr("value", "checked");
+      // if ($(e.currentTarget).parent().find(".fork-star").hasClass("layui-icon-star-fill")) {
+      //   layer.msg("此纪录已经被收藏！");
+      // } else {
+      //   $(e.currentTarget).parent().find("input").attr("value", "checked");
+      // }
     }
   });
   /**
    * 收藏 取消收藏
    */
   $("#searchResult").on("click", ".fork-star", function (e) {
+    var id = e.currentTarget.id.split("-").pop();
     if ($(e.currentTarget).hasClass("layui-icon-star")) {
       // 收藏
       $(e.currentTarget).removeClass("layui-icon-star");
       $(e.currentTarget).addClass("layui-icon-star-fill");
       $(e.currentTarget).next().html("取消收藏");
+      request.post(`api/user/favorites?id=${id}`);
     } else {
       $(e.currentTarget).removeClass("layui-icon-star-fill");
       $(e.currentTarget).addClass("layui-icon-star");
       $(e.currentTarget).next().html("收藏");
+      request.delete(`api/user/favorites?id=${id}`);
     }
   });
 
