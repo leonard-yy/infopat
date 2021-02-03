@@ -21,6 +21,8 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     var idxSelected = 1;
     var hasIndex = 0;
     if (res.total > 0) {
+      res.total = res.total ? (res.total > 1000 ? 999 : res.total) : 0;
+      _this.total = res.total || 0;
       var patents = res.patents || [];
       var html = "";
       patents.map(function (item, index) {
@@ -32,6 +34,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       patents.map(function (item, index) {
         var title = item.title.replace(/<em>/g, "").replace(/<\/em>/g, "");
         if (index == hasIndex) {
+          _this.id = item.id;
           html += '<div class="result-list-item active" data-value="' + item.id + '" data-index=' + index + ">";
           html += '   <div class="flex">';
           html += "    <span>" + (index + 1) + ".</span>";
@@ -54,7 +57,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       // 分页
       laypage.render({
         elem: "pageNavagete",
-        count: res.total || 0,
+        count: res.total,
         first: "首页",
         last: "尾页",
         curr: res.page || 1,
@@ -72,7 +75,10 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
         },
       });
 
-      _this.total = res.total || 0;
+      // 其他页面数据
+      _this.getData();
+      // 中间基本信息
+      _this.renderCont("基本信息", "name", true);
       element.init();
     }
   };
@@ -151,16 +157,11 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
 
   _this.initCont = function () {
     if (!_this.force) {
-      // 其他页面数据
-      _this.getData();
-
       // 查询右侧分页
       var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
-      request.get(url.replace(/p=\d/, "p=" + _this.page), function (res) {
+      request.get(url.replace(/p=\d*/, "p=" + _this.page), function (res) {
         _this.renderList(res || {}, _this.id);
       });
-      // 中间基本信息
-      _this.renderCont("基本信息", "name", true);
     } else {
       // 其他页面数据
       // debug_token 调试用，正式环境去除
@@ -256,6 +257,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       _this.id = request.getParamFromUri("id");
       var url = request.getParamFromUri("url").replace(/TANDT/g, "&");
       _this.page = _this.getParamFromUri("p", url);
+
       // 菜单数据
       $.getJSON("mock/menu.json", function (data) {
         if (data != null) {

@@ -54,17 +54,17 @@ function initPage() {
           $("#resultSumaryContent").html(patent.summary);
 
           $("#resultImgContent").attr("src", "api/adv/img?v=1&key=" + patent.imagePath);
-        });
 
-        // 首项权利要求
-        request.get(`adv/patent/claims?id=${option.id}`, function (res2) {
-          if (res2 && res2.patent) {
-            var claims = res2.patent.claims;
-            var claimArr = claims.split(/\d\./);
-            if (claimArr.length > 2) {
-              $("#firstClaim").html(claimArr[1]);
+          // 首项权利要求
+          request.get(`adv/patent/claims?id=${option.id}`, function (res2) {
+            if (res2 && res2.patent) {
+              var claims = res2.patent.claims;
+              var claimArr = claims.split(/\d\./);
+              if (claimArr.length > 1) {
+                $("#firstClaim").html(claimArr[1]);
+              }
             }
-          }
+          });
         });
       }
     };

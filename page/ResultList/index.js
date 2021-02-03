@@ -144,6 +144,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         $("#fieldsContent").html(html);
       });
       // 分页
+      // 最多99 * 10 条
+      res.total = res.total ? (res.total > 1000 ? 999 : res.total) : 0;
       laypage.render({
         elem: "pageNavagete",
         count: res.total || 0,
@@ -159,6 +161,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           if (!first) {
             _this.page = obj.curr;
             _this.search();
+            $(".result-body").animate({ scrollTop: 0 }, 600);
           }
         },
       });
@@ -238,7 +241,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       if (_this.selectQuery["countryCode"]) {
         defaulCc = false;
         ds = "all";
-        q += " AND " + _this.selectQuery["countryCode"];
+
+        q = "(" + q + ")" + " AND " + _this.selectQuery["countryCode"];
       }
 
       if (defaulCc && selectedCountry !== "CN" && selectedCountry != "all") {
@@ -254,25 +258,25 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             }
           });
           dsStr += ")";
-          q += dsStr;
+          q = "(" + q + ")" + dsStr;
         }
       }
 
       if (_this.filterQuery["countryCode"]) {
         ds = "all";
-        q += " AND NOT " + _this.filterQuery["countryCode"];
+        q = "(" + q + ")" + " AND NOT " + _this.filterQuery["countryCode"];
       }
 
       // 筛选过滤时其他条件不变
       for (let key in _this.selectQuery) {
         if (_this.selectQuery[key] != null && key !== "countryCode") {
-          q += " AND " + key + ":" + _this.selectQuery[key];
+          q = "(" + q + ")" + " AND " + key + ":" + _this.selectQuery[key];
         }
       }
       // 过滤筛选
       for (let key in _this.filterQuery) {
         if (_this.filterQuery[key] != null && key !== "countryCode") {
-          q += " NOT " + key + ":" + _this.filterQuery[key];
+          q = "(" + q + ")" + " AND NOT " + key + ":" + _this.filterQuery[key];
         }
       }
 
@@ -618,7 +622,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           // 遍历Set
           var sel = parentSelect[element];
           var typeStr = sel.match(/\,/);
-          typeStr = " AND type: (" + sel.replace(/\,/g, " OR ") + "))";
+          typeStr = " AND type:(" + sel.replace(/\,/g, " OR ") + "))";
           if (first) {
             first = false;
             filterText = " (countryCode:" + element + typeStr;
@@ -647,6 +651,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     _this.page = 1;
     if (type == "second") {
       _this.secondText = null;
+      _this.searchText = $("#expandTextarea").val();
     } else {
       var filterCode = $(this).data().value;
       if (type == "filter") {
@@ -654,8 +659,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       } else {
         _this.selectQuery[filterCode] = null;
       }
-      _this.search();
     }
+    _this.search();
   });
 
   /**
@@ -707,7 +712,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           // 遍历Set
           var sel = parentSelect[element];
           var typeStr = sel.match(/\,/);
-          typeStr = " AND type: (" + sel.replace(/\,/g, " OR ") + "))";
+          typeStr = " AND type:(" + sel.replace(/\,/g, " OR ") + "))";
           if (first) {
             first = false;
             filterText = " (countryCode:" + element + typeStr;
@@ -882,6 +887,10 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           if (value == "ALL") {
             $("#layerSelector").find("input").attr("value", "unchecked");
           }
+          // 特殊 欧盟
+          if (value == "EUROPE") {
+            $("#layerSelector").find('input[id = "COUNTRY-CHILD-EP"]').attr("value", "unchecked");
+          }
         } else {
           // 选择
           $(e.currentTarget).prev().attr("value", "checked");
@@ -898,6 +907,10 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             if (allCountry.length == checkedCountry.length + 1) {
               $("#layerSelector").find('input[id = "COUNTRY-PARENT-ALL"]').attr("value", "checked");
             }
+          }
+          // 特殊 欧盟
+          if (value == "EUROPE") {
+            $("#layerSelector").find('input[id = "COUNTRY-CHILD-EP"]').attr("value", "checked");
           }
         }
       });

@@ -306,7 +306,7 @@
         .result-selector-item {
           display: flex;
           align-items: center;
-          padding: 0 20px;
+          padding: 0 10px 0 20px;
           font-weight: bold;
 
           &.bb {
@@ -316,7 +316,7 @@
             color: #000 !important;
           }
           &.child {
-            margin-left: 25px;
+            margin-left: 15px;
           }
           .block-back {
             height: 16px;
@@ -332,7 +332,7 @@
             font-size: 14px;
             color: #333333;
             line-height: 24px;
-            max-width: calc(100% - 75px);
+            max-width: calc(100% - 50px);
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
@@ -412,145 +412,149 @@
               padding: 10px 20px;
               border-bottom: 1px solid #efefef;
               position: relative;
-
               .result-content-img {
                 margin: 8px 10px 0 10px;
                 cursor: pointer;
                 width: 160px;
-                display: inline-table;
+                // display: inline-table;
+                max-height: 240px;
+                overflow: hidden;
                 img {
                   height: auto;
                   width: 100%;
                 }
               }
-              .content-fileds-item {
-                display: flex;
-                justify-content: flex-start;
-                padding: 0 5px;
+              .result-content-fileds {
+                flex: 1;
+                .content-fileds-item {
+                  display: flex;
+                  justify-content: flex-start;
+                  padding: 0 5px;
 
-                &.sp-bt {
-                  justify-content: space-between;
-                }
-                .title {
-                  font-size: 14px;
-                  font-weight: bold;
-                  cursor: pointer;
-                }
+                  &.sp-bt {
+                    justify-content: space-between;
+                  }
+                  .title {
+                    font-size: 14px;
+                    font-weight: bold;
+                    cursor: pointer;
+                  }
 
-                .fmgk-img {
-                  height: 28px;
-                  width: 90px;
-                  background-image: url(../images/search/fmgk.png);
-                }
-                .yq-img {
-                  height: 28px;
-                  width: 90px;
-                  background-image: url(../images/search/yq.png);
-                }
-                .fmsq-img {
-                  height: 28px;
-                  width: 90px;
-                  background-image: url(../images/search/fmsq.png);
-                }
-                .syxx-img {
-                  height: 28px;
-                  width: 90px;
-                  background-image: url(../images/search/syxx.png);
-                }
-                .wgsj-img {
-                  height: 28px;
-                  width: 90px;
-                  background-image: url(../images/search/wgsj.png);
-                }
-                .common-img {
-                  height: 28px;
-                  width: 90px;
-                  line-height: 28px;
-                  text-align: center;
-                  background-image: url(../images/search/common-status.png);
-                  background-size: 90px 28px;
-                  color: #ffffff;
-                }
-                .red-back {
-                  height: 28px;
-                  width: 90px;
-                  line-height: 28px;
-                  text-align: center;
-                  background-image: url(../images/search/red-back.png);
-                  background-size: 90px 28px;
-                  color: #ffffff;
-                }
-                .green-back {
-                  height: 28px;
-                  width: 90px;
-                  line-height: 28px;
-                  text-align: center;
-                  background-image: url(../images/search/green-back.png);
-                  background-size: 90px 28px;
-                  color: #ffffff;
-                }
-                .blue-back {
-                  height: 28px;
-                  width: 90px;
-                  line-height: 28px;
-                  text-align: center;
-                  background-image: url(../images/search/blue-back.png);
-                  background-size: 90px 28px;
-                  color: #ffffff;
-                }
-                .brown-back {
-                  height: 28px;
-                  width: 90px;
-                  line-height: 28px;
-                  text-align: center;
-                  background-image: url(../images/search/brown-back.png);
-                  background-size: 90px 28px;
-                  color: #ffffff;
-                }
-                .brown-back2 {
-                  height: 28px;
-                  width: 120px;
-                  line-height: 28px;
-                  text-align: center;
-                  background-image: url(../images/search/brown-back2.png);
-                  background-size: 120px 28px;
-                  color: #ffffff;
-                }
-                .orange-back {
-                  height: 28px;
-                  width: 90px;
-                  line-height: 28px;
-                  text-align: center;
-                  background-image: url(../images/search/orange-back.png);
-                  background-size: 90px 28px;
-                  color: #ffffff;
-                }
-                .default-img {
-                  height: 28px;
-                  min-width: 90px;
-                  line-height: 28px;
-                  text-align: center;
-                  background-image: url(../images/search/default-back.png);
-                  background-size: 100% 28px;
-                  color: #ffffff;
-                }
-                .tips-title {
-                  font-size: 14px;
-                  display: inline-block;
-                  height: 100%;
-                  line-height: 24px;
-                  white-space: nowrap;
-                  color: #999999;
-                }
-                .sec-align {
-                  position: absolute;
-                  left: 300px;
-                }
-                .tips-value {
-                  font-size: 14px;
-                  display: inline-block;
-                  height: 100%;
-                  line-height: 24px;
+                  .fmgk-img {
+                    height: 28px;
+                    width: 90px;
+                    background-image: url(../images/search/fmgk.png);
+                  }
+                  .yq-img {
+                    height: 28px;
+                    width: 90px;
+                    background-image: url(../images/search/yq.png);
+                  }
+                  .fmsq-img {
+                    height: 28px;
+                    width: 90px;
+                    background-image: url(../images/search/fmsq.png);
+                  }
+                  .syxx-img {
+                    height: 28px;
+                    width: 90px;
+                    background-image: url(../images/search/syxx.png);
+                  }
+                  .wgsj-img {
+                    height: 28px;
+                    width: 90px;
+                    background-image: url(../images/search/wgsj.png);
+                  }
+                  .common-img {
+                    height: 28px;
+                    width: 90px;
+                    line-height: 28px;
+                    text-align: center;
+                    background-image: url(../images/search/common-status.png);
+                    background-size: 90px 28px;
+                    color: #ffffff;
+                  }
+                  .red-back {
+                    height: 28px;
+                    width: 90px;
+                    line-height: 28px;
+                    text-align: center;
+                    background-image: url(../images/search/red-back.png);
+                    background-size: 90px 28px;
+                    color: #ffffff;
+                  }
+                  .green-back {
+                    height: 28px;
+                    width: 90px;
+                    line-height: 28px;
+                    text-align: center;
+                    background-image: url(../images/search/green-back.png);
+                    background-size: 90px 28px;
+                    color: #ffffff;
+                  }
+                  .blue-back {
+                    height: 28px;
+                    width: 90px;
+                    line-height: 28px;
+                    text-align: center;
+                    background-image: url(../images/search/blue-back.png);
+                    background-size: 90px 28px;
+                    color: #ffffff;
+                  }
+                  .brown-back {
+                    height: 28px;
+                    width: 90px;
+                    line-height: 28px;
+                    text-align: center;
+                    background-image: url(../images/search/brown-back.png);
+                    background-size: 90px 28px;
+                    color: #ffffff;
+                  }
+                  .brown-back2 {
+                    height: 28px;
+                    width: 120px;
+                    line-height: 28px;
+                    text-align: center;
+                    background-image: url(../images/search/brown-back2.png);
+                    background-size: 120px 28px;
+                    color: #ffffff;
+                  }
+                  .orange-back {
+                    height: 28px;
+                    width: 90px;
+                    line-height: 28px;
+                    text-align: center;
+                    background-image: url(../images/search/orange-back.png);
+                    background-size: 90px 28px;
+                    color: #ffffff;
+                  }
+                  .default-img {
+                    height: 28px;
+                    min-width: 90px;
+                    line-height: 28px;
+                    text-align: center;
+                    background-image: url(../images/search/default-back.png);
+                    background-size: 100% 28px;
+                    color: #ffffff;
+                  }
+                  .tips-title {
+                    font-size: 14px;
+                    display: inline-block;
+                    height: 100%;
+                    line-height: 24px;
+                    white-space: nowrap;
+                    color: #999999;
+                  }
+                  .sec-align {
+                    position: absolute;
+                    left: 300px;
+                  }
+                  .tips-value {
+                    font-size: 14px;
+                    display: inline-block;
+                    height: 100%;
+                    line-height: 24px;
+                  }
                 }
               }
             }

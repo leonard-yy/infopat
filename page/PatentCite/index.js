@@ -76,7 +76,7 @@ function initPage() {
     function init() {
       var p = request.getParamFromUri("p");
       var q = request.getParamFromUri("q");
-      var id = request.getParamFromUri("id");
+      var id = option.id;
       $("#citeContent").loding("start");
       $("#citedContent").loding("start");
       request.get(`adv/s?ds=cn&q=${q}&p=${p}`, function (res) {
