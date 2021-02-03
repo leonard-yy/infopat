@@ -22,7 +22,7 @@ function initPage() {
       if (date && details) {
         $("#favoriteTable").loding("start");
         $("#chooseDate").html(date);
-        request.get(`${details}&p=${this.page}`, function (res) {
+        request.get(`${details}`, function (res) {
           $("#favoriteTable").loding("stop");
           if (res && res.data) {
             var data = res.data || [];
@@ -45,7 +45,7 @@ function initPage() {
                 html += '      <label class="favorite-selector"/>';
                 html += "   </div>";
                 html += "</td>";
-                html += "<td>" + item.document_number + "</td>";
+                html += '<td><a href="/result.html?id=' + item.document_number + '">' + item.document_number + "</a></td>";
                 html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";
                 html += "<td>" + item.document_date + "</td>";
                 html += "<td>" + item.application_date + "</td>";
@@ -83,19 +83,29 @@ function initPage() {
     function renderYearSelect(data) {
       var html = '<ul class="layui-nav layui-nav-tree" >';
       var first = true;
+      var firstParent = true;
       layui.each(data, function (k, v) {
         var child = v || [];
-        html += '  <li class="layui-nav-item" data-value=' + k + ">";
+        if (firstParent) {
+          firstParent = false;
+          html += '  <li class="layui-nav-item layui-nav-itemed" data-value=' + k + ">";
+        } else {
+          html += '  <li class="layui-nav-item" data-value=' + k + ">";
+        }
+
         html += '     <a href="javascript:;" class="blod" title=' + k + ">" + k + "</a>";
         if (child.length > 0) {
           html += '<dl class="layui-nav-child">';
           layui.each(child, function (index, c) {
+            var details = c.details.replace("api/", "");
             if (first) {
               first = false;
               _this.chooseDate = c.date;
-              _this.details = c.details;
+              _this.details = details;
+              html += '     <dd class="layui-this"><a href="javascript:;" class="date-choose-ex" data-value=' + details + ">" + c.date + "</a></dd>";
+            } else {
+              html += '     <dd><a href="javascript:;" class="date-choose-ex" data-value=' + details + ">" + c.date + "</a></dd>";
             }
-            html += '     <dd><a href="javascript:;" class="date-choose-ex" data-value=' + c.details + ">" + c.date + "</a></dd>";
           });
         }
         html += "</dl>";
@@ -103,6 +113,14 @@ function initPage() {
       });
       $(".time-range-content").html(html);
       element.render("nav");
+      renderTable();
+    }
+
+    /**
+     * 取消收藏
+     */
+    function removeFork() {
+      request.deleteAsync(`user/favorites?id=${_this.checked.toString()}`);
       renderTable();
     }
 
@@ -118,7 +136,7 @@ function initPage() {
     /**
      * 初始化数据
      */
-    request.get(`api/user/favorites`, function (res) {
+    request.get(`user/favorites`, function (res) {
       if (res && res.data) {
         renderYearSelect(res.data || {});
       }
@@ -154,8 +172,8 @@ function initPage() {
         layer.msg("请选择一条数据取消收藏");
         return;
       }
-      request.delete(`api/user/favorites?id=${_this.checked.toString()}`);
-      renderTable();
+
+      removeFork();
     });
 
     /**
@@ -176,7 +194,6 @@ function initPage() {
     $(".time-range-container").on("click", ".date-choose-ex", function (e) {
       _this.chooseDate = $(this).text();
       _this.details = $(this).data().value;
-      console.log("datail", _this.details);
       renderTable();
     });
   });

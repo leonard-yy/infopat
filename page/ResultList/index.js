@@ -177,7 +177,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           var favoriteData = res.data || {};
           layui.each(favoriteData, function (k, v) {
             if (v) {
-              $("FORK-KEY-" + key)
+              $("#FORK-KEY-" + k)
                 .addClass("layui-icon-star-fill")
                 .removeClass("layui-icon-star")
                 .next()
@@ -504,7 +504,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         .html("取消收藏");
     });
     // 收藏接口
-    request.post(`api/user/favorites?id=${checkValue.toString()}`);
+    request.post(`user/favorites?id=${checkValue.toString()}`);
   });
 
   /**
@@ -593,12 +593,12 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       $(e.currentTarget).removeClass("layui-icon-star");
       $(e.currentTarget).addClass("layui-icon-star-fill");
       $(e.currentTarget).next().html("取消收藏");
-      request.post(`api/user/favorites?id=${id}`);
+      request.post(`user/favorites?id=${id}`);
     } else {
       $(e.currentTarget).removeClass("layui-icon-star-fill");
       $(e.currentTarget).addClass("layui-icon-star");
       $(e.currentTarget).next().html("收藏");
-      request.delete(`api/user/favorites?id=${id}`);
+      request.delete(`user/favorites?id=${id}`);
     }
   });
 

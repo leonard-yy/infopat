@@ -635,11 +635,14 @@
       height: 100%;
       background-color: #ffffff;
 
-      .layui-nav-more {
-        border-color: #999999 transparent transparent;
-      }
       .layui-nav-itemed > a {
         color: #000 !important;
+      }
+
+      .layui-nav-item > a .layui-nav-more {
+        border-color: #999999 transparent transparent;
+      }
+      .layui-nav-itemed > a .layui-nav-more {
         border-color: transparent transparent #999999;
       }
       .layui-this,
@@ -670,6 +673,14 @@
         background-image: linear-gradient(90deg, #5268d3 0%, #5ba0d8 100%) !important;
         background-color: transparent !important;
         color: #ffffff !important;
+        > .layui-nav-more {
+          border-color: #ffffff transparent transparent;
+        }
+      }
+      .layui-nav-itemed a:hover {
+        > .layui-nav-more {
+          border-color: transparent transparent #ffffff;
+        }
       }
     }
     .patent-list-container {

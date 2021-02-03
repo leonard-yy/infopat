@@ -11,110 +11,47 @@ layui.define(function (exports) {
   // 正式环境
   var apiPrefix = "https://www.infodossier.com/api/";
   // 测试环境
-  var apiTestPrefix = "https://www.infodossier.test:2080/api/";
+  var apiTestPrefix = "http://www.infodossier.test:2080/api/";
   // nginx 环境
   var nginxDevPrefix = "api/";
 
-  var getParamString = function (param) {
-    var str = "";
-    $.each(param, function (key, val) {
-      str += "&" + key + "=" + val;
-    });
-    return str;
-  };
+  var realPrefix = nginxDevPrefix;
 
   request.get = function (url, cb = function () {}, err = function () {}) {
-    // url = apiTestPrefix + url;
-    url = nginxDevPrefix + url;
-    if (url.indexOf("?") !== -1) {
-      url += `&v=${v}`;
-    } else {
-      url += `?&v=${v}`;
-    }
-    $.ajax({
-      url: url,
-      type: "get",
-      success: function (data) {
-        cb(data);
-      },
-      error: function (xhr, textstatus, thrown) {
-        err(xhr);
-        console.log("error", thrown);
-      },
-    });
-  };
-
-  request.post = function (url, params = {}, cb = function () {}, err = function () {}) {
-    // url = apiTestPrefix + url;
-    url = nginxDevPrefix + url;
-    if (url.indexOf("?") !== -1) {
-      url += `&v=${v}`;
-    } else {
-      url += `?&v=${v}`;
-    }
-    $.ajax({
-      url: url,
-      type: "post",
-      data: params,
-      success: function (data) {
-        cb(data);
-      },
-      error: function (xhr, textstatus, thrown) {
-        err(xhr);
-        console.log("error", thrown);
-      },
-    });
+    request.ajax(url, {}, "GET", true, cb, err);
   };
 
   request.getAsync = function async(url, cb = function () {}, err = function () {}) {
-    // url = apiTestPrefix + url;
-    url = nginxDevPrefix + url;
-    if (url.indexOf("?") !== -1) {
-      url += `&v=${v}`;
-    } else {
-      url += `?&v=${v}`;
-    }
-    $.ajax({
-      url: url,
-      type: "get",
-      async: false,
-      success: function (data) {
-        cb(data);
-      },
-      error: function (xhr, textstatus, thrown) {
-        err(xhr);
-        console.log("error", thrown);
-      },
-    });
+    request.ajax(url, {}, "GET", false, cb, err);
+  };
+
+  request.post = function (url, params = {}, cb = function () {}, err = function () {}) {
+    request.ajax(url, params, "POST", true, cb, err);
   };
 
   request.delete = function (url, cb = function () {}, err = function () {}) {
-    // url = apiTestPrefix + url;
-    url = nginxDevPrefix + url;
+    request.ajax(url, {}, "DELETE", true, cb, err);
+  };
+
+  request.deleteAsync = function async(url, cb = function () {}, err = function () {}) {
+    request.ajax(url, {}, "DELETE", false, cb, err);
+  };
+
+  request.ajax = function (url, params, type, needAsync, cb = function () {}, err = function () {}) {
+    url = realPrefix + url;
     if (url.indexOf("?") !== -1) {
       url += `&v=${v}`;
     } else {
-      url += `?&v=${v}`;
+      url += `?v=${v}`;
     }
     $.ajax({
       url: url,
-      type: "delete",
-      success: function (data) {
-        cb(data);
+      type: type,
+      async: needAsync,
+      data: params,
+      headers: {
+        Authorization: "w3WhhyPz5Ri34vaEtepRoM58G4VtJIyC",
       },
-      error: function (xhr, textstatus, thrown) {
-        err(xhr);
-        console.log("error", thrown);
-      },
-    });
-  };
-
-  request.ajax = function (url, cb = function () {}, err = function () {}) {
-    // url = apiTestPrefix + url;
-    url = nginxDevPrefix + url;
-    $.ajax({
-      url: url,
-      type: "get",
       success: function (data) {
         cb(data);
       },
