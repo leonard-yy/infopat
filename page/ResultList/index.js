@@ -707,7 +707,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     // 生成新的
     if (checked.length > 0) {
       var content = '<div class="filter-item filter-modal" name="' + name + '">';
-      content += '<span class="close-icon-self" data-value="' + filterCode + '" data-name="' + name + 'data-type="filter">x</span>';
+      content += '<span class="close-icon-self" data-value="' + filterCode + '" data-name="' + name + '" data-type="filter">x</span>';
       content += '<span class="key-word">过滤 </span>';
       content += '<span class="key-type">' + name + " </span>";
       var filterText = "(";
