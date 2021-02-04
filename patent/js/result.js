@@ -108,7 +108,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
   };
 
   // 获取其他信息 | 法律信息之下
-  _this.getBasicInfo = function (url, patent) {
+  _this.getBasicInfo = function (url) {
     //将基本信息
     request.get(url, function (result) {
       //返回成功进行响应操作
@@ -133,7 +133,6 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
             inventor: (basicInfo["发明人"] && basicInfo["发明人"].join("、")) || "--",
             Agency: (basicInfo["代理情况"] && basicInfo["代理情况"]["代理机构名称"]) || "--",
             agent: (basicInfo["代理情况"] && basicInfo["代理情况"]["第一代理人"]) || "--",
-            patentInfo: patent,
           },
         });
       } else {
@@ -157,7 +156,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       var code = patent.applicationNumber.substring(2).replace(".", "");
       // debug_token 调试用，正式环境去除
       var url = `/api/patent/${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
-      _this.getBasicInfo(url, patent);
+      _this.getBasicInfo(url);
     });
   };
 
@@ -167,7 +166,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       // 其他页面数据
       // debug_token 调试用，正式环境去除
       var url = `/api/patent/${request.getParamFromUri("id")}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
-      _this.getBasicInfo(url, null);
+      _this.getBasicInfo(url);
       _this.renderCont("费用信息", "name", true);
       $(".layuimini-content-list").hide();
       return;
@@ -207,9 +206,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
       $.getJSON("mock/menu.json", function (data) {
         if (data != null) {
           var menuList = data.menu || [];
-
           var html = '<ul class="layui-nav layui-nav-tree" >';
-
           menuList.map(function (item, index) {
             var child = item.child || [];
             var fisrt = true;
@@ -253,9 +250,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
             var needMargin = false;
             // 第二栏 间隔
             if (index > 0) needMargin = true;
-
             var fisrt = true;
-
             child.map(function (c, idx) {
               var showMenu = true;
               var show = c.show || "all";
@@ -274,7 +269,6 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
                   }
                 }
               }
-
               if (showMenu) {
                 if (index == 0 && fisrt) {
                   _this.firstMenu = c.title;
@@ -293,7 +287,6 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
           });
 
           $(".layui-left-menu").html(html);
-
           // 加载页面数据
           _this.initCont();
         }

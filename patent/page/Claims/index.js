@@ -14,7 +14,7 @@ function initPage() {
         if (res) {
           request.get(`/api/adv/patent/claims?id=${id}`, function (res2) {
             $("#claimsContent").loding("stop");
-            if (res2 && res2.patent) {
+            if (res2 && res2.patent && res2.patent.claims) {
               $("#claimsContent").html(res2.patent.claims);
             } else {
               $("#claimsContent").html(patNodataPage.html);

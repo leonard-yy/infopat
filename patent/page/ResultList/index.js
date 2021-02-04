@@ -146,6 +146,9 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       });
       // 分页
       // 最多99 * 10 条
+      // 统计
+      $("#resultTime").html((res.responseTimes || 0) + "s");
+      $("#resultCount").html((res.total || 0) + "条");
       res.total = res.total ? (res.total > 1000 ? 999 : res.total) : 0;
       laypage.render({
         elem: "pageNavagete",
@@ -166,8 +169,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           }
         },
       });
-      // 检查收藏
 
+      // 检查收藏
       let ids = [];
       layui.each(res.patents, function (index, item) {
         ids.push(item.id);
@@ -203,7 +206,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       var html = `
       <div class="tips"> 
         <div style="width:600px;text-align: center;">
-          <img src="../../images/nodata.png" style="margin-top:50px"/>
+          <img src="../../images/nodata-big.png" style="margin-top:50px"/>
         </div>
         <div class="tip-container">
           <div class="tips-line blod" style="font-size: 16px; color: #333333;">没有找到符合搜索条件的专利，请输入有效的搜索条件进行查询！</div>
@@ -230,10 +233,6 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       `;
       $("#fieldsContent").html(html);
     }
-
-    // 统计
-    $("#resultTime").html((res.responseTimes || 0) + "s");
-    $("#resultCount").html((res.total || 0) + "条");
   };
 
   /**

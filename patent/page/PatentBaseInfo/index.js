@@ -59,9 +59,12 @@ function initPage() {
           request.get(`/api/adv/patent/claims?id=${option.id}`, function (res2) {
             if (res2 && res2.patent) {
               var claims = res2.patent.claims;
-              var claimArr = claims.split(/\d\./);
-              if (claimArr.length > 1) {
-                $("#firstClaim").html(claimArr[1]);
+              // var claimArr = claims.split(/\d\./);
+              if (claims) {
+                var claimArr = claims.split("。");
+                if (claimArr.length > 0) {
+                  $("#firstClaim").html(claimArr[0]);
+                }
               }
             }
           });

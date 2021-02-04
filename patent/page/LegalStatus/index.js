@@ -7,11 +7,7 @@ layui.use(["laytpl", "patBasicInfo", "lsTable", "request"], function () {
   //动态加载CSS
   layui.link("./page/LegalStatus/index.css");
   //从session里面获取模拟数据
-  var data = layui.sessionData("session").basicInfo;
-  var allInfo = layui.sessionData("session").allInfo;
-  var id = data.patentInfo.documentNumber;
-  // var qwflUrl = allInfo["全文与法律信息"];
-  var qwflUrl = "/api/adv/patent/tx?id=" + id;
+  var qwflUrl = "/api/adv/patent/tx?id=" + option.id;
   function getDataList(url, cb) {
     request.get(
       url,
