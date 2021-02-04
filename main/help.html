@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="telephone=no" name="format-detection" />
+    <!-- <meta name="viewport" content="width=device-width,initial-scale=1" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+    <link rel="stylesheet" type="text/less" href="./css/useStatement.less" />
+    <link rel="stylesheet" href="./css/normal.css" />
+    <link rel="stylesheet" href="./css/scroll.css" />
+    <!-- <link rel="stylesheet" href="css/phone.css" /> -->
+
+    <script src="./third-party/lesstools/less.min.js" type="text/javascript" charset="utf-8"></script>
+    <title></title>
+  </head>
+
+  <style>
+    p {
+      margin-top: 5px;
+    }
+  </style>
+
+  <body>
+    <!-- 顶部部分 -->
+    <header class="container-head white">
+      <div class="left-logo"></div>
+      <ul class="right">
+        <span class="btn pointer"> <a href="https://www.infodossier.com/main/index.html">主页</a></span>
+      </ul>
+    </header>
+    <main id="main-container">
+      <div class="content">
+        <h4>简单搜索</h4>
+        <h6 style="margin-top: 10px">入门</h6>
+        <p>简单搜索简洁方便，仅需输入查询关键信息并敲一下回车键 (Enter)，或单击“搜索”按钮即可得到相关资料。 系统尽量让最具核心价值的专利文献出现在最前面，方便您更容易找到最重要、最相关的内容。</p>
+        <h6 style="margin-top: 10px">特别注意</h6>
+        <p>
+          通过申请（专利）号、公开（公告）号查询时，直接输入号码，<span class="hl-yellow">前面可以不用加 ZL 或 CN ，不用加小数点及其后面的数据。</span>一次搜索多个专利号, 可以用OR连接, 如
+          <span class="hl-yellow">201280022677 OR 201120263542 OR 201180027996</span>
+        </p>
+
+        <h6 style="margin-top: 10px">分词</h6>
+        <p>
+          在一些情况下，系统会对查询关键词进行适当拆分，以防止漏检，比如输入<span class="hl-yellow">航空航天发动机</span>，会自动转换成 <span class="hl-yellow">航空航天 AND 发动机</span> 来搜索。
+          如不需要进行这种自动拆分，只需在查询词上加英文双引号""，比如输入 "航空航天发动机"，就不会再拆分开了。
+        </p>
+
+        <h4 style="margin-top: 30px">高级检索</h4>
+        <h6 style="margin-top: 10px">时间范围检索</h6>
+        <p>
+          申请日、公开日、授权日可支持时间范围查询 [开始值 TO 结束值]。<br />
+          举例：<br />
+          <span class="hl-yellow">applicationDate:[2014 TO 2015]</span>，表示查询申请日期在2014年与2015年之间的所有专利。
+        </p>
+
+        <h6 style="margin-top: 10px">复杂逻辑搜索</h6>
+        <p>
+          支持AND、OR、NOT以及()的逻辑运算，以空格间隔默认为AND关系。 <br />
+          举例：<br />
+          <span class="hl-yellow">applicationYear:[2010 TO 2012] AND 石墨烯</span>，表示查询申请日期在2010年与2012年之间的石墨烯相关的所有专利。<br />
+          <span class="hl-yellow">applicationYear:[2010 TO 2012] AND applicant:"清华大学" AND 石墨烯</span>，表示查询申请日期在2010年与2012年时候，清华大学申请的石墨烯相关的所有专利。<br />
+          <span class="hl-yellow">applicationYear:[2010 TO 2012] AND applicant:"清华大学" AND mainIpc3:"C01B" AND 石墨烯</span
+          >，表示查询申请日期在2010年与2012年之间，清华大学在主分类号为C01B上面的石墨烯相关的所有专利。<br />
+          <span class="hl-yellow">legalStatus:"有效专利" AND province:"北京市" AND 石墨烯</span>，表示查询北京市范围内跟石墨烯相关的所有有效专利。<br />
+          <span class="hl-yellow">inventor:"袁新生" AND inventor:"周明杰" AND 石墨烯</span>，表示查询两位发明人之间合作研发的石墨烯相关的所有专利。<br />
+          <span class="hl-yellow">石墨烯 AND NOT (countryCode:CN AND type:发明公开) AND NOT (countryCode:CN AND type:实用新型) AND NOT legalStatus:失效专利</span
+          >，表示查询石墨烯相关专利但是去掉中国的发明公开和实用新型专利并且不能是失效专利。
+        </p>
+
+        <h6 style="margin-top: 10px">时间范围检索</h6>
+        <p>申请日、公开日、授权日可支持时间范围查询 [开始值 TO 结束值]。 举例：<span class="hl-yellow">applicationDate:[2014 TO 2015]</span>，表示查询申请日期在2014年与2015年之间的所有专利。</p>
+
+        <h6 style="margin-top: 10px">检索字段</h6>
+        <table style="width: 100%; margin-top: 10px">
+          <thead>
+            <td>字段</td>
+            <td>简写</td>
+            <td>描述</td>
+          </thead>
+          <tbody>
+            <tr>
+              <td>type</td>
+              <td></td>
+              <td>专利类型</td>
+            </tr>
+            <tr>
+              <td>countryCode</td>
+              <td>cc</td>
+              <td>国家代码，如CN，US</td>
+            </tr>
+            <tr>
+              <td>number</td>
+              <td>n</td>
+              <td>申请号/文献号，如申请号，公开号、授权号</td>
+            </tr>
+            <tr>
+              <td>applicationNumber</td>
+              <td>an</td>
+              <td>申请号</td>
+            </tr>
+            <tr>
+              <td>type</td>
+              <td></td>
+              <td>申请日期</td>
+            </tr>
+            <tr>
+              <td>applicationDate</td>
+              <td>ad</td>
+              <td>专利类型</td>
+            </tr>
+            <tr>
+              <td>applicationYear</td>
+              <td>ay</td>
+              <td>申请年份，如2015</td>
+            </tr>
+            <tr>
+              <td>applicationMonth</td>
+              <td></td>
+              <td>申请年月，如2016-08</td>
+            </tr>
+            <tr>
+              <td>documentNumber</td>
+              <td>dn</td>
+              <td>文献号</td>
+            </tr>
+            <tr>
+              <td>documentDate</td>
+              <td>dd</td>
+              <td>文献日期</td>
+            </tr>
+            <tr>
+              <td>documentYear</td>
+              <td></td>
+              <td>文献年份，如2015</td>
+            </tr>
+            <tr>
+              <td>documentMonth</td>
+              <td></td>
+              <td>文献年月，如2016-08</td>
+            </tr>
+            <tr>
+              <td>ipc</td>
+              <td></td>
+              <td>IPC分类号</td>
+            </tr>
+            <tr>
+              <td>ipc1</td>
+              <td></td>
+              <td>IPC部，如A、B、C、D等</td>
+            </tr>
+            <tr>
+              <td>ipc2</td>
+              <td></td>
+              <td>IPC大类，如A01、B01等</td>
+            </tr>
+            <tr>
+              <td>ipc3</td>
+              <td></td>
+              <td>IPC小类，如B01B、B01D、B01F等</td>
+            </tr>
+            <tr>
+              <td>ipc4</td>
+              <td></td>
+              <td>IPC大组，如C08K5、C08K3等</td>
+            </tr>
+            <tr>
+              <td>ipc5</td>
+              <td></td>
+              <td>IPC小组，如C01B31/04、C08K13/06、C08K3/22等</td>
+            </tr>
+            <tr>
+              <td>mainIpc</td>
+              <td></td>
+              <td>主分类号</td>
+            </tr>
+            <tr>
+              <td>mainIpc1</td>
+              <td></td>
+              <td>IPC部，如A、B、C、D等</td>
+            </tr>
+            <tr>
+              <td>mainIpc2</td>
+              <td></td>
+              <td>IPC大类，如A01、B01等</td>
+            </tr>
+            <tr>
+              <td>mainIpc3</td>
+              <td></td>
+              <td>IPC小类，如B01B、B01D、B01F等</td>
+            </tr>
+            <tr>
+              <td>mainIpc4</td>
+              <td></td>
+              <td>IPC大组，如C08K5、C08K3等</td>
+            </tr>
+            <tr>
+              <td>mainIpc5</td>
+              <td></td>
+              <td>IPC小组，如C01B31/04、C08K13/06、C08K3/22等</td>
+            </tr>
+            <tr>
+              <td>loc</td>
+              <td></td>
+              <td>外观专利分类标准</td>
+            </tr>
+            <tr>
+              <td>applicant</td>
+              <td></td>
+              <td>申请人</td>
+            </tr>
+            <tr>
+              <td>applicantType</td>
+              <td></td>
+              <td>申请人类型，包括：学校、科研院所、企业、其他 四种</td>
+            </tr>
+            <tr>
+              <td>firstApplicant</td>
+              <td></td>
+              <td>第一申请人</td>
+            </tr>
+            <tr>
+              <td>applicantAddress</td>
+              <td></td>
+              <td>申请人地址</td>
+            </tr>
+            <tr>
+              <td>applicantZip</td>
+              <td></td>
+              <td>申请人邮编</td>
+            </tr>
+            <tr>
+              <td>assignee</td>
+              <td></td>
+              <td>专利权人</td>
+            </tr>
+            <tr>
+              <td>assigneeType</td>
+              <td></td>
+              <td>专利权人类型，包括：学校、科研院所、企业、其他 四种</td>
+            </tr>
+            <tr>
+              <td>inventor</td>
+              <td>inv</td>
+              <td>发明人</td>
+            </tr>
+            <tr>
+              <td>firstInventor</td>
+              <td></td>
+              <td>第一发明人</td>
+            </tr>
+            <tr>
+              <td>agency</td>
+              <td></td>
+              <td>代理机构</td>
+            </tr>
+            <tr>
+              <td>agent</td>
+              <td></td>
+              <td>代理人</td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td>ti 或 t</td>
+              <td>专利名称</td>
+            </tr>
+            <tr>
+              <td>summary</td>
+              <td>ab 或 s</td>
+              <td>专利摘要</td>
+            </tr>
+            <tr>
+              <td>country</td>
+              <td></td>
+              <td>国家</td>
+            </tr>
+            <tr>
+              <td>province</td>
+              <td></td>
+              <td>省份</td>
+            </tr>
+            <tr>
+              <td>city</td>
+              <td></td>
+              <td>城市</td>
+            </tr>
+            <tr>
+              <td>legalStatus</td>
+              <td>ls</td>
+              <td>专利有效性，包括：实质审查、有效专利、失效专利、公开</td>
+            </tr>
+            <tr>
+              <td>claims</td>
+              <td>cl 或 c</td>
+              <td>权利要求书</td>
+            </tr>
+            <tr>
+              <td>description</td>
+              <td>desc 或 d</td>
+              <td>说明书</td>
+            </tr>
+            <tr>
+              <td>ta</td>
+              <td>ts</td>
+              <td>标题，摘要</td>
+            </tr>
+            <tr>
+              <td>tac</td>
+              <td>tsc</td>
+              <td>标题，摘要，权利要求</td>
+            </tr>
+            <tr>
+              <td>tacd</td>
+              <td>tscd</td>
+              <td>标题，摘要，权利要求, 说明书</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer class="wrapper-footer">
+      <ul>
+        <li>© Copyright 2021 世纪昆仑（南京）信息发展有限公司</li>
+        <li>地址：南京市江宁区弘景大道99号金陵科技学院创业楼107室5102室</li>
+        <li>商务合作：info@infodossier.com</li>
+        <li>ICP备：苏ICP备19056771号-5</li>
+      </ul>
+    </footer>
+  </body>
+</html>

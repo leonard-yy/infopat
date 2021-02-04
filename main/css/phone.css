@@ -1,0 +1,24 @@
+.img-content {
+  flex-wrap: wrap;
+}
+.img-content .div-img {
+  min-width: 100%;
+}
+.wrapper-form .form-content .col-sy-1,
+.wrapper-form .form-content .col-sy-2,
+.wrapper-form .form-content .col-sy-3 {
+  width: calc(100% - 140px) !important;
+}
+.wrapper-form .form-content .row .form-label:first-child {
+  width: 120px !important;
+}
+.wrapper-form .form-content .validate-btn {
+  transform: unset;
+  right: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper-form .form-content {
+    padding: 0;
+  }
+}

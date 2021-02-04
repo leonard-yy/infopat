@@ -1,0 +1,342 @@
+/*第一页图标动效*/
+.container .cont-moveicon {
+    position: absolute;
+    left    : 0;
+    top     : 0;
+    width   : 100%;
+    height  : 100%;
+    overflow: hidden;
+}
+
+.container .cont-moveicon .icon2 {
+    display          : block;
+    width            : 20px;
+    height           : 20px;
+    border           : solid 1px rgba(255, 255, 255, 1);
+    border-radius    : 50%;
+    position         : absolute;
+    bottom           : 0px;
+    left             : 10%;
+    -webkit-animation: icon2 20s ease infinite;
+    -moz-animation   : icon2 20s ease infinite;
+    -ms-animation    : icon2 20s ease infinite;
+    animation        : icon2 40s ease infinite;
+}
+
+@-webkit-keyframes icon2 {
+    0% {
+        transform: translate(0, 0);
+        opacity  : 0.8
+    }
+
+    100% {
+        transform: translate(0, -460px);
+        opacity  : 0
+    }
+}
+
+@-moz-keyframes icon2 {
+    0% {
+        transform: translate(0, 0);
+        opacity  : 0.8
+    }
+
+    100% {
+        transform: translate(0, -460px);
+        opacity  : 0
+    }
+}
+
+@-ms-keyframes icon2 {
+    0% {
+        transform: translate(0, 0);
+        opacity  : 0.8
+    }
+
+    100% {
+        transform: translate(0, -460px);
+        opacity  : 0
+    }
+}
+
+@keyframes icon2 {
+    0% {
+        transform: translate(0, 0);
+        opacity  : 0.8
+    }
+
+    100% {
+        transform: translate(0, -460px);
+        opacity  : 0
+    }
+}
+
+.container .cont-moveicon .icon3 {
+    display          : block;
+    width            : 20px;
+    height           : 20px;
+    border           : solid 1px rgba(255, 255, 255, 1);
+    position         : absolute;
+    bottom           : 150px;
+    left             : 20%;
+    transform        : rotate(40deg);
+    opacity          : 0.5;
+    -webkit-animation: icon3 15s linear infinite;
+    -moz-animation   : icon3 15s linear infinite;
+    -ms-animation    : icon3 15s linear infinite;
+    animation        : icon3 15s linear infinite;
+}
+
+@-webkit-keyframes icon3 {
+    0% {
+        bottom : 150px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 450px;
+        opacity: 0.2
+    }
+}
+
+@-moz-keyframes icon3 {
+    0% {
+        bottom : 150px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+@-ms-keyframes icon3 {
+    0% {
+        bottom : 150px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+@keyframes icon3 {
+    0% {
+        bottom : 150px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+.container .cont-moveicon .icon4 {
+    display          : block;
+    width            : 20px;
+    height           : 20px;
+    border           : solid 1px rgba(255, 255, 255, 1);
+    position         : absolute;
+    bottom           : 150px;
+    left             : 50%;
+    margin-left      : 500px;
+    transform        : rotate(60deg);
+    opacity          : 0.5;
+    -webkit-animation: icon4 15s linear infinite;
+    -moz-animation   : icon4 15s linear infinite;
+    -ms-animation    : icon4 15s linear infinite;
+    animation        : icon4 15s linear infinite;
+}
+
+@-webkit-keyframes icon4 {
+    0% {
+        bottom : 50px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 450px;
+        opacity: 0.2
+    }
+}
+
+@-moz-keyframes icon4 {
+    0% {
+        bottom : 50px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+@-ms-keyframes icon4 {
+    0% {
+        bottom : 50px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+@keyframes icon4 {
+    0% {
+        bottom : 50px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+.container .cont-moveicon .icon5 {
+    display          : block;
+    width            : 20px;
+    height           : 20px;
+    border           : solid 1px rgba(255, 255, 255, 1);
+    position         : absolute;
+    top              : 80px;
+    left             : 50%;
+    margin-left      : 800px;
+    transform        : rotate(60deg);
+    opacity          : 0.5;
+    -webkit-animation: icon5 15s linear infinite;
+    -moz-animation   : icon5 15s linear infinite;
+    -ms-animation    : icon5 15s linear infinite;
+    animation        : icon5 15s linear infinite;
+}
+
+@-webkit-keyframes icon5 {
+    0% {
+        top    : 80px;
+        opacity: 0.5;
+    }
+
+    100% {
+        top    : -20px;
+        opacity: 0.2
+    }
+}
+
+@-moz-keyframes icon5 {
+    0% {
+        top    : 80px;
+        opacity: 0.5;
+    }
+
+    100% {
+        top    : -20px;
+        opacity: 0.2
+    }
+}
+
+@-ms-keyframes icon5 {
+    0% {
+        top    : 80px;
+        opacity: 0.5;
+    }
+
+    100% {
+        top    : -20px;
+        opacity: 0.2
+    }
+}
+
+@keyframes icon5 {
+    0% {
+        top    : 80px;
+        opacity: 0.5;
+    }
+
+    100% {
+        top    : -20px;
+        opacity: 0.2
+    }
+}
+
+.container .cont-moveicon .icon6 {
+    display          : block;
+    width            : 20px;
+    height           : 20px;
+    border           : solid 1px rgba(255, 255, 255, 1);
+    position         : absolute;
+    bottom           : 90px;
+    left             : 50%;
+    margin-left      : 700px;
+    border-radius    : 50%;
+    transform        : rotate(60deg);
+    opacity          : 0.5;
+    -webkit-animation: icon6 20s linear infinite;
+    -moz-animation   : icon6 20s linear infinite;
+    -ms-animation    : icon6 20s linear infinite;
+    animation        : icon6 20s linear infinite;
+}
+
+@-webkit-keyframes icon6 {
+    0% {
+        bottom : 120px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 450px;
+        opacity: 0.2
+    }
+}
+
+@-moz-keyframes icon6 {
+    0% {
+        bottom : 120px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+@-ms-keyframes icon6 {
+    0% {
+        bottom : 120px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+@keyframes icon6 {
+    0% {
+        bottom : 120px;
+        opacity: 0.5;
+    }
+
+    100% {
+        bottom : 650px;
+        opacity: 0.2
+    }
+}
+
+.container .cont-moveicon .icon7 {
+    left              : 40%;
+    animation-duration: 15s;
+}
+
+.container .cont-moveicon .icon8 {
+    left              : 55%;
+    animation-duration: 10s;
+}

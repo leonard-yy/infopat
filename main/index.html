@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="telephone=no" name="format-detection" />
+    <!-- <meta name="viewport" content="width=device-width,initial-scale=1" /> -->
+    <link rel="stylesheet" type="text/css" href="./css/play.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+    <link rel="stylesheet" type="text/less" href="./css/index.less" />
+    <link rel="stylesheet" href="./css/normal.css" />
+    <link rel="stylesheet" href="./css/scroll.css" />
+    <!-- <link rel="stylesheet" href="css/phone.css" /> -->
+
+    <script src="./third-party/lesstools/less.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./third-party/jquery/jquery-1.10.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./third-party/jquery/jquery.slimscroll.min.js" type="text/javascript" charset="utf-8"></script>
+    <title></title>
+  </head>
+
+  <body>
+    <div class="wrapper-head" id="homepage">
+      <!-- 顶部部分 -->
+      <div class="container-head">
+        <div class="left-logo"></div>
+        <ul class="right">
+          <li class="homepage checked">
+            <a class="Aanchor pointer" target="#homepage">主页</a>
+          </li>
+          <li class="product">
+            <a class="Aanchor pointer" target="#product">系列产品</a>
+          </li>
+          <li class="contactus">
+            <a class="Aanchor pointer" target="#contactus">联系我们</a>
+          </li>
+          <span class="btn anchor pointer login" target="#homepage">登录</span>
+          <!-- <a href='/login.html' class="btn pointer login">登录</a> -->
+          <span class="btn anchor pointer try" target="#tryProduct">试用</span>
+          <span class="btn anchor pointer logined" target="#tryProduct" style="display: none">
+            <svg t="1592744015396" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6883" width="14" height="14">
+              <path
+                d="M914.286 802.853q0 68.571-41.728 108.288T761.71 950.857H262.29q-69.156 0-110.848-39.716t-41.728-108.288q0-30.282 2.012-59.136t8.009-62.282 15.14-61.988 24.576-55.698 35.438-46.3 48.86-30.574 63.707-11.446q5.157 0 23.99 12.288t42.57 27.428 61.696 27.429T512 554.862t76.288-12.288 61.696-27.429 42.57-27.428 23.99-12.288q34.853 0 63.707 11.446t48.86 30.574 35.438 46.3 24.576 55.698 15.14 61.988 8.01 62.282 2.01 59.136zM731.429 292.57q0 90.844-64.293 155.136T512 512t-155.136-64.293-64.293-155.136 64.293-155.136T512 73.143t155.136 64.292 64.293 155.136z"
+                p-id="6884"
+                fill="#ffffff"
+              ></path>
+            </svg>
+            <span class="username"></span>
+          </span>
+          <span class="btn pointer logout" style="display: none">退出登录</span>
+        </ul>
+      </div>
+      <!-- 中间部分 -->
+      <div class="container-middle">
+        <div class="middle-info">
+          <div class="div-title">infoDossier简单·好用·专业·全面</div>
+          <div class="div-sub-title">检索全球专利技术</div>
+          <div class="div-sub-title">洞悉专利维持与审查的全生命周期事件<i>TM</i></div>
+        </div>
+        <div class="middle-login" id="loginForm" style="display: none">
+          <form class="login-form">
+            <div class="form-title">登录</div>
+            <div class="form-item"><input placeholder="请输入账号" /></div>
+            <div class="form-item"><input placeholder="请输入密码" type="password" /></div>
+            <div class="form-item"><input placeholder="请输入下方验证码" /></div>
+            <div class="verify">
+              <img src="./images/verify.png" alt="验证码" />
+              <span><a href="/forgetpassword.html" target="_blank">忘记密码</a></span>
+            </div>
+            <div class="button">登录</div>
+          </form>
+        </div>
+
+        <!-- <div class="div-search">
+        <div class="search-box-1">
+          <img src="images/zhongguo.png" />
+          <span class="country off">CN中国</span>
+          <div class="animated fadeIn search-select-options">
+            <div class="select-item" data-img="images/zhongguo.png" data-country="CN中国">
+              <img src="images/zhongguo.png" />&nbsp;CN&nbsp;中国
+            </div>
+            <div class="select-item" data-img="images/ouzhuanju.png" data-country="EP欧盟">
+              <img src="images/ouzhuanju.png" />&nbsp;EP&nbsp;欧盟
+            </div>
+            <div class="select-item" data-img="images/riben.png" data-country="JP日本">
+              <img src="images/riben.png" />&nbsp;JP&nbsp;日本
+            </div>
+            <div class="select-item" data-img="images/hanguo.png" data-country="KP韩国">
+              <img src="images/hanguo.png" />&nbsp;KP&nbsp;韩国
+            </div>
+            <div class="select-item" data-img="images/meiguo.png" data-country="US美国">
+              <img src="images/meiguo.png" />&nbsp;US&nbsp;美国
+            </div>
+          </div>
+        </div>
+        <div class="search-box-2">
+          <img src="images/sousuo.png" style="margin-top: -2px;" />
+          <input placeholder="中国专利号/申请号格式：9或13位数字（例：201580021537.9）其他国家或地区格式不限" id="input-search" />
+        </div>
+        <div class="search-box-3">
+          <span class="btn pointer" id="btn-search">搜索</span>
+        </div>
+      </div> -->
+      </div>
+      <div class="container-footer">
+        <div class="quotation-wrap">
+          <div class="quotation">
+            <div class="sentence">
+              <div>专利像魔鬼，总是造成天文数字般地赔偿或和解金额；专利像潜水艇，在你看不见摸不着的地方静静威胁着周围。</div>
+              <div class="original">——（中国）顾金焰</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden-container" id="product">
+      <div class="img-content">
+        <div class="div-img">
+          <img src="./images/qietu-1.png" />
+        </div>
+        <div class="div-content" style="margin-left: 0.8rem">
+          <div class="title">专利智能监控管理系统</div>
+          <div class="body">
+            本系统应用于智能监控管理「专利全生命周期」内产生的各类费用及法律状态，有效管理企业无形的专利资产，
+            安全保障企业核心专利持续创造市场价值，避免因专利权丧失而带来的技术资源浪费和重要资产的流失。
+            <br />
+            <br />
+            本系统由infoPat智能缴费系统提供技术支持，满足7×24小时在线自助缴纳各类官费，有效节省企业维持成本，降低管理风险。
+          </div>
+          <div class="btn anchor" target="#tryProduct">
+            <a>了解更多</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="img-content img-content2-phone" style="display: none">
+        <div class="div-img">
+          <img src="./images/qietu-2.png" />
+        </div>
+        <div class="div-content" style="margin-left: 0.8rem">
+          <div class="title">区域专利大数据监控可视化系统</div>
+          <div class="body">
+            本系统基于infoPat专利数据库的支撑，全面、智能、实时的盘点地方区域专利资产状况，利用AI技术进行智能分类分级，通过本系统为各辖区提供专利授权总量、各辖区各类专利拥有量实时监控服务，帮助各地科技局、知识产权局有效地管理各省/市/区/县专利情况，及时了解区域考核指标进展，及时跟踪影响区域专利总量变化因素，统计分析区域专利情况，科学管理专利工作。
+          </div>
+          <div class="btn anchor" target="#tryProduct">
+            <a>了解更多</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="img-content img-content2">
+        <div class="div-content">
+          <div class="title" style="text-align: right">区域专利大数据监控可视化系统</div>
+          <div class="body">
+            本系统基于infoPat专利数据库的支撑，全面、智能、实时的盘点地方区域专利资产状况，利用AI技术进行智能分类分级，通过本系统为各辖区提供专利授权总量、各辖区各类专利拥有量实时监控服务，帮助各地科技局、知识产权局有效地管理各省/市/区/县专利情况，及时了解区域考核指标进展，及时跟踪影响区域专利总量变化因素，统计分析区域专利情况，科学管理专利工作。
+          </div>
+          <div class="btn anchor" style="float: right" target="#tryProduct">
+            <a>了解更多</a>
+          </div>
+        </div>
+        <div class="div-img" style="margin-left: 0.8rem">
+          <img src="./images/qietu-2.png" />
+        </div>
+      </div>
+    </div>
+    <div class="wrapper-form" id="tryProduct">
+      <div class="form-title">
+        申请试用
+        <div class="tips">如需更深入了解infoPat，请填写以下信息，我们会尽快安排专业人员与您沟通。(* 标注的为必填内容)</div>
+      </div>
+      <div class="form-content">
+        <div class="row">
+          <span class="form-label require">姓名：</span>
+          <input class="col-sy-1" type="text" />
+          <span class="form-label require">单位名称：</span>
+          <input class="col-sy-2" />
+        </div>
+        <div class="row">
+          <span class="form-label require">职务：</span>
+          <input class="col-sy-1" type="text" />
+          <span class="form-label require"> 手机号： </span>
+          <input class="col-sy-3" />
+          <!-- <span class="validate-btn">发送验证码</span> -->
+          <!-- <span class="form-label require">验证码：</span> -->
+          <!-- <input class="col-sy-3" /> -->
+        </div>
+        <div class="row">
+          <span class="form-label"></span>
+          <textarea class="form-area" placeholder="如有任何建议或意见，请在此填写……"></textarea>
+        </div>
+      </div>
+      <div class="form-submit">
+        <span>提交申请</span>
+      </div>
+    </div>
+
+    <div class="wrapper-footer" id="contactus">
+      <div class="head">
+        <div class="part part-1">世纪昆仑（南京）信息发展有限公司</div>
+        <!-- <div class="part part-2">
+				<div class="title">产品矩阵</div>
+				<div class="items">
+					专利智能自动缴费<br />
+					专利费用智能监控管理系统<br />
+					专利发文信息查询系统<br />
+					专利审查意见查询系统<br />
+					专利费用信息查询系统<br />
+				</div>
+			</div> -->
+        <div class="part part-4">
+          <div class="title">服务与支持</div>
+          <div class="items">
+            <ul>
+              <li><img src="./images/phone.png" alt="_" style="vertical-align: baseline" />13016965670</li>
+              <li><img src="./images/envelope.png" alt="_" />info@infodossier.com</li>
+              <li><img src="./images/map.png" alt="_" />南京市江宁区弘景大道99号金陵科技学院创业楼107室5102室</li>
+            </ul>
+          </div>
+          <div class="qrcode-wrapper">
+            <div class="title" style="text-align: right; padding-right: 0.24rem">扫一扫</div>
+            <div class="flex-wrapper">
+              <div style="padding-right: 0.24rem; display: flex; flex-direction: column; justify-content: center">
+                <div class="title">将搜索放入口袋</div>
+                <div class="title">随时随地查你想查</div>
+              </div>
+              <div><img src="./images/qrcode.png" alt="二维码" /></div>
+            </div>
+          </div>
+        </div>
+        <div class="part part-3">
+          <div class="items">
+            <ul>
+              <li><a href="./company.html" target="_blank" style="color: #ffffff">公司概况</a></li>
+              <li><a href="./joinUs.html" target="_blank" style="color: #ffffff">加入我们</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <ul>
+          <li>© Copyright 2021世纪昆仑（南京）信息发展有限公司</li>
+          <li>地址：南京市江宁区弘景大道99号金陵科技学院创业楼107室5102室</li>
+          <li>商务合作：info@infodossier.com</li>
+          <li>ICP备：苏ICP备19056771号-5</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fixed-public">
+      <img src="./images/laba.png" alt="_" class="infoIcon" />
+      <span>通知：</span>
+      <span class="box">
+        <a class="animate" target="_blank" href="./public.html">重要通告</a>
+      </span>
+      <img src="./images/close.png" alt="关闭" class="closeIcon" />
+    </div>
+    <div class="fixed-policy">
+      <img src="./images/info.png" alt="_" class="infoIcon" />
+      使用网站即表明您已阅读并同意我们的<a href="./useStatement.html" style="text-decoration: underline; color: #ffffff">用户协议</a>
+      <img src="./images/close.png" alt="关闭" class="closeIcon" />
+    </div>
+    <script src="./js/common.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

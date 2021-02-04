@@ -1,0 +1,53 @@
+@keyframes trans {
+  0%,
+  100% {
+    transform: 0;
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+@-webkit-keyframes trans {
+  0%,
+  100% {
+    transform: 0;
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
