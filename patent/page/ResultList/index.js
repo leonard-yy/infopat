@@ -506,7 +506,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         .html("取消收藏");
     });
     // 收藏接口
-    request.post(`/api/user/favorites?id=${checkValue.toString()}`);
+    request.post(`/api/user/favorites?id=${checkValue.toString()}`, function (res) {
+      if (res && res.error == 0) {
+        layer.msg("收藏成功");
+      }
+    });
   });
 
   /**
@@ -595,12 +599,20 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       $(e.currentTarget).removeClass("layui-icon-star");
       $(e.currentTarget).addClass("layui-icon-star-fill");
       $(e.currentTarget).next().html("取消收藏");
-      request.post(`/api/user/favorites?id=${id}`);
+      request.post(`/api/user/favorites?id=${id}`, function (res) {
+        if (res && res.error == 0) {
+          layer.msg("收藏成功");
+        }
+      });
     } else {
       $(e.currentTarget).removeClass("layui-icon-star-fill");
       $(e.currentTarget).addClass("layui-icon-star");
       $(e.currentTarget).next().html("收藏");
-      request.delete(`/api/user/favorites?id=${id}`);
+      request.delete(`/api/user/favorites?id=${id}`, function (res) {
+        if (res && res.error == 0) {
+          layer.msg("取消收藏成功");
+        }
+      });
     }
   });
 

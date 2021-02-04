@@ -120,7 +120,11 @@ function initPage() {
      * 取消收藏
      */
     function removeFork() {
-      request.deleteAsync(`/api/user/favorites?id=${_this.checked.toString()}`);
+      request.deleteAsync(`/api/user/favorites?id=${_this.checked.toString()}`, function (res) {
+        if (res && res.error == 0) {
+          layer.msg("取消收藏成功");
+        }
+      });
       renderTable();
     }
 
