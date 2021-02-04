@@ -1,4 +1,4 @@
-layui.define("patNodata", function(exports) {
+layui.define("patNodata", function (exports) {
   let patNodata = layui.patNodata;
   let noDataTpl = patNodata.html;
   //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
@@ -24,7 +24,7 @@ layui.define("patNodata", function(exports) {
       <td>{{ item[2]  || '--' }}</td>
       <td>{{ item[3]  || '--' }}</td>
       {{#  if(item[3]==='未缴费'){ }}
-      <td class="td-action"><img src="../../images/jiaofei.png">去缴费</td>
+      <td class="td-action"><img src="../../../images/jiaofei.png">去缴费</td>
     {{#  }else{ }} 
     <td></td>
     {{# }}}
@@ -116,7 +116,7 @@ layui.define("patNodata", function(exports) {
   {{# }}}`;
 
   exports("commonTable", {
-    getTpl: function(type) {
+    getTpl: function (type) {
       switch (type) {
         case "yjTpl":
           return yjTpl;
@@ -129,6 +129,6 @@ layui.define("patNodata", function(exports) {
         default:
           return "";
       }
-    }
+    },
   });
 });

@@ -4,7 +4,7 @@
  * @Description:
  */
 
-layui.define("patNodataPage", function(exports) {
+layui.define("patNodataPage", function (exports) {
   let patNodata = layui.patNodataPage;
   let noDataTpl = patNodata.html;
   //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
@@ -14,7 +14,7 @@ layui.define("patNodataPage", function(exports) {
     ${noDataTpl}
   {{#   }else{ }} 
     <tr>
-    <td>名称</td>
+    <td>专利信息</td>
     <td>操作</td>
   </tr>
   {{#  layui.each(d, function(index, item){ }}
@@ -30,7 +30,7 @@ layui.define("patNodataPage", function(exports) {
   `;
 
   exports("piTable", {
-    getTpl: function(type) {
+    getTpl: function (type) {
       switch (type) {
         case "qwTpl":
           return qwTpl;
@@ -38,6 +38,6 @@ layui.define("patNodataPage", function(exports) {
         default:
           return "";
       }
-    }
+    },
   });
 });

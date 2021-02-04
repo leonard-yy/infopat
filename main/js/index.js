@@ -61,11 +61,18 @@ function adaptPhone() {
   }
 }
 function islogin(cb) {
+  // 清除用户信息
+  window.userInfo = {};
   $.ajax({
     type: "GET",
     url: `/api/user/session?t=${new Date().getTime()}`,
     success: function (result) {
-      if (result && result.code == 1) {
+      if (result && result.error == 0) {
+        window.userInfo.userName = result.data.username;
+        if (result.data.is_trial_period) {
+          window.userInfo.trial_period_tips = result.data.trial_period_tips || undefined;
+          window.userInfo.expires_date = result.data.expires_date || undefined;
+        }
         $(".username").html(result.data.username);
         $(".logined,.logout").show();
         $(".login,.try").hide();
