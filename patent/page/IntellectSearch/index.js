@@ -66,7 +66,7 @@ layui.use(["layuipotal", "loader"], function () {
         ds = "all";
         dp = "all";
       }
-      window.location.href = "/list.html?s=" + value + `&ds=${ds}&dp=${dp}&f=${df}&dd=${dd}`;
+      window.location.href = "/patent/list.html?s=" + value + `&ds=${ds}&dp=${dp}&f=${df}&dd=${dd}`;
     }
   }
 

@@ -53,7 +53,7 @@ function initPage() {
 
           $("#resultSumaryContent").html(patent.summary);
 
-          $("#resultImgContent").attr("src", "api/adv/img?v=1&key=" + patent.imagePath);
+          $("#resultImgContent").attr("src", "/api/adv/img?v=1&key=" + patent.imagePath);
 
           // 首项权利要求
           request.get(`/api/adv/patent/claims?id=${option.id}`, function (res2) {

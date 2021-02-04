@@ -17,7 +17,7 @@ layui.define("patNodataPage", function (exports) {
             </div>
 
             <div class="result-content-img" data-value={{item.id}}>
-                <img src={{"api/adv/img?v=1&key=" + item.imagePath }} data-value={{item.id}} onerror=src="../../../images/default-image.png" />
+                <img src={{"/api/adv/img?v=1&key=" + item.imagePath }} data-value={{item.id}} onerror=src="/patent/images/default-image.png" />
             </div>
 
             <div class="result-content-fileds">

@@ -276,7 +276,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
           key: "currentPage",
           value: "I",
         });
-        window.location.href = "/index.html";
+        window.location.href = "/patent/index.html";
         return;
       }
       if (menuName === "advanceSearch") {
@@ -284,7 +284,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
           key: "currentPage",
           value: "A",
         });
-        window.location.href = "/index.html";
+        window.location.href = "/patent/index.html";
         return;
       }
     }
@@ -297,7 +297,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
       layuipotal.initSearchPage("A");
     }
     if (menuName === "favorite") {
-      window.location.href = "/favorite.html";
+      window.location.href = "/patent/favorite.html";
       layuipotal.currentPage = "F";
     }
   });

@@ -45,7 +45,7 @@ function initPage() {
                 html += '      <label class="favorite-selector"/>';
                 html += "   </div>";
                 html += "</td>";
-                html += '<td><a href="/result.html?id=' + item.document_number + '">' + item.document_number + "</a></td>";
+                html += '<td><a href="/patent/result.html?id=' + item.document_number + '">' + item.document_number + "</a></td>";
                 html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";
                 html += "<td>" + item.document_date + "</td>";
                 html += "<td>" + item.application_date + "</td>";

@@ -198,7 +198,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         if (at && at[0]) {
           id = at[0].replace(".", "");
         }
-        extra = '或者查看下该专利的<a target="_blank" href="/result.html?force=cost&id=' + id + '" class="hl">费用信息</a>。';
+        extra = '或者查看下该专利的<a target="_blank" href="/patent/result.html?force=cost&id=' + id + '" class="hl">费用信息</a>。';
       }
       var html = `
       <div class="tips"> 
@@ -211,8 +211,8 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           <div class="tips-line"><span class="point">•</span> 此专利不存在。</div>
           <div class="tips-line"><span class="point">•</span> 该发明创造目前未公开／未公告，处于保密专利申请的状态。这段时间一般是自申请日起几个月到十几个月，</div>
           <div class="tips-line pd-br"> 过段时间再来查吧。${extra}</div>
-          <div class="tips-line"><span class="point">•</span> 检索条件不正确。请您核对是否对搜索条件进行了不正确的字段限定。<a target="_blank" href="https://www.infopat.net/" class="hl">查看帮助文档</a></div>
-          <div class="tips-line"><span class="point">•</span> 检索的号码格式不正确。请核对是否输入了符合infoDossier要求的号码格式。<a target="_blank" href="https://www.infopat.net/" class="hl">查看帮助文档</a></div>
+          <div class="tips-line"><span class="point">•</span> 检索条件不正确。请您核对是否对搜索条件进行了不正确的字段限定。<a target="_blank" href="https://www.infodossier.com/main/help.html" class="hl">查看帮助文档</a></div>
+          <div class="tips-line"><span class="point">•</span> 检索的号码格式不正确。请核对是否输入了符合infoDossier要求的号码格式。<a target="_blank" href="https://www.infodossier.com/main/help.html" class="hl">查看帮助文档</a></div>
           <div class="tips-line"><span class="point">•</span> 搜索关键词范围太窄。请尝试使用其他关键词或近义词、使用含义更为宽泛的关键词。</div>
           <div class="tips-line"><span class="point">•</span> 也许是非正常的搜索请求。</div>
           <br/>
@@ -224,7 +224,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           <div class="tips-line pd-br"> 如:200480028847、CN200480028847、CN200610063434.1</div>
           <div class="tips-line"><span class="point">•</span>通过分类号搜索，可以输入不完整的分类号。如：A61B、 G06F17</div>
           <div class="tips-line"><span class="point">•</span>查日期，可按年、年月、年月日查。如:applicationYear:2007、applicationMonth:2007-08、applicationDate:2007-08-08。</div>
-          <div class="tips-line"><span class="point">•</span>更复杂的逻辑查询请参考右上角的<a target="_blank" href="https://www.infopat.net/" class="hl">《帮助文档》</a></div>
+          <div class="tips-line"><span class="point">•</span>更复杂的逻辑查询请参考右上角的<a target="_blank" href="https://www.infodossier.com/main/help.html" class="hl">《帮助文档》</a></div>
         </div>
       </div>
       `;
@@ -399,7 +399,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * 去往详情页
    */
   function gotoResultPage(value) {
-    window.open(`/result.html?id=${value}&url=${_this.resultUrl}`, "_blank");
+    window.open(`/patent/result.html?id=${value}&url=${_this.resultUrl}`, "_blank");
   }
 
   /**

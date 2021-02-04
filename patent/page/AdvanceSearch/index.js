@@ -147,7 +147,7 @@ function initPage() {
           contryChecked = "all";
           contryChecked2 = "all";
         }
-        window.open("/list.html?s=" + value + "&ds=" + contryChecked + "&dp=" + contryChecked2, "_blank");
+        window.open("/patent/list.html?s=" + value + "&ds=" + contryChecked + "&dp=" + contryChecked2, "_blank");
       }
     };
 
