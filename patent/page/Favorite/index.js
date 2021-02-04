@@ -97,7 +97,7 @@ function initPage() {
         if (child.length > 0) {
           html += '<dl class="layui-nav-child">';
           layui.each(child, function (index, c) {
-            var details = c.details.replace("api/", "");
+            var details = c.details;
             if (first) {
               first = false;
               _this.chooseDate = c.date;
