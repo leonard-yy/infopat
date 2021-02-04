@@ -12,49 +12,5 @@ layui.use(["element", "layer", "layuimini", "layuipotal", "form", "loader"], fun
     fontFamily: "century gothic, texgyreadventor, stheiti, sans-serif,'Roboto-Medium', 'Roboto-Regular', Arial",
   });
 
-  // 登陆
-  // login();
-  // 初次进入页面 loading框 此处是模拟的 请适当结合ajax请求使用
-  // $("body").addClass("nopointer");
-  // $("#loading").addClass("wrapperAll").show();
-  // // Splitting();
-  // setTimeout(() => {
-  //   $("body").removeClass("nopointer");
-  //   $("#loading").hide().removeClass("wrapperAll");
-  // }, 300);
-  // const search = window.location.search;
-  // var PAT_CODE = search.replace("?", "");
-  // $("#input-search").val(PAT_CODE);
-
-  // try {
-  //   if (PAT_CODE) {
-  //     getData(false, () => {
-  //       var inter = setInterval(() => {
-  //         if (initData) {
-  //           window.clearInterval(inter);
-  //           initData();
-  //         }
-  //       }, 100);
-  //     });
-  //   }
-  // } catch (error) {}
-
   layuipotal.requirePreview("page/Header/index.html", ".layui-header.header");
 });
-
-function login() {
-  $.ajax({
-    type: "GET",
-    url: `https://www.infopat.net/patent/v2/session?t=${new Date().getTime()}`,
-    success: function (result) {
-      if (result && result.code == 1) {
-        $(".username").html(result.data.username);
-      } else {
-        // 尚未登陆
-        $(".username").html("尚未登陆");
-      }
-    },
-    error: function () {},
-    complete: function (result) {},
-  });
-}

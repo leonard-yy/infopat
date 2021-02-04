@@ -596,7 +596,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       $(e.currentTarget).removeClass("layui-icon-star");
       $(e.currentTarget).addClass("layui-icon-star-fill");
       $(e.currentTarget).next().html("取消收藏");
-      request.post(`user/favorites?id=${id}`);
+      request.post(`/api/user/favorites?id=${id}`);
     } else {
       $(e.currentTarget).removeClass("layui-icon-star-fill");
       $(e.currentTarget).addClass("layui-icon-star");
