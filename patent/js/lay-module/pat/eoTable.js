@@ -4,7 +4,7 @@
  * @Description:
  */
 
-layui.define("patNodataPage", function(exports) {
+layui.define("patNodataPage", function (exports) {
   let patNodata = layui.patNodataPage;
   let noDataTpl = patNodata.html;
   //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
@@ -25,7 +25,7 @@ layui.define("patNodataPage", function(exports) {
     <tr>
       <td>{{ item[0] || '--'}}</td>
       <td>{{ item[1] || '--'}}</td>
-      <td data-url={{item[2]}} class="td-action action-show"><img src="../../images/chakan.png">查看</td>
+      <td data-url={{item[2]}} class="td-action action-show"><img src="../../../images/chakan.png">查看</td>
     </tr>
     {{#  }); }}
     {{# }}}
@@ -33,13 +33,13 @@ layui.define("patNodataPage", function(exports) {
   `;
 
   exports("eoTable", {
-    getTpl: function(type) {
+    getTpl: function (type) {
       switch (type) {
         case "scyjTpl":
           return scyjTpl;
         default:
           return "";
       }
-    }
+    },
   });
 });

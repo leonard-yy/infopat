@@ -1,9 +1,10 @@
-layui.use(["laytpl", "patBasicInfo", "picture", "piTable"], function () {
+layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function () {
   var $ = layui.jquery,
     laytpl = layui.laytpl,
     patBasicInfo = layui.patBasicInfo,
     picture = layui.picture,
-    Table = layui.piTable;
+    Table = layui.piTable,
+    request = layui.request;
   //动态加载CSS
   layui.link("./page/PatentInformation/index.css");
   //从session里面获取模拟数据
@@ -47,10 +48,10 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable"], function () {
     });
   }
 
-  function renderTable() {
+  function renderTable(pdfList) {
     layui.each(pdfList, function (index, item) {
-      var imgUrl = "api/adv/pdf2img?key=" + item;
-      var downloadUrl = "api/adv/pdf?key=" + item;
+      var imgUrl = "/api/adv/pdf2img?v=1&key=" + item;
+      var downloadUrl = "/api/adv/pdf?v=1&key=" + item;
       qwDataList.push({
         name: option.id,
         imgUrl: imgUrl || "",
@@ -101,17 +102,7 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable"], function () {
       $(".action-download").on("click", function (e) {
         let $element = $(e.currentTarget);
         var pdfUrl = $element.data("url");
-        if (pdfUrl && pdfUrl != "") {
-          getDataList(
-            pdfUrl,
-            function (pdfDownloadUrl) {
-              window.open(pdfDownloadUrl);
-            },
-            function (params) {
-              $(".table-item .no-data-onepage").show();
-            }
-          );
-        }
+        window.open(pdfUrl);
       });
     });
   }
