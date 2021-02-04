@@ -63,7 +63,7 @@ function adaptPhone() {
 function islogin(cb) {
   $.ajax({
     type: "GET",
-    url: `http://www.infodossier.test:2080/api/user/session?t=${new Date().getTime()}`,
+    url: `/api/user/session?t=${new Date().getTime()}`,
     success: function (result) {
       if (result && result.code == 1) {
         $(".username").html(result.data.username);

@@ -22,7 +22,7 @@ function initPage() {
       if (date && details) {
         $("#favoriteTable").loding("start");
         $("#chooseDate").html(date);
-        request.get(`${details}`, function (res) {
+        request.get(`${details}&page=${_this.page}`, function (res) {
           $("#favoriteTable").loding("stop");
           if (res && res.data) {
             var data = res.data || [];
@@ -194,6 +194,7 @@ function initPage() {
     $(".time-range-container").on("click", ".date-choose-ex", function (e) {
       _this.chooseDate = $(this).text();
       _this.details = $(this).data().value;
+      _this.page = 1;
       renderTable();
     });
   });
