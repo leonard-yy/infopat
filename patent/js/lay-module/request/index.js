@@ -48,9 +48,9 @@ layui.define(function (exports) {
       type: type,
       async: needAsync,
       data: params,
-      headers: {
-        Authorization: "w3WhhyPz5Ri34vaEtepRoM58G4VtJIyC",
-      },
+      // headers: {
+      //   Authorization: "w3WhhyPz5Ri34vaEtepRoM58G4VtJIyC",// 测试用
+      // },
       success: function (data) {
         cb(data);
       },

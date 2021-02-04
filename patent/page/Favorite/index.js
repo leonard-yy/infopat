@@ -62,7 +62,7 @@ function initPage() {
               count: res.total || 0,
               first: "首页",
               last: "尾页",
-              curr: res.page || 1,
+              curr: res.current_page || 1,
               prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
               next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',
               jump: function (obj, first) {
