@@ -37,9 +37,9 @@ $(function () {
     $ele.addClass("active").siblings().removeClass("active");
   });
   // 清除通告
-  setTimeout(function () {
-    $(".fixed-public").remove();
-  }, 60 * 1000);
+  // setTimeout(function () {
+  //   $(".fixed-public").remove();
+  // }, 60 * 1000);
 });
 function adaptPhone() {
   var ua = navigator.userAgent;

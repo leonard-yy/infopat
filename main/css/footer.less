@@ -78,33 +78,34 @@
 .fixed-public {
   background: rgba(0, 0, 0, 0.8);
   background-image: linear-gradient(179deg, #f7b500 0%, #f39800 100%);
-  font-size: 0.16rem;
+  font-size: 16px;
   color: #ffffff;
-  letter-spacing: 0.4px;
-  padding: 0 0.3rem;
-  height: 0.3rem;
-  line-height: 0.3rem;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px;
   position: fixed;
   top: 70px;
   left: 0;
   right: 0;
+
+  display: flex;
+  align-items: center;
   .box {
     overflow: hidden;
-  }
-
-  .animate {
-    padding-left: 20px;
-    width: calc(100% - 200px);
-    text-decoration: underline;
-    color: #ffffff;
-    display: inline-block;
-    white-space: nowrap;
-    animation: 30s wordsLoop linear infinite normal;
-    &:hover {
-      -webkit-animation-play-state: paused;
-      -moz-animation-play-state: paused;
-      -ms-animation-play-state: paused;
-      animation-play-state: paused;
+    flex: 1;
+    .animate {
+      text-decoration: underline;
+      height: 30px;
+      line-height: 30px;
+      margin: 0 20px;
+      white-space: nowrap;
+      animation: 30s wordsLoop linear infinite normal;
+      &:hover {
+        -webkit-animation-play-state: paused;
+        -moz-animation-play-state: paused;
+        -ms-animation-play-state: paused;
+        animation-play-state: paused;
+      }
     }
   }
 
@@ -130,8 +131,6 @@
     }
   }
   .closeIcon {
-    float: right;
-    margin-top: 0.07rem;
     cursor: pointer;
     height: 16px;
     width: 16px;
