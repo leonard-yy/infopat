@@ -5,7 +5,7 @@
     { "name": "当前法律状态", "value": "currentStatus" },
     { "name": "法律事件", "value": "legalEvent" },
     { "name": "申请日", "value": "applicationYear" },
-    { "name": "公开公告日", "value": "documentYear" },
+    { "name": "公开（公告）日", "value": "documentYear" },
     { "name": "申请人", "value": "applicant" },
     { "name": "专利权人", "value": "assignee" },
     { "name": "当前利权人", "value": "currentAssignee" },

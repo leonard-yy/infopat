@@ -13,12 +13,4 @@ layui.use(["element", "layer", "layuimini", "layuipotal", "form", "loader"], fun
   });
 
   layuipotal.requirePreview("page/Header/index.html", ".layui-header.header");
-
-  // 用户信息
-  if (window.userInfo && window.userInfo.userName) $(".username").html(window.userInfo.userName);
-  if (window.userInfo && window.userInfo.trial_period_tips) {
-    $(".period-tips").html(window.userInfo.trial_period_tips);
-  } else {
-    $(".period-tips").hide();
-  }
 });

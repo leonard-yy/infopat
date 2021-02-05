@@ -8,6 +8,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     resultlistpat = layui.resultlistpat,
     request = layui.request,
     layer = layui.layer;
+  var random = 0;
   var _this = {
     page: 1,
     pageSize: 10,
@@ -191,50 +192,53 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         }
       });
     } else {
-      // 默认无数据
-      var txt = $("#expandTextarea").val();
-      var extra = "";
-      var id = "";
-      var reg = new RegExp(/\S*\d{12}\.?((\d?|X)|\d?|X?)/);
-      if (reg.test(txt)) {
-        var at = txt.match(/\d{12}\.?\S{1}/);
-        if (at && at[0]) {
-          id = at[0].replace(".", "");
-        }
-        extra = '或者查看下该专利的<a target="_blank" href="/patent/result.html?force=cost&id=' + id + '" class="hl">费用信息</a>。';
-      }
-      var html = `
-      <div class="tips"> 
-        <div style="width:600px;text-align: center;">
-          <img src="../../images/nodata-big.png" style="margin-top:50px"/>
-        </div>
-        <div class="tip-container">
-          <div class="tips-line blod" style="font-size: 16px; color: #333333;">没有找到符合搜索条件的专利，请输入有效的搜索条件进行查询！</div>
-          <div class="tips-line">没有搜索到相关或相似专利，原因可能是：</div>
-          <div class="tips-line"><span class="point">•</span> 此专利不存在。</div>
-          <div class="tips-line"><span class="point">•</span> 该发明创造目前未公开／未公告，处于保密专利申请的状态。这段时间一般是自申请日起几个月到十几个月，</div>
-          <div class="tips-line pd-br"> 过段时间再来查吧。${extra}</div>
-          <div class="tips-line"><span class="point">•</span> 检索条件不正确。请您核对是否对搜索条件进行了不正确的字段限定。<a target="_blank" href="/help.html" class="hl">查看帮助文档</a></div>
-          <div class="tips-line"><span class="point">•</span> 检索的号码格式不正确。请核对是否输入了符合infoDossier要求的号码格式。<a target="_blank" href="/help.html" class="hl">查看帮助文档</a></div>
-          <div class="tips-line"><span class="point">•</span> 搜索关键词范围太窄。请尝试使用其他关键词或近义词、使用含义更为宽泛的关键词。</div>
-          <div class="tips-line"><span class="point">•</span> 也许是非正常的搜索请求。</div>
-          <br/>
-          <br/>
-          <div class="tips-line">请特别注意：</div>
-          <div class="tips-line"><span class="point">•</span>系统默认会对关键词进行拆分，若不希望分词，请使用""对词语进行限制，以获得更精确的结果。</div>
-          <div class="tips-line pd-br"> 如：关键词使用"柴油汽车发动机" 则只查找包含柴油汽车发动机这几个字紧邻的专利文献</div>
-          <div class="tips-line"><span class="point">•</span>通过申请(专利)号时，可以任意输入，可以选择是否带国家代码或者校验位。</div>
-          <div class="tips-line pd-br"> 如:200480028847、CN200480028847、CN200610063434.1</div>
-          <div class="tips-line"><span class="point">•</span>通过分类号搜索，可以输入不完整的分类号。如：A61B、 G06F17</div>
-          <div class="tips-line"><span class="point">•</span>查日期，可按年、年月、年月日查。如:applicationYear:2007、applicationMonth:2007-08、applicationDate:2007-08-08。</div>
-          <div class="tips-line"><span class="point">•</span>更复杂的逻辑查询请参考右上角的<a target="_blank" href="/help.html" class="hl">《帮助文档》</a></div>
-        </div>
-      </div>
-      `;
-      $("#fieldsContent").html(html);
+      _this.renderNoData();
     }
   };
 
+  _this.renderNoData = function () {
+    // 默认无数据
+    var txt = $("#expandTextarea").val();
+    var extra = "";
+    var id = "";
+    var reg = new RegExp(/\S*\d{12}\.?((\d?|X)|\d?|X?)/);
+    if (reg.test(txt)) {
+      var at = txt.match(/\d{12}\.?\S{1}/);
+      if (at && at[0]) {
+        id = at[0].replace(".", "");
+      }
+      extra = '或者查看下该专利的<a target="_blank" href="/patent/result.html?force=cost&id=' + id + '" class="hl">费用信息</a>。';
+    }
+    var html = `
+    <div class="tips"> 
+      <div style="width:600px;text-align: center;">
+        <img src="../../images/nodata-big.png" style="margin-top:50px"/>
+      </div>
+      <div class="tip-container">
+        <div class="tips-line blod" style="font-size: 16px; color: #333333;">没有找到符合搜索条件的专利，请输入有效的搜索条件进行查询！</div>
+        <div class="tips-line">没有搜索到相关或相似专利，原因可能是：</div>
+        <div class="tips-line"><span class="point">•</span> 此专利不存在。</div>
+        <div class="tips-line"><span class="point">•</span> 该发明创造目前未公开／未公告，处于保密专利申请的状态。这段时间一般是自申请日起几个月到十几个月，</div>
+        <div class="tips-line pd-br"> 过段时间再来查吧。${extra}</div>
+        <div class="tips-line"><span class="point">•</span> 检索条件不正确。请您核对是否对搜索条件进行了不正确的字段限定。<a target="_blank" href="/help.html" class="hl">查看帮助文档</a></div>
+        <div class="tips-line"><span class="point">•</span> 检索的号码格式不正确。请核对是否输入了符合infoDossier要求的号码格式。<a target="_blank" href="/help.html" class="hl">查看帮助文档</a></div>
+        <div class="tips-line"><span class="point">•</span> 搜索关键词范围太窄。请尝试使用其他关键词或近义词、使用含义更为宽泛的关键词。</div>
+        <div class="tips-line"><span class="point">•</span> 也许是非正常的搜索请求。</div>
+        <br/>
+        <br/>
+        <div class="tips-line">请特别注意：</div>
+        <div class="tips-line"><span class="point">•</span>系统默认会对关键词进行拆分，若不希望分词，请使用""对词语进行限制，以获得更精确的结果。</div>
+        <div class="tips-line pd-br"> 如：关键词使用"柴油汽车发动机" 则只查找包含柴油汽车发动机这几个字紧邻的专利文献</div>
+        <div class="tips-line"><span class="point">•</span>通过申请(专利)号时，可以任意输入，可以选择是否带国家代码或者校验位。</div>
+        <div class="tips-line pd-br"> 如:200480028847、CN200480028847、CN200610063434.1</div>
+        <div class="tips-line"><span class="point">•</span>通过分类号搜索，可以输入不完整的分类号。如：A61B、 G06F17</div>
+        <div class="tips-line"><span class="point">•</span>查日期，可按年、年月、年月日查。如:applicationYear:2007、applicationMonth:2007-08、applicationDate:2007-08-08。</div>
+        <div class="tips-line"><span class="point">•</span>更复杂的逻辑查询请参考右上角的<a target="_blank" href="/help.html" class="hl">《帮助文档》</a></div>
+      </div>
+    </div>
+    `;
+    $("#fieldsContent").html(html);
+  };
   /**
    * 列表内容
    */
@@ -284,7 +288,10 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
 
       if (_this.filterQuery["countryCode"]) {
         ds = "all";
-        q = "(" + q + ")" + " AND NOT " + _this.filterQuery["countryCode"];
+        var filterArr = _this.filterQuery["countryCode"];
+        layui.each(filterArr, function (index, item) {
+          q = "(" + q + ")" + " AND NOT " + item.value;
+        });
       }
 
       // 筛选过滤时其他条件不变
@@ -296,7 +303,10 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       // 过滤筛选
       for (let key in _this.filterQuery) {
         if (_this.filterQuery[key] != null && key !== "countryCode") {
-          q = "(" + q + ")" + " AND NOT " + key + ":" + _this.filterQuery[key];
+          var filterArr = _this.filterQuery[key];
+          layui.each(filterArr, function (index, item) {
+            q = "(" + q + ")" + " AND NOT " + key + ":" + item.value;
+          });
         }
       }
 
@@ -329,6 +339,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         },
         function (err) {
           $("#lodingContent").loding("stop");
+          _this.renderNoData();
         }
       );
       // 加载过滤筛选条件
@@ -698,7 +709,20 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     } else {
       var filterCode = $(this).data().value;
       if (type == "filter") {
-        _this.filterQuery[filterCode] = null;
+        var key = $(this).data().random;
+        var filterArr = _this.filterQuery[filterCode];
+        var index = -1;
+        // 删除当前选中的
+        filterArr.find(function (item, idx) {
+          if (item.key == key) {
+            index = idx;
+            return;
+          }
+        });
+        if (index >= 0) {
+          filterArr.splice(index, 1);
+          _this.filterQuery[filterCode] = filterArr;
+        }
       } else {
         _this.selectQuery[filterCode] = null;
       }
@@ -713,12 +737,13 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     var checked = $(this).parent().parent().find('.fliter-child input[value = "checked"]');
     var name = $(this).data().name;
     var filterCode = $(this).data().value;
-    // 清除已有的
-    $('.filter-item.filter-modal[name = "' + name + '"]').remove();
+    // 清除已有的 ps:多次过滤 不用清除
+    // $('.filter-item.filter-modal[name = "' + name + '"]').remove();
     // 生成新的
     if (checked.length > 0) {
+      var key = random++;
       var content = '<div class="filter-item filter-modal" name="' + name + '">';
-      content += '<span class="close-icon-self" data-value="' + filterCode + '" data-name="' + name + '" data-type="filter">x</span>';
+      content += '<span class="close-icon-self" data-value="' + filterCode + '" data-random="' + key + '" data-type="filter">x</span>';
       content += '<span class="key-word">过滤 </span>';
       content += '<span class="key-type">' + name + " </span>";
       var filterText = "(";
@@ -769,7 +794,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       content += "</div>";
       $(".result-left-filter").append(content);
       // TODO 重新查询
-      _this.filterQuery[filterCode] = filterText;
+      if (_this.filterQuery[filterCode]) {
+        _this.filterQuery[filterCode].push({ key: key, value: filterText });
+      } else {
+        _this.filterQuery[filterCode] = [{ key: key, value: filterText }];
+      }
       _this.page = 1;
       _this.search();
     }
@@ -991,6 +1020,15 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
         }
       });
     });
+  });
+
+  /**
+   * 搜索框
+   */
+  $(".expand-textarea").on("change", "textarea", function (e) {
+    if (e.currentTarget.value) {
+      _this.searchText = e.currentTarget.value;
+    }
   });
 });
 

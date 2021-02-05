@@ -297,7 +297,9 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
       layuipotal.initSearchPage("A");
     }
     if (menuName === "favorite") {
-      window.location.href = "/patent/favorite.html";
+      // 新开页
+      // window.location.href = "/patent/favorite.html";
+      window.open("/patent/favorite.html");
       layuipotal.currentPage = "F";
     }
   });

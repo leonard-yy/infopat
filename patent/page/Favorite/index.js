@@ -18,7 +18,6 @@ function initPage() {
     function renderTable() {
       var date = _this.chooseDate || null;
       var details = _this.details || null;
-      var noData = true;
       if (date && details) {
         $("#favoriteTable").loding("start");
         $("#chooseDate").html(date);
@@ -28,16 +27,16 @@ function initPage() {
             var data = res.data || [];
             _this.pageData = data;
             if (data && data.length > 0) {
-              noData = false;
               var html = '<table class="layui-table" lay-even="" lay-skin="nob">';
               html += "     <colgroup>";
               html += "        <col><col><col><col><col><col><col>";
               html += "     </colgroup>";
               html += '     <thead><tr style="height:50px;">';
-              html += "        <th></th><th>公布（公告）日</th><th>标题</th><th>公开(公告)日</th><th>申请日</th><th>申请人</th><th>发明人</th>";
+              html += "        <th></th><th>序号</th><th>公开（公告）号</th><th>标题</th><th>公开（公告）日</th><th>申请日</th><th>申请人</th><th>发明人</th>";
               html += "     </tr></thead>";
               html += "     <tbody>";
-              data.map(function (item) {
+              data.map(function (item, index) {
+                var idx = (_this.page - 1) * 10 + index + 1;
                 html += '<tr style="height:50px;">';
                 html += "<td>";
                 html += '   <div class="squared-checkbox mt5">';
@@ -45,6 +44,7 @@ function initPage() {
                 html += '      <label class="favorite-selector"/>';
                 html += "   </div>";
                 html += "</td>";
+                html += "<td>" + idx + "</td>";
                 html += '<td><a href="/patent/result.html?id=' + item.document_number + '">' + item.document_number + "</a></td>";
                 html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";
                 html += "<td>" + item.document_date + "</td>";
@@ -56,27 +56,26 @@ function initPage() {
               html += "     </tbody>";
               html += "   </table>";
               $("#favoriteTable").html(html);
+              laypage.render({
+                elem: "pageNavagete",
+                count: res.total || 0,
+                first: "首页",
+                last: "尾页",
+                curr: res.current_page || 1,
+                prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
+                next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',
+                jump: function (obj, first) {
+                  if (!first) {
+                    _this.page = obj.curr;
+                    renderTable();
+                  }
+                },
+              });
+            } else {
+              renderNoData("#favoriteTable", "暂无数据");
             }
-            laypage.render({
-              elem: "pageNavagete",
-              count: res.total || 0,
-              first: "首页",
-              last: "尾页",
-              curr: res.current_page || 1,
-              prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
-              next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',
-              jump: function (obj, first) {
-                if (!first) {
-                  _this.page = obj.curr;
-                  renderTable();
-                }
-              },
-            });
           }
         });
-      }
-      if (noData) {
-        renderNoData("#favoriteTable", "暂无数据");
       }
     }
 
