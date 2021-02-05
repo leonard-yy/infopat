@@ -9,7 +9,10 @@
         if (result && result.error == 0) {
           $(".username").html(result.data.username);
           if (result.data.is_trial_period) {
-            $(".period-tips").html(window.userInfo.trial_period_tips);
+            var tips = result.data.trial_period_tips;
+            if (tips && tips !== "") {
+              $(".period-tips").html(tips);
+            }
           }
         } else {
           $(".period-tips").hide();
