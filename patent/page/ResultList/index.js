@@ -243,6 +243,10 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
    * 列表内容
    */
   _this.search = function (ration) {
+    // 清除页面收藏状态
+    $("#selectAllResult").text("全选");
+    $("#selectAllResult").removeClass("select-all");
+
     // 得到检索条件 查询
     var q = _this.searchText;
     // 排序
