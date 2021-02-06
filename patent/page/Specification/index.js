@@ -16,8 +16,12 @@ function initPage() {
             $("#specificationContent").loding("stop");
             if (res2 && res2.patent) {
               var desc = res2.patent.description;
-              desc = desc.replace(/\\n/g, "<br/>");
-              $("#specificationContent").html(desc);
+              if (desc && desc !== "") {
+                desc = desc.replace(/\\n/g, "<br/>");
+                $("#specificationContent").html(desc);
+              } else {
+                $("#specificationContent").html(patNodataPage.html);
+              }
             } else {
               $("#specificationContent").html(patNodataPage.html);
             }

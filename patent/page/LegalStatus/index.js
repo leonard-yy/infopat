@@ -7,15 +7,15 @@ layui.use(["laytpl", "patBasicInfo", "lsTable", "request"], function () {
   //动态加载CSS
   layui.link("./page/LegalStatus/index.css");
   //从session里面获取模拟数据
-  var data = layui.sessionData("session").basicInfo;
+  // var data = layui.sessionData("session").basicInfo;
   //获取模板 入参为false 返回暂无数据，如果有数据的话则正常返回模板
-  var tpl = patBasicInfo.getTpl(data);
+  // var tpl = patBasicInfo.getTpl(data);
   //渲染模板以及数据到dom元素里去
-  var view = document.getElementById("basicInfoView");
+  // var view = document.getElementById("basicInfoView");
 
-  laytpl(tpl).render(data, function (html) {
-    view.innerHTML = html;
-  });
+  // laytpl(tpl).render(data, function (html) {
+  //   view.innerHTML = html;
+  // });
 
   var qwflUrl = "/api/adv/patent/tx?id=" + option.id;
   function getDataList(url, cb) {

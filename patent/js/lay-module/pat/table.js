@@ -24,7 +24,7 @@ layui.define("patNodata", function (exports) {
       <td>{{ item[2]  || '--' }}</td>
       <td>{{ item[3]  || '--' }}</td>
       {{#  if(item[3]==='未缴费'){ }}
-      <td class="td-action"><img src="../../../images/jiaofei.png">去缴费</td>
+      <td class="td-action"><img src="./images/jiaofei.png">去缴费</td>
     {{#  }else{ }} 
     <td></td>
     {{# }}}

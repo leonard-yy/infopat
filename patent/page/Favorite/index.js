@@ -68,6 +68,8 @@ function initPage() {
                 jump: function (obj, first) {
                   if (!first) {
                     _this.page = obj.curr;
+                    $("#selectAllFavorite").text("全选");
+                    $("#selectAllFavorite").removeClass("select-all");
                     renderTable();
                   }
                 },
@@ -140,11 +142,19 @@ function initPage() {
     /**
      * 初始化数据
      */
-    request.get(`/api/user/favorites`, function (res) {
-      if (res && res.data) {
-        renderYearSelect(res.data || {});
+    request.get(
+      `/api/user/favorites`,
+      function (res) {
+        if (res && res.data) {
+          renderYearSelect(res.data || {});
+        } else {
+          renderNoData("#favoriteTable", "暂无数据");
+        }
+      },
+      function () {
+        renderNoData("#favoriteTable", "暂无数据");
       }
-    });
+    );
 
     // 全选
     $("#selectAllFavorite").on("click", function (e) {

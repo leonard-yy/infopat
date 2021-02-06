@@ -40,16 +40,16 @@
       "name": "other",
       "child": [
         {
-          "title": "费用信息",
-          "href": "page/CostInfo/index.html",
-          "target": "_self",
-          "show": "-CN-"
-        },
-        {
           "title": "法律信息",
           "href": "page/LegalStatus/index.html",
           "target": "_self",
           "show": "all"
+        },
+        {
+          "title": "费用信息",
+          "href": "page/CostInfo/index.html",
+          "target": "_self",
+          "show": "-CN-"
         },
         {
           "title": "发文通知",

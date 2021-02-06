@@ -16,7 +16,7 @@ layui.define("patNodataPage", function (exports) {
             <div class="result-content-filed">
                 <div class="content-filed-item">
                     <span class="tips-title">专利名称：</span>
-                    <span class="tips-value ml10">{{item.title}}</span>
+                    <span class="tips-value-fix ml10">{{item.title}}</span>
                 </div>
                 <div class="content-filed-item">
                     <span class="tips-title">申请号：</span>

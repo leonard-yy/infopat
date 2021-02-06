@@ -8,16 +8,16 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
   //动态加载CSS
   layui.link("./page/PatentInformation/index.css");
   //从session里面获取模拟数据
-  var data = layui.sessionData("session").basicInfo;
+  // var data = layui.sessionData("session").basicInfo;
   //获取模板 入参为false 返回暂无数据，如果有数据的话则正常返回模板
-  let tpl = patBasicInfo.getTpl(data);
+  // let tpl = patBasicInfo.getTpl(data);
 
   //渲染模板以及数据到dom元素里去
-  var view = document.getElementById("basicInfoView");
+  // var view = document.getElementById("basicInfoView");
 
-  laytpl(tpl).render(data, function (html) {
-    view.innerHTML = html;
-  });
+  // laytpl(tpl).render(data, function (html) {
+  //   view.innerHTML = html;
+  // });
 
   function renderNoData() {
     var qwTpl = Table.getTpl("qwTpl");
@@ -28,6 +28,7 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
   }
 
   function getDataList(url, resolve, reject) {
+    $(".detailInfo").loding("start");
     $.ajax({
       type: "GET",
       url: url,
@@ -111,9 +112,11 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
   // http://www.infodossier.test:2080/api/adv/pdf?key=/CN/api/2016/05/25/2/CN205263153U.pdf&v=1
   // http://www.infodossier.test:2080/api/adv/pdf2img?key=/CN/api/2016/05/25/2/CN205263153U.pdf&v=1
   var qwDataList = [];
+  $(".detailInfo").loding("start");
   request.get(
     `/api/adv/patent/base?id=${option.id}`,
     function (res) {
+      $(".detailInfo").loding("stop");
       var hasData = false;
       if (res && res.patent) {
         var pdfList = res.patent.pdfList || [];
@@ -127,6 +130,7 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
       }
     },
     function () {
+      $(".detailInfo").loding("stop");
       $(".detailInfo").html(`<div class="table-container-common table-item">
       <div class="table-title-common table-title">专利全文</div>
         <div class="no-data-onepage">
