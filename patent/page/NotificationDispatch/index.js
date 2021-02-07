@@ -14,19 +14,24 @@ layui.use(["laytpl", "patBasicInfo", "nfctTable"], function () {
   //从session里面获取模拟数据
   var data = layui.sessionData("session").basicInfo;
   var allInfo = layui.sessionData("session").allInfo;
-  var fwData = allInfo["发文信息"] || null;
+  var fwData = null;
 
   //获取模板 入参为false 返回暂无数据，如果有数据的话则正常返回模板
-  let tpl = patBasicInfo.getTpl(data);
-
+  var tpl = patBasicInfo.getTpl(true);
   //渲染模板以及数据到dom元素里去
   var view = document.getElementById("basicInfoView");
-
-  laytpl(tpl).render(data, function (html) {
+  laytpl(tpl).render({}, function (html) {
     view.innerHTML = html;
   });
 
+  $(".mypage-container").loding("start");
   function render() {
+    $(".mypage-container").loding("stop");
+    // 基础信息
+    laytpl(tpl).render(data, function (html) {
+      view.innerHTML = html;
+    });
+
     //渲染专利通知书发文信息
     const tzsfwData = fwData["通知书发文"] || [];
     let tzsfwTpl = Table.getTpl("tzsfwTpl");
@@ -55,7 +60,7 @@ layui.use(["laytpl", "patBasicInfo", "nfctTable"], function () {
   var check = 0;
   function init() {
     check++;
-    allInfo = layui.sessionData("session").allInfo;
+    allInfo = layui.sessionData("session").allInfo || {};
     fwData = allInfo["发文信息"] || null;
     if (fwData || check > 15) {
       fwData = allInfo["发文信息"] || {};

@@ -6,23 +6,25 @@ layui.use(["laytpl", "patBasicInfo", "esTable"], function () {
   //动态加载CSS
   layui.link("./page/ExaminationSearch/index.css");
   //从session里面获取模拟数据
-  var data = layui.sessionData("session").basicInfo;
-  var allInfo = layui.sessionData("session").allInfo;
-  var scxxData = allInfo["审查信息"] || null;
-  //获取模板 入参为false 返回暂无数据，如果有数据的话则正常返回模板
-  let tpl = patBasicInfo.getTpl(data);
+  var data = null;
+  var allInfo = null;
+  var scxxData = null;
 
+  //获取模板 入参为false 返回暂无数据，如果有数据的话则正常返回模板
+  var tpl = patBasicInfo.getTpl(true);
   //渲染模板以及数据到dom元素里去
   var view = document.getElementById("basicInfoView");
-
-  laytpl(tpl).render(data, function (html) {
+  laytpl(tpl).render({}, function (html) {
     view.innerHTML = html;
   });
 
-  $(".detailInfo").loding("start");
+  $(".mypage-container").loding("start");
   function render() {
-    console.log("scxxData", scxxData);
-    $(".detailInfo").loding("stop");
+    $(".mypage-container").loding("stop");
+    // 基础信息
+    laytpl(tpl).render(data, function (html) {
+      view.innerHTML = html;
+    });
     let jsData = scxxData["检索信息"];
     //如果沒有數據直接顯示暫無數據
     if (!scxxData || !jsData) {
@@ -130,7 +132,7 @@ layui.use(["laytpl", "patBasicInfo", "esTable"], function () {
   var check = 0;
   function init() {
     check++;
-    allInfo = layui.sessionData("session").allInfo;
+    allInfo = layui.sessionData("session").allInfo || {};
     scxxData = allInfo["审查信息"] || null;
     if (scxxData || check > 15) {
       scxxData = allInfo["审查信息"] || {};
