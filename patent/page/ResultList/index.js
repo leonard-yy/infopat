@@ -469,12 +469,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     // 清除左侧筛选框
     $(".result-left-filter").html("");
     var v = $("#expandTextarea").val();
-    if (v == _this.searchText) {
-      _this.renderPage();
-    } else {
+    if (v != _this.searchText) {
       _this.secondText = " AND " + v;
-      _this.renderPage();
     }
+    _this.page = 1;
+    _this.renderPage();
     // 生成筛选提示框
     var content = '<div class="filter-item select-modal">';
     content += '<span class="close-icon-self" data-type="second">x</span>';
@@ -938,6 +937,13 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
             _this.selectedCountryDp = "all";
           }
           _this.page = 1;
+          _this.searchText = $("#expandTextarea").val();
+          _this.secondText = null;
+          // 清除左侧筛选框
+          $(".result-left-filter").html("");
+          $(".result-left-second").html("");
+          _this.selectQuery = {};
+          _this.filterQuery = {};
           _this.renderPage();
           layer.close(index);
         },
@@ -1030,11 +1036,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
   /**
    * 搜索框
    */
-  $(".expand-textarea").on("change", "textarea", function (e) {
-    if (e.currentTarget.value) {
-      _this.searchText = e.currentTarget.value;
-    }
-  });
+  // $(".expand-textarea").on("change", "textarea", function (e) {
+  //   if (e.currentTarget.value) {
+  //     _this.searchText = e.currentTarget.value;
+  //   }
+  // });
 });
 
 (function () {})();
