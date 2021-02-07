@@ -50,9 +50,14 @@ function initPage() {
               $(".preview-image").hide();
             });
           });
+          // 摘要
+          if (patent.summary && patent.summary !== "") {
+            $("#resultSumaryContent").html(patent.summary);
+          } else {
+            $(".result-sumary-content").remove();
+          }
 
-          $("#resultSumaryContent").html(patent.summary);
-
+          // 图片
           $("#resultImgContent").attr("src", "/api/adv/img?v=1&key=" + patent.imagePath);
 
           // 首项权利要求
@@ -60,12 +65,14 @@ function initPage() {
             if (res2 && res2.patent) {
               var claims = res2.patent.claims;
               // var claimArr = claims.split(/\d\./);
+              var claim = "--";
               if (claims) {
                 var claimArr = claims.split("。");
                 if (claimArr.length > 0) {
-                  $("#firstClaim").html(claimArr[0]);
+                  claim = claimArr[0];
                 }
               }
+              $("#firstClaim").html(claim);
             }
           });
         });

@@ -25,7 +25,7 @@ layui.define("patNodataPage", function (exports) {
     <tr>
       <td>{{ item[0] || '--'}}</td>
       <td>{{ item[1] || '--'}}</td>
-      <td data-url={{item[2]}} class="td-action action-show"><img src="../../../images/chakan.png">查看</td>
+      <td data-url={{item[2]}} class="td-action action-show"><img src="./images/chakan.png">查看</td>
     </tr>
     {{#  }); }}
     {{# }}}

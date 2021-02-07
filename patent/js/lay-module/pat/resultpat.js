@@ -16,73 +16,73 @@ layui.define("patNodataPage", function (exports) {
             <div class="result-content-filed">
                 <div class="content-filed-item">
                     <span class="tips-title">专利名称：</span>
-                    <span class="tips-value-fix ml10">{{item.title}}</span>
+                    <span class="tips-value-fix ml10">{{item.title ||"--"}}</span>
                 </div>
                 <div class="content-filed-item">
                     <span class="tips-title">申请号：</span>
-                    <span class="tips-value ml10">{{item.applicationNumber}}</span>
+                    <span class="tips-value ml10">{{item.applicationNumber ||"--"}}</span>
                 </div>
                 <div class="content-filed-item">
                     <span class="tips-title ">申请日：</span>
-                    <span class="tips-value ml10">{{item.applicationDate}}</span>
+                    <span class="tips-value ml10">{{item.applicationDate ||"--"}}</span>
                 </div>
                 <div class="content-filed-item">
                     <span class="tips-title">公开（公告）号：</span>
-                    <span class="tips-value ml10">{{item.documentNumber}}</span>
+                    <span class="tips-value ml10">{{item.documentNumber ||"--"}}</span>
                 </div>
                 <div class="content-filed-item">
                     <span class="tips-title">公开日：</span>
-                    <span class="tips-value ml10">{{item.documentDate}}</span>
+                    <span class="tips-value ml10">{{item.documentDate ||"--"}}</span>
                 </div>
                
                 <div class="content-filed-item">
                     <span class="tips-title">发明人：</span>
-                    <span class="tips-value-fix ml10">{{item.inventor}}</span>
+                    <span class="tips-value-fix ml10">{{item.inventor ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">申请人：</span>
-                    <span class="tips-value-fix ml10">{{item.applicant}}</span>
+                    <span class="tips-value-fix ml10">{{item.applicant ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">申请人地址：</span>
-                    <span class="tips-value-fix ml10">{{item.applicantAddress}}</span>
+                    <span class="tips-value-fix ml10">{{item.applicantAddress ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">专利权人：</span>
-                    <span class="tips-value-fix ml10">{{item.assignee}}</span>
+                    <span class="tips-value-fix ml10">{{item.assignee ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">当前专利权人：</span>
-                    <span class="tips-value-fix ml10">{{item.currentAssignee}}</span>
+                    <span class="tips-value-fix ml10">{{item.currentAssignee ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">代理机构：</span>
-                    <span class="tips-value ml10">{{item.agency}}</span>
+                    <span class="tips-value ml10">{{item.agency ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">代理人：</span>
-                    <span class="tips-value ml10">{{item.agent}}</span>
+                    <span class="tips-value ml10">{{item.agent ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">主分类号：</span>
-                    <span class="tips-value ml10">{{item.mainIpc}}</span>
+                    <span class="tips-value ml10">{{item.mainIpc ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">IPC分类号：</span>
-                    <span class="tips-value ml10">{{item.ipc}}</span>
+                    <span class="tips-value ml10">{{item.ipc ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">
                     <span class="tips-title">IPC结构图谱：</span>
-                    <span class="tips-value ml10">{{item.ipc}}</span>
+                    <span class="tips-value ml10">{{item.ipc ||"--"}}</span>
                 </div>
 
                 <div class="content-filed-item">

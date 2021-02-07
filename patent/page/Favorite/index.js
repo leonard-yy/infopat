@@ -18,6 +18,9 @@ function initPage() {
     function renderTable() {
       var date = _this.chooseDate || null;
       var details = _this.details || null;
+      // 初始化全选按钮
+      $("#selectAllFavorite").text("全选");
+      $("#selectAllFavorite").removeClass("select-all");
       if (date && details) {
         $("#favoriteTable").loding("start");
         $("#chooseDate").html(date);
@@ -68,8 +71,6 @@ function initPage() {
                 jump: function (obj, first) {
                   if (!first) {
                     _this.page = obj.curr;
-                    $("#selectAllFavorite").text("全选");
-                    $("#selectAllFavorite").removeClass("select-all");
                     renderTable();
                   }
                 },

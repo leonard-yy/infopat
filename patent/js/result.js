@@ -141,6 +141,10 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
             },
           });
         } else {
+          if (result.code && (result.code === 2001 || result.code === 2000)) {
+            // 隐藏菜单 只显示法律信息和pdfpdf全文
+            $('.layui-nav-item[extra="hidden"]').hide();
+          }
           layui.sessionData("session", {
             key: "allInfo",
             value: {},
@@ -284,10 +288,14 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
                 }
                 var clazz = needMargin && fisrt ? "mt10" : "";
                 fisrt = false;
+                var extra = "show";
+                if (item.name == "other" && c.title !== "法律信息" && c.title !== "PDF全文") {
+                  extra = "hidden";
+                }
                 if (c.active) {
-                  html += '<li class="layui-nav-item layui-this ' + clazz + '" data-value="' + c.href + '">';
+                  html += '<li class="layui-nav-item layui-this ' + clazz + '" data-value="' + c.href + '" extra="' + extra + '">';
                 } else {
-                  html += '<li class="layui-nav-item ' + clazz + '"data-value="' + c.href + '" data-parent="' + item.name + '">';
+                  html += '<li class="layui-nav-item ' + clazz + '"data-value="' + c.href + '" data-parent="' + item.name + '" extra="' + extra + '">';
                 }
                 html += '     <a href="javascript:;"  title=' + c.title + ">" + c.title + "</a>";
                 html += "  </li>";
