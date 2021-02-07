@@ -19,7 +19,9 @@ function initData() {
     });
 
     $(".detailInfo").loding("start");
+
     function render() {
+      console.log("jfData", jfData);
       $(".detailInfo").loding("stop");
       //渲染应缴费信息
       const yjData = jfData["应缴费信息"] || [];
