@@ -50,8 +50,8 @@ function initPage() {
               $(".preview-image").hide();
             });
           });
-          // 摘要
-          if (patent.summary && patent.summary !== "") {
+          // 摘要 <p num="0000"></p> 为空数据
+          if (patent.summary && patent.summary !== "" && patent.summary !== '<p num="0000"></p>') {
             $("#resultSumaryContent").html(patent.summary);
           } else {
             $(".result-sumary-content").remove();

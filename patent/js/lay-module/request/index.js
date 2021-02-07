@@ -52,6 +52,11 @@ layui.define(function (exports) {
       //   Authorization: "w3WhhyPz5Ri34vaEtepRoM58G4VtJIyC",// 测试用
       // },
       success: function (data) {
+        if (data.error && data.error == 401) {
+          // 重定向地址
+          window.location.href = data.redirect;
+          return;
+        }
         cb(data);
       },
       error: function (xhr, textstatus, thrown) {
