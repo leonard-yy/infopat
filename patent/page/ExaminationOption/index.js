@@ -79,9 +79,9 @@ layui.use(["laytpl", "patBasicInfo", "picture", "eoTable"], function () {
   }
 
   function showPitcure(imgs) {
-    $("#common-container-picture").show();
+    $("#optionCommonPicture").show();
 
-    picture.init("#common-container-picture", imgs, {
+    picture.init("#optionCommonPicture", imgs, {
       closeIcon: true,
       full: true,
     });

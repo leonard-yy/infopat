@@ -79,7 +79,7 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
         $(".action-show.active").removeClass("active");
         //如果当前节点已经是打开状态 那么再次点击收起
         if (isActive) {
-          $("#common-container-picture").hide();
+          $("#infoCommonPicture").hide();
           return;
         }
         //给当前节点 添加打开样式
@@ -87,13 +87,13 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
         $(".action-show.active img").attr("src", "./images/shouqi.png");
         $(".action-show.active span").text("收起");
         //显示图片
-        $("#common-container-picture").show();
+        $("#infoCommonPicture").show();
         var imgUrl = $element.data("url");
         if (imgUrl && imgUrl != "") {
           getDataList(
             imgUrl,
             function (imgs) {
-              picture.init("#common-container-picture", imgs);
+              picture.init("#infoCommonPicture", imgs);
             },
             function () {
               $(".table-item .no-data-onepage").show();
