@@ -24,18 +24,27 @@ layui.use(["laytpl", "patBasicInfo", "lsTable", "request"], function () {
       function (res) {
         if (res.transactions) {
           cb && cb(res.transactions);
+        } else {
+          renderNoData();
         }
       },
       function () {
-        $(".detailInfo").html(`<div class="table-container-common table-item"  id='zl-flzt-table'>
-          <div class="table-title-common table-title">法律状态信息</div>
-            <div class="no-data-onepage">
-              <img src="./images/nodata.png" alt="_" />
-            <div>暂无数据</div>
-            </div>
-          </div>`);
+        renderNoData();
       }
     );
+  }
+
+  function renderNoData() {
+    // 清除loding
+    $(".detailInfo").loding("stop");
+    // 提示无数据
+    $(".detailInfo").html(`<div class="table-container-common table-item"  id='zl-flzt-table'>
+    <div class="table-title-common table-title">法律状态信息</div>
+      <div class="no-data-onepage">
+        <img src="./images/nodata.png" alt="_" />
+      <div>暂无数据</div>
+      </div>
+    </div>`);
   }
 
   if (qwflUrl) {

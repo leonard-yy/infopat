@@ -36,12 +36,15 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
         //返回成功进行响应操作
         if (result.data) {
           resolve && resolve(result.data);
+        } else {
+          $(".detailInfo").loding("stop");
         }
       },
       error: function () {
         if (reject) {
           reject();
         }
+        $(".detailInfo").loding("stop");
       },
       complete: function () {
         $(".detailInfo").loding("stop");

@@ -21,6 +21,7 @@ function initPage() {
       // 初始化全选按钮
       $("#selectAllFavorite").text("全选");
       $("#selectAllFavorite").removeClass("select-all");
+
       if (date && details) {
         $("#favoriteTable").loding("start");
         $("#chooseDate").html(date);
