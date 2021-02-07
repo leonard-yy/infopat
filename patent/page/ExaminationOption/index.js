@@ -18,7 +18,10 @@ layui.use(["laytpl", "patBasicInfo", "picture", "eoTable"], function () {
     view.innerHTML = html;
   });
 
+  $(".detailInfo").loding("start");
   function render() {
+    console.log("scxxData", scxxData);
+    $(".detailInfo").loding("stop");
     //渲染专利审查意见通知书
     let tzsData = scxxData["通知书"];
     let scyjData = [];

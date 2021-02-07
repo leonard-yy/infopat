@@ -70,6 +70,7 @@ function initPage() {
                 var claimArr = claims.split("。");
                 if (claimArr.length > 0) {
                   claim = claimArr[0];
+                  claim = claim.replace(/\d\./, "");
                 }
               }
               $("#firstClaim").html(claim);

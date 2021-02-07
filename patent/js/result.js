@@ -111,12 +111,12 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
   _this.getBasicInfo = function (url) {
     //将基本信息
 
-    $("#resultContentPage").loding("start");
+    // $("#resultContentPage").loding("start");
     request.get(
       url,
       function (result) {
         //返回成功进行响应操作
-        $("#resultContentPage").loding("stop");
+        // $("#resultContentPage").loding("stop");
         if (result.data) {
           let AllInfo = result.data;
           // 放到session里，减少重复请求
@@ -156,7 +156,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
         }
       },
       function () {
-        $("#resultContentPage").loding("stop");
+        // $("#resultContentPage").loding("stop");
       }
     );
   };

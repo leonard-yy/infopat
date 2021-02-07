@@ -19,7 +19,10 @@ layui.use(["laytpl", "patBasicInfo", "esTable"], function () {
     view.innerHTML = html;
   });
 
+  $(".detailInfo").loding("start");
   function render() {
+    console.log("scxxData", scxxData);
+    $(".detailInfo").loding("stop");
     let jsData = scxxData["检索信息"];
     //如果沒有數據直接顯示暫無數據
     if (!scxxData || !jsData) {
