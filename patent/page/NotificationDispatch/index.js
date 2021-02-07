@@ -60,6 +60,7 @@ layui.use(["laytpl", "patBasicInfo", "nfctTable"], function () {
   var check = 0;
   function init() {
     check++;
+    data = layui.sessionData("session").basicInfo || {};
     allInfo = layui.sessionData("session").allInfo || {};
     fwData = allInfo["发文信息"] || null;
     if (fwData || check > 15) {
