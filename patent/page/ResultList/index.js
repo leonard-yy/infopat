@@ -458,6 +458,7 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
     $(".result-left-filter").html("");
     $(".result-left-second").html("");
     _this.searchText = $("#expandTextarea").val();
+    _this.page = 1;
     _this.renderPage();
   });
 
