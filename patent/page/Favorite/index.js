@@ -49,7 +49,7 @@ function initPage() {
                 html += "   </div>";
                 html += "</td>";
                 html += "<td>" + idx + "</td>";
-                html += '<td><a href="/patent/result.html?id=' + item.document_number + '">' + item.document_number + "</a></td>";
+                html += '<td><a target="_blank" href="/patent/result.html?id=' + item.document_number + '">' + item.document_number + "</a></td>";
                 html += '<td style="max-width:400px" title="' + item.title + '">' + item.title + "</td>";
                 html += "<td>" + item.document_date + "</td>";
                 html += "<td>" + item.application_date + "</td>";

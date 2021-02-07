@@ -48,6 +48,17 @@ layui.use(["laytpl", "patBasicInfo", "picture", "eoTable"], function () {
     laytpl(scyjTpl).render(scyjData, function (html) {
       scyjTable.innerHTML = html;
     });
+
+    // 查看图片
+    $(".action-show").on("click", function (e) {
+      const item = e.currentTarget;
+      const url = $(item).data("url");
+
+      getImgUrl(url, function (imgs) {
+        console.log(imgs);
+        showPitcure(imgs);
+      });
+    });
   }
 
   function getImgUrl(url, cb) {
@@ -67,32 +78,14 @@ layui.use(["laytpl", "patBasicInfo", "picture", "eoTable"], function () {
     });
   }
 
-  // 查看图片
-  $(".action-show").on("click", function (e) {
-    const item = e.currentTarget;
-    const url = $(item).data("url");
-
-    getImgUrl(url, function (imgs) {
-      console.log(imgs);
-      showPitcure(imgs);
-    });
-    // let imgs = [
-    //   "../../images/picture/00001.png",
-    //   "../../images/picture/00002.png",
-    //   "../../images/picture/00003.png",
-    //   "../../images/picture/00004.png",
-    //   "../../images/picture/00005.png",
-    // ];
-    // showPitcure(imgs);
-  });
-  var showPitcure = function (imgs) {
+  function showPitcure(imgs) {
     $("#common-container-picture").show();
 
     picture.init("#common-container-picture", imgs, {
       closeIcon: true,
       full: true,
     });
-  };
+  }
 
   var check = 0;
   function init() {
