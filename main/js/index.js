@@ -25,7 +25,7 @@ $(function () {
   $(".logout").click(function () {
     $.ajax({
       type: "DELETE",
-      url: ` https://www.infodossier.comlogout?t=${new Date().getTime()}`,
+      url: "https://www.infodossier.comlogout?t=" + new Date().getTime(),
       complete: function (result) {
         window.location.reload();
       },
@@ -65,7 +65,7 @@ function islogin(cb) {
   window.userInfo = {};
   $.ajax({
     type: "GET",
-    url: `/api/user/session?t=${new Date().getTime()}`,
+    url: "/api/user/session?t=" + new Date().getTime(),
     success: function (result) {
       if (result && result.error == 0) {
         window.userInfo.userName = result.data.username;
@@ -94,12 +94,11 @@ function islogin(cb) {
 function initSearch() {
   $("#btn-search").off("click");
   $("#btn-search").on("click", function (e) {
-    let value = $("#input-search").val();
+    var value = $("#input-search").val();
     value = value.replace(/\.|ZL|zl|CN|cn| /g, "");
     if (userLogin) {
       //登录验证通过
-      // window.open(`http://127.0.0.1:5500/index.html?${value}`, "_self");
-      window.open(`https://www.infodossier.compatent/index.html?${value}`, "_self");
+      window.open("https://www.infodossier.compatent/index.html?" + value, "_self");
     } else {
       alert("您未登录");
     }
@@ -129,7 +128,7 @@ function initAnchor(params) {
     // var timer = setTimeout(() => {
 
     // }, 1000);
-    const headScroll = $(".container-head").offset().top;
+    var headScroll = $(".container-head").offset().top;
     if (headScroll) {
       $(".container-head").addClass("white");
     } else {
@@ -161,9 +160,9 @@ function initpPolicyClick() {
 
 function isVisible(element) {
   //元素相对于文档顶部的偏移距离
-  var elementOffsetTop = $(`${element}`).offset().top;
+  var elementOffsetTop = $(element).offset().top;
   //该元素的高度
-  var elementOuterHeight = $(`${element}`).outerHeight();
+  var elementOuterHeight = $(element).outerHeight();
   //页面滚动的距离
   var winScrollHeight = $(window).scrollTop();
   // 浏览器可见区域的高度:
