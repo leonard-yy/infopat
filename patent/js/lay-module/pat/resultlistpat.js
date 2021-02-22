@@ -60,42 +60,42 @@ layui.define("patNodataPage", function (exports) {
                 <div class="content-fileds-item">
                     <div class="content-fileds-item" style="width:400px">
                         <span class="tips-title">公开日：</span>
-                        <span class="tips-value ml10">{{item.documentDate}}</span>
+                        <span class="tips-value ml10">{{item.documentDate ||"--"}}</span>
                     </div>
                     <div class="content-fileds-item" style="width:400px">
                         <span class="tips-title ">申请日：</span>
-                        <span class="tips-value ml10">{{item.applicationDate}}</span>
+                        <span class="tips-value ml10">{{item.applicationDate ||"--"}}</span>
                     </div>
                 </div>
                 <div class="content-fileds-item">
                     <div class="content-fileds-item" style="width:400px">
                         <span class="tips-title">公开（公告）号：</span>
-                        <span class="tips-value ml10">{{item.documentNumber}}</span>
+                        <span class="tips-value ml10">{{item.documentNumber ||"--"}}</span>
                     </div>
                     <div class="content-fileds-item" style="width:400px">
                         <span class="tips-title">申请号：</span>
-                        <span class="tips-value ml10">{{item.applicationNumber}}</span>
+                        <span class="tips-value ml10">{{item.applicationNumber ||"--"}}</span>
                     </div>
                 </div>
                 <div class="content-fileds-item">
                     <div class="content-fileds-item" style="width:400px">
                         <span class="tips-title">申请人：</span>
-                        <span class="tips-value ml10" title={{item.applicant.replace("<em>","").replace("</em>","")}} >{{item.applicant}}</span>
+                        <span class="tips-value ml10" title={{item.applicant.replace("<em>","").replace("</em>","")}} >{{item.applicant ||"--"}}</span>
                     </div>
                     <div class="content-fileds-item" style="width:400px">
                         <span class="tips-title">发明人：</span>
-                        <span class="tips-value ml10" title={{item.inventor.replace("<em>","").replace("</em>","")}} >{{item.inventor}}</span>
+                        <span class="tips-value ml10" title={{item.inventor.replace("<em>","").replace("</em>","")}} >{{item.inventor ||"--"}}</span>
                     </div>
                 </div>
 
                 <div class="content-fileds-item" style="padding-left:10px;">
                     <span class="tips-title">IPC分类号：</span>
-                    <span class="tips-value ml10">{{item.mainIpc}}</span>
+                    <span class="tips-value ml10">{{item.mainIpc ||"--"}}</span>
                 </div>
 
                 <div class="content-fileds-item" style="padding-left:10px;">
                     <span class="tips-title">CPC分类号：</span>
-                    <span class="tips-value ml10">{{item.ipc}}</span>
+                    <span class="tips-value ml10">{{item.ipc ||"--"}}</span>
                 </div>
 
                 <div class="content-fileds-item" style="padding-left:10px;">

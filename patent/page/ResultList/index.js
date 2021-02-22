@@ -128,8 +128,11 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
           temp += "    </dl>";
           $("#T-" + key + " dl").remove();
           $("#T-" + key).append(temp);
-          element.render("nav");
+        } else {
+          $("#T-" + key + " dl").remove();
+          $("#T-" + key).append('<dl class="layui-nav-child"><dd class="result-selector-filter"><span class="width100" style="color:#000;padding: 0 20px;">无</span></dd></dl>');
         }
+        element.render("nav");
       });
     });
   };
