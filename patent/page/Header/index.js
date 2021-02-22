@@ -23,4 +23,8 @@
       }
     );
   });
+
+  $("#loginOut").on("click", function () {
+    request.delete("/api/user/logout");
+  });
 })();
