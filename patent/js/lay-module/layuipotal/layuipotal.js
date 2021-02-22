@@ -210,9 +210,10 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
         success: function (data) {
           if (option) {
             var script = document.createElement("script");
-            var dd = JSON.stringify(option.data);
             script.type = "text/javascript";
-            script.text = "var option = " + dd;
+            script.text = `
+              var option = ${JSON.stringify(option.data)}
+            `;
             document.getElementById(option.id).appendChild(script);
           }
           $(selector).html(data);
