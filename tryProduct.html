@@ -56,26 +56,26 @@
       <div class="form-content">
         <div class="row">
           <span class="form-label require">姓名：</span>
-          <input class="col-sy-1" type="text" />
+          <input class="col-sy-1" type="text" id="name" />
           <span class="form-label require">单位名称：</span>
-          <input class="col-sy-2" />
+          <input class="col-sy-2" id="company" />
         </div>
         <div class="row">
           <span class="form-label require">职务：</span>
-          <input class="col-sy-1" type="text" />
+          <input class="col-sy-1" type="text" id="department" />
           <span class="form-label require"> 手机号： </span>
-          <input class="col-sy-3" />
+          <input class="col-sy-3" id="mobile" />
           <!-- <span class="validate-btn">发送验证码</span> -->
           <!-- <span class="form-label require">验证码：</span> -->
           <!-- <input class="col-sy-3" /> -->
         </div>
         <div class="row">
           <span class="form-label"></span>
-          <textarea class="form-area" placeholder="如有任何建议或意见，请在此填写……"></textarea>
+          <textarea class="form-area" placeholder="如有任何建议或意见，请在此填写……" id="remark"></textarea>
         </div>
       </div>
       <div class="form-submit">
-        <span>提交申请</span>
+        <span id="submit">提交申请</span>
       </div>
     </div>
     <div class="wrapper-footer" id="contactus">
@@ -119,5 +119,6 @@
         </ul>
       </div>
     </div>
+    <script src="main/js/appliant.js"></script>
   </body>
 </html>

@@ -211,9 +211,7 @@ layui.define(["element", "jquery", "loader", "layuimini", "layer"], function (ex
           if (option) {
             var script = document.createElement("script");
             script.type = "text/javascript";
-            script.text = `
-              var option = ${JSON.stringify(option.data)}
-            `;
+            script.text = "var option = " + JSON.stringify(option.data);
             document.getElementById(option.id).appendChild(script);
           }
           $(selector).html(data);
