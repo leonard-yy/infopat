@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="main/css/normal.css" />
     <link rel="stylesheet" href="main/css/scroll.css" />
     <link rel="stylesheet" href="main/css/phone.css" />
-    <script type="text/javascript" src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" src="main/third-party/polyfill.min.js"></script>
     <script src="main/third-party/lesstools/less.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="main/third-party/jquery/jquery-1.10.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="main/third-party/jquery/jquery.slimscroll.min.js" type="text/javascript" charset="utf-8"></script>
     <title>申请试用</title>
     <style>
       body {
@@ -64,10 +66,13 @@
           <span class="form-label require">职务：</span>
           <input class="col-sy-1" type="text" id="department" />
           <span class="form-label require"> 手机号： </span>
-          <input class="col-sy-3" id="mobile" />
-          <!-- <span class="validate-btn">发送验证码</span> -->
-          <!-- <span class="form-label require">验证码：</span> -->
-          <!-- <input class="col-sy-3" /> -->
+          <input class="col-sy-2" id="mobile" />
+        </div>
+        <div class="row">
+          <span class="form-label require">验证码：</span>
+          <input class="col-sy-2" id="captcha" />
+          <span class="validate-btn" id="sendCaptcha">发送验证码</span>
+          <img src="" alt="" id="validateImg" style="margin: 10px 120px" />
         </div>
         <div class="row">
           <span class="form-label"></span>
