@@ -89,7 +89,7 @@ layui.use(["laytpl", "patBasicInfo", "picture"], function () {
     data = layui.sessionData("session").basicInfo || {};
     allInfo = layui.sessionData("session").allInfo || {};
     scxxData = allInfo["审查信息"] || null;
-    if (scxxData || check > 15) {
+    if (data.number || scxxData || check > 15) {
       scxxData = allInfo["审查信息"] || {};
       render();
     } else {

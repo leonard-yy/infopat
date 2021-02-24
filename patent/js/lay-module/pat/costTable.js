@@ -36,7 +36,7 @@ layui.define("patNodata", function (exports) {
 
   let znTpl = `
  
-  {{#  if(d.length >= 0){ }}
+  {{#  if(d.length === 0){ }}
 
   {{#   }else{ }} 
     <div class="table-title-common table-title">专利滞纳金信息</div>
@@ -89,7 +89,7 @@ layui.define("patNodata", function (exports) {
 
   let tfTpl = `
  
-  {{#  if(d.length >= 0){ }}
+  {{#  if(d.length === 0){ }}
 
   {{#   }else{ }} 
     <div class="table-title-common table-title">专利退费信息</div>

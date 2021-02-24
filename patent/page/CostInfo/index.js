@@ -63,7 +63,7 @@ function initData() {
       data = layui.sessionData("session").basicInfo || {};
       allInfo = layui.sessionData("session").allInfo || {};
       jfData = allInfo["费用信息"] || null;
-      if (jfData || check > 15) {
+      if (data.number || jfData || check > 15) {
         jfData = allInfo["费用信息"] || {};
         render();
       } else {
