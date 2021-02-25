@@ -49,4 +49,8 @@ $(function () {
   $("#sendCaptcha").click(function (e) {
     $("#validateImg").attr("src", "/captcha/contact?t=" + new Date().getTime());
   });
+
+  $("#validateImg").click(function (e) {
+    $("#validateImg").attr("src", "/captcha/contact?t=" + new Date().getTime());
+  });
 });

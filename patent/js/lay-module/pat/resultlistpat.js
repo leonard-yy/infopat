@@ -100,7 +100,7 @@ layui.define("patNodataPage", function (exports) {
 
                 <div class="content-fileds-item" style="padding-left:10px;">
                     <div class="tips-title">摘要：</div>
-                    <div class="tips-value ml10">{{item.summary || ""}}</div>
+                    <div class="tips-value ml10">{{item.summary || "--"}}</div>
                 </div>
 
             </div>
