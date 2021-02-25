@@ -25,7 +25,7 @@ $(function () {
   $(".logout").click(function () {
     $.ajax({
       type: "DELETE",
-      url: "https://www.infodossier.comlogout?t=" + new Date().getTime(),
+      url: "https://www.infodossier.com/logout?t=" + new Date().getTime(),
       complete: function (result) {
         window.location.reload();
       },
