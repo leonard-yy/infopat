@@ -25,6 +25,8 @@
   });
 
   $("#loginOut").on("click", function () {
-    request.delete("/api/user/logout");
+    request.delete("/api/user/logout", function (res) {
+      window.location.reload();
+    });
   });
 })();
