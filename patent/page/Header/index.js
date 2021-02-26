@@ -22,11 +22,11 @@
         $(".period-tips").hide();
       }
     );
-  });
 
-  $("#loginOut").on("click", function () {
-    request.delete("/api/user/logout", function (res) {
-      window.location.reload();
+    $("#loginOut").on("click", function () {
+      request.delete("/api/user/logout", function (res) {
+        window.location.reload();
+      });
     });
   });
 })();
