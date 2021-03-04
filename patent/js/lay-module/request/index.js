@@ -14,7 +14,7 @@ layui.define(function (exports) {
   var apiTestPrefix = "http://www.infodossier.test:2080";
   // nginx 环境
 
-  var realPrefix = "";
+  var realPrefix = apiPrefix;
 
   request.get = function (url, cb = function () {}, err = function () {}) {
     request.ajax(url, {}, "GET", true, cb, err);
