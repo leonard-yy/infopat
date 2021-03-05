@@ -163,13 +163,16 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
 
   // 其他页面信息
   _this.getData = function () {
-    // 获取基本信息
-    request.get(`/api/adv/patent/base?id=${_this.id}`, function (res) {
-      var patent = res.patent;
-      var code = patent.applicationNumber.substring(2).replace(".", "");
-      // debug_token 调试用，正式环境去除
-      var url = `/api/patent/${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
-      _this.getBasicInfo(url);
+    // 获取 api/s检索 防止215错误代码
+    request.get(`/api/adv/s?ds=all&q=${_this.id}&p=1`, function (res) {
+      // 获取基本信息
+      request.get(`/api/adv/patent/base?id=${_this.id}`, function (res) {
+        var patent = res.patent;
+        var code = patent.applicationNumber.substring(2).replace(".", "");
+        // debug_token 调试用，正式环境去除
+        var url = `/api/patent/${code}?debug_token=c6d8a85f2d3e40a9a59f8f0c834caea5`;
+        _this.getBasicInfo(url);
+      });
     });
   };
 
