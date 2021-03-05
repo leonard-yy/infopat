@@ -76,13 +76,8 @@ layui.define("patNodataPage", function (exports) {
                 </div>
 
                 <div class="content-filed-item">
-                    <span class="tips-title">IPC分类号：</span>
-                    <span class="tips-value ml10">{{item.ipc ||"--"}}</span>
-                </div>
-
-                <div class="content-filed-item">
-                    <span class="tips-title">IPC结构图谱：</span>
-                    <span class="tips-value ml10">{{item.ipc ||"--"}}</span>
+                    <span class="tips-title">{{item.ipc !== '' ? "IPC分类号" : "LOC分类号"}}</span>
+                    <span class="tips-value ml10">{{item.ipc !== '' ? item.ipc : item.loc}}</span>
                 </div>
 
                 <div class="content-filed-item">

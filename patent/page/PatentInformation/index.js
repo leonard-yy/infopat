@@ -53,9 +53,12 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
   }
 
   function renderTable(pdfList) {
+    var iframeSrc = "";
     layui.each(pdfList, function (index, item) {
       var imgUrl = "/api/adv/pdf2img?v=1&key=" + item;
       var downloadUrl = "/api/adv/pdf?v=1&key=" + item;
+      // iframeSrc = "https://www.infodossier.com" + downloadUrl;
+      iframeSrc = downloadUrl;
       qwDataList.push({
         name: option.id,
         imgUrl: imgUrl || "",
@@ -109,11 +112,12 @@ layui.use(["laytpl", "patBasicInfo", "picture", "piTable", "request"], function 
         window.open(pdfUrl);
       });
     });
+
+    // https://www.infodossier.com/api/adv/pdf?v=1&key=/CN/api/2020/09/15/1/CN111660982A.pdf
+    $("#iframeDom").attr("src", iframeSrc);
   }
 
   // 请求数据
-  // http://www.infodossier.test:2080/api/adv/pdf?key=/CN/api/2016/05/25/2/CN205263153U.pdf&v=1
-  // http://www.infodossier.test:2080/api/adv/pdf2img?key=/CN/api/2016/05/25/2/CN205263153U.pdf&v=1
   var qwDataList = [];
   $(".detailInfo").loding("start");
   request.get(

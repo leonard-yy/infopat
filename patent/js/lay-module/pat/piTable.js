@@ -21,7 +21,7 @@ layui.define("patNodataPage", function (exports) {
     <tr style="background: #FFFFFF;border-bottom: 1px solid #999999;">
       <td style="color:#000;">{{ item['name']  || '--' }}</td>
       <td class="td-action">
-        <span class="action action-show" data-url='{{item['imgUrl'] || '--' }}'> <img src="./images/dakai.png"><span>打开</span></span>
+        <!-- <span class="action action-show" data-url='{{item['imgUrl'] || '--' }}'> <img src="./images/dakai.png"><span>打开</span></span>-->
         <span class="action action-download"  data-url='{{item['pdfUrl'] || '--' }}'><img src="./images/xiazai.png"><span>下载</span></span>
       </td>
     </tr>

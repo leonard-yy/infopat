@@ -153,12 +153,13 @@ layui.use(["laytpl", "request", "loader", "form", "laypage", "element", "layer",
       // 统计
       $("#resultTime").html((res.responseTimes || 0) + "s");
       $("#resultCount").html((res.total || 0) + "条");
-      res.total = res.total ? (res.total > 1000 ? 999 : res.total) : 0;
+      // res.total = res.total ? (res.total > 1000 ? 999 : res.total) : 0;
       laypage.render({
         elem: "pageNavagete",
-        count: res.total || 0,
-        first: "首页",
-        last: "尾页",
+        count: res.total > 1000 ? 999 : res.total,
+        first: false,
+        last: false,
+        groups: 5,
         curr: res.page || 1,
         prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
         next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',

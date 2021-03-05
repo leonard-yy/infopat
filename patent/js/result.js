@@ -22,7 +22,7 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
     var idxSelected = 1;
     var hasIndex = 0;
     if (res.total > 0) {
-      res.total = res.total ? (res.total > 1000 ? 999 : res.total) : 0;
+      // res.total = res.total ? (res.total > 1000 ? 999 : res.total) : 0;
       _this.total = res.total || 0;
       var patents = res.patents || [];
       var html = "";
@@ -32,20 +32,22 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
           idxSelected = index + 1;
         }
       });
+
+      var start = (res.page - 1) * 10 + 1;
       patents.map(function (item, index) {
         var title = item.title.replace(/<em>/g, "").replace(/<\/em>/g, "");
         if (index == hasIndex) {
           _this.id = item.id;
           html += '<div class="result-list-item active" data-value="' + item.id + '" data-index=' + index + ">";
           html += '   <div class="flex">';
-          html += "    <span>" + (index + 1) + ".</span>";
+          html += "    <span>" + (index + start) + ".</span>";
           html += '    <span class="ml10 title active" title="' + title + '">' + title + "</span>" + "</div>";
           html += '   <div class="subtitle active">' + item.id + "</div>";
           html += "</div>";
         } else {
           html += '<div class="result-list-item" data-value="' + item.id + '" data-index=' + index + ">";
           html += '   <div class="flex">';
-          html += "    <span>" + (index + 1) + ".</span>";
+          html += "    <span>" + (index + start) + ".</span>";
           html += '    <span class="ml10 title" title="' + title + '">' + title + "</span>" + "</div>";
           html += '   <div class="subtitle">' + item.id + "</div>";
           html += "</div>";
@@ -54,21 +56,19 @@ layui.use(["element", "layuipotal", "laypage", "element", "loader", "request"], 
 
       $(".result-list-content").html(html);
 
-      $(".title-count").html((res.page - 1) * 10 + idxSelected + "/" + res.total);
+      $(".title-count").html("共" + res.total + "件专利");
       // 分页
       laypage.render({
         elem: "pageNavagete",
-        count: res.total,
-        first: "首页",
-        last: "尾页",
+        count: res.total > 1000 ? 999 : res.total,
+        first: false,
+        last: false,
         curr: res.page || 1,
-        groups: 2,
+        groups: 5,
         prev: '<i class="layui-icon layui-icon-left" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i>',
         next: '<i class="layui-icon layui-icon-right" style="font-size: 14px; color: rgba(0,0,0,0.65);"></i> ',
         jump: function (obj, first) {
           //obj包含了当前分页的所有参数，比如：
-          // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-          // console.log(obj.limit); //得到每页显示的条数
           if (!first) {
             _this.page = obj.curr;
             _this.initCont();
