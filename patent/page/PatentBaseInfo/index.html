@@ -1,3 +1,11 @@
+<script type="text/javascript">
+  function changeImg(o) {
+    var zoom = parseInt(o.style.zoom, 10) || 100;
+    zoom += event.wheelDelta / 12;
+    if (zoom > 0) o.style.zoom = zoom + "%";
+  }
+</script>
+
 <div class="my-page-container">
   <div class="height100 result-container">
     <div class="result-base-content result-body height100">
@@ -11,7 +19,10 @@
       <div class="over-flex" id="resultBaseInfo"></div>
       <div class="preview-image">
         <i class="layui-icon layui-icon-close-fill close-preview"></i>
-        <div class="height100 width100 box"><img id="previewImage" /> <span></span></div>
+        <div class="height100 width100 box">
+          <img id="previewImage" onmousewheel="changeImg(this);" />
+          <span></span>
+        </div>
       </div>
     </div>
   </div>
